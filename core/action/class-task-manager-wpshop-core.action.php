@@ -42,6 +42,7 @@ class Task_Manager_Wpshop_Core_Action {
 		}
 
 		add_action( 'init', array( $this, 'callback_plugins_loaded' ) );
+		add_action( 'add_meta_boxes', array( $this, 'callback_add_meta_boxes' ), 10, 2 );
 	}
 
 	/**
@@ -108,6 +109,21 @@ class Task_Manager_Wpshop_Core_Action {
 	 * @version 1.0.0.0
 	 */
 	public function callback_plugins_loaded() {}
+
+	/**
+	 * Fait le contenu de la metabox
+	 *
+	 * @param string  $post_type Le type du post.
+	 * @param WP_Post $post      Les données du post.
+	 *
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
+	 */
+	public function callback_add_meta_boxes( $post_type, $post ) {
+		if ( 'wpshop_customers' === $post_type || 'wpshop_shop_order' === $post_type ) {
+			add_meta_box( 'wpeo-task-metabox', __( 'Task', 'task-manager' ), array( Task_Manager_Wpshop_Core::g(), 'callback_render_metabox' ), $post_type, 'normal', 'default' );
+		}
+	}
 }
 
 new Task_Manager_Wpshop_Core_Action();

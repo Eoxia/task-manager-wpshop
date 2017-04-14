@@ -24,6 +24,20 @@ class Task_Manager_Wpshop_Core extends Singleton_Util {
 	 * @version 1.0.0.0
 	 */
 	protected function construct() {}
+
+	/**
+	 * Fait le rendu de la metabox
+	 *
+	 * @param  WP_Post $post les données du post.
+	 * @return void
+	 *
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
+	 */
+	public function callback_render_metabox( $post ) {
+		$parent_id = $post->ID;
+		require( PLUGIN_TASK_MANAGER_WPSHOP_PATH . '/core/view/main.view.php' );
+	}
 }
 
 new Task_Manager_Wpshop_Core();
