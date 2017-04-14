@@ -1,0 +1,13 @@
+{
+	"name": "Task Manager WPShop Core",
+	"slug": "core",
+	"version": "1.0.0.0",
+	"description": "",
+	"path": "core/",
+	"dependencies": {
+		"util": {},
+		"action": {},
+		"helper": {},
+		"class": {}
+	}
+}
