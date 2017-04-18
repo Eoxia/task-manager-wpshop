@@ -17,7 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 
 	<div class="wpeo-project-dashboard">
 		<h2>
-			<?php	esc_html_e( 'Tasks Manager', 'task-manager' ); ?>
 			<a 	href="#"
 					class="action-attribute add-new-h2"
 					data-action="create_task"
@@ -27,4 +26,12 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 	</div>
 
 	<?php do_shortcode( '[task_manager_dashboard_content post_parent="' . $parent_id . '" term="' . $term . '" categories_id_selected="' . $categories_id_selected . '" follower_id_selected="' . $follower_id_selected . '"]' ); ?>
+
+	<?php if ( ! empty( $titles ) ) :
+		foreach ( $titles as $key => $data ) :
+			?><h2><?php echo esc_html( $data['title'] ); ?></h2><?php
+			do_shortcode( '[task_manager_dashboard_content post_parent="' . $data['id'] . '" term="' . $term . '" categories_id_selected="' . $categories_id_selected . '" follower_id_selected="' . $follower_id_selected . '"]' );
+		endforeach;
+	endif;
+	?>
 </div>

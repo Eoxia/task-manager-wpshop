@@ -36,6 +36,30 @@ class Task_Manager_Wpshop_Core extends Singleton_Util {
 	 */
 	public function callback_render_metabox( $post ) {
 		$parent_id = $post->ID;
+		$user_id = $post->post_author;
+
+		global $wpdb;
+
+		$posts_id = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_parent=" . $user_id );
+
+		$posts = get_posts( array(
+			'include' => $posts_id,
+			'post_type' => 'wpshop_shop_order',
+		) );
+
+		$titles = array();
+		$tasks = array();
+
+		if ( ! empty( $posts ) ) {
+			foreach ( $posts as $post ) {
+				$meta = get_post_meta( $post->ID, '_order_postmeta', true );
+
+				$tasks[ $post->post_parent ]['title'] = __( 'Task in order : ', 'task-manager-wpshop' );
+				$tasks[ $post->post_parent ]['title'] .= $meta->order_key;
+				$tasks[ $post->post_parent ]['id'] = $post->ID;
+			}
+		}
+
 		require( PLUGIN_TASK_MANAGER_WPSHOP_PATH . '/core/view/main.view.php' );
 	}
 }
