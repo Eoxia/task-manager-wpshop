@@ -22,15 +22,40 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 					data-action="create_task"
 					data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
 					data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'New task', 'task-manager' ); ?></a>
+
+			<a 	href="#"
+					class="action-attribute add-new-h2"
+					data-action="create_task"
+					data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
+					data-tag="sav"
+					data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'Nouvelle tâche "SAV"', 'task-manager' ); ?></a>
+
+			<a 	href="#"
+					class="action-attribute add-new-h2"
+					data-action="create_task"
+					data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
+					data-tag="ref"
+					data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'Nouvelle tâche "reférencement"', 'task-manager' ); ?></a>
+
+			<a 	href="#"
+					class="action-attribute add-new-h2"
+					data-action="create_task"
+					data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
+					data-tag="com"
+					data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'Nouvelle tâche "commercial"', 'task-manager' ); ?></a>
 		</h2>
+
+		<p class="alignright">Temps total passé: <?php echo esc_html( $total_time_elapsed ); ?></p>
 	</div>
 
-	<?php do_shortcode( '[task_manager_dashboard_content post_parent="' . $parent_id . '" term="' . $term . '" categories_id_selected="' . $categories_id_selected . '" follower_id_selected="' . $follower_id_selected . '"]' ); ?>
-
-	<?php if ( ! empty( $titles ) ) :
-		foreach ( $titles as $key => $data ) :
-			?><h2><?php echo esc_html( $data['title'] ); ?></h2><?php
-			do_shortcode( '[task_manager_dashboard_content post_parent="' . $data['id'] . '" term="' . $term . '" categories_id_selected="' . $categories_id_selected . '" follower_id_selected="' . $follower_id_selected . '"]' );
+	<?php if ( ! empty( $tasks ) ) :
+		foreach ( $tasks as $key => $data ) :
+			?>
+				<h2><?php echo esc_html( $data['title'] ); ?></h2>
+				<div class="list-task">
+					<?php \task_manager\Task_Class::g()->display_tasks( $data['data'] ); ?>
+				</div>
+			<?php
 		endforeach;
 	endif;
 	?>

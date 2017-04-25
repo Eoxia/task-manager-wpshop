@@ -47,8 +47,20 @@ class Task_Manager_Wpshop_Core extends Singleton_Util {
 			'post_type' => 'wpshop_shop_order',
 		) );
 
-		$titles = array();
 		$tasks = array();
+		$total_time_elapsed = 0;
+
+		$tasks[ $post->post_parent ]['title'] = __( 'Task in client', 'task-manager-wpshop' );
+		$tasks[ $post->post_parent ]['data'] = \task_manager\Task_Class::g()->get_tasks( array(
+			'post_parent' => $post->ID,
+		) );
+
+		if ( ! empty( $tasks[ $post->post_parent ]['data'] ) ) {
+			foreach ( $tasks[ $post->post_parent ]['data'] as $task ) {
+				$tasks[ $post->post_parent ]['total_time_elapsed'] += $task->time_info['elapsed'];
+				$total_time_elapsed += $task->time_info['elapsed'];
+			}
+		}
 
 		if ( ! empty( $posts ) ) {
 			foreach ( $posts as $post ) {
@@ -56,9 +68,29 @@ class Task_Manager_Wpshop_Core extends Singleton_Util {
 
 				$tasks[ $post->post_parent ]['title'] = __( 'Task in order : ', 'task-manager-wpshop' );
 				$tasks[ $post->post_parent ]['title'] .= $meta->order_key;
-				$tasks[ $post->post_parent ]['id'] = $post->ID;
+				$tasks[ $post->post_parent ]['data'] = \task_manager\Task_Class::g()->get_tasks( array(
+					'post_parent' => $post->ID,
+				) );
+
+				if ( ! empty( $tasks[ $post->post_parent ]['data'] ) ) {
+					foreach ( $tasks[ $post->post_parent ]['data'] as $task ) {
+						$tasks[ $post->post_parent ]['total_time_elapsed'] += $task->time_info['elapsed'];
+						$total_time_elapsed += $task->time_info['elapsed'];
+					}
+				}
 			}
 		}
+
+		$format = '%hh %imin';
+
+		$dtf = new \DateTime( '@0' );
+		$dtt = new \DateTime( '@' . ( $total_time_elapsed * 60 ) );
+
+		if ( 1440 <= $total_time_elapsed ) {
+			$format = '%aj %hh %imin';
+		}
+
+		$total_time_elapsed = $dtf->diff( $dtt )->format( $format );
 
 		require( PLUGIN_TASK_MANAGER_WPSHOP_PATH . '/core/view/main.view.php' );
 	}
