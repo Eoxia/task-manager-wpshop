@@ -41,6 +41,9 @@ class Task_Manager_Wpshop_Core_Action {
 			add_action( 'admin_print_scripts', array( $this, 'callback_admin_print_scripts_js' ) );
 		}
 
+		add_action( 'wp_enqueue_scripts', array( $this, 'callback_wp_enqueue_scripts' ), 11 );
+
+
 		add_action( 'init', array( $this, 'callback_plugins_loaded' ) );
 		add_action( 'add_meta_boxes', array( $this, 'callback_add_meta_boxes' ), 10, 2 );
 	}
@@ -88,8 +91,21 @@ class Task_Manager_Wpshop_Core_Action {
 	 * @since 1.0.0.0
 	 * @version 1.0.0.0
 	 */
-	public function callback_admin_enqueue_scripts_js() {
-		wp_enqueue_script( 'digi-epi-script', PLUGIN_TASK_MANAGER_WPSHOP_URL . 'core/assets/js/backend.min.js', array(), Config_Util::$init['task-manager-wpshop']->version, false );
+	public function callback_admin_enqueue_scripts_js() {}
+
+	/**
+	 * Initialise le fichier backend.min.js du plugin Digirisk-EPI.
+	 *
+	 * @return void nothing
+	 *
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
+	 */
+	public function callback_wp_enqueue_scripts() {
+		$pagename = get_query_var( 'pagename' );
+		if ( in_array( $pagename, Config_Util::$init['task-manager-wpshop']->insert_scripts_pages_js, true ) ) {
+			wp_enqueue_script( 'task-manager-wpshop-frontend-script', PLUGIN_TASK_MANAGER_WPSHOP_URL . 'core/assets/js/frontend.min.js', array(), Config_Util::$init['task-manager-wpshop']->version, false );
+		}
 	}
 
 	/**

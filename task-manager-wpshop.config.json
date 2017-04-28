@@ -4,12 +4,15 @@
 	"version": "1.0.0.0",
 	"description": "",
 	"insert_scripts_pages_js": [
+		"myaccount"
 	],
 	"insert_scripts_pages_css": [],
 	"modules": [
 		"core/external/wpeo_log/wpeo_log.config.json",
 		"core/external/wpeo_model/wpeo_model.config.json",
-		"core/core.config.json"
+		"core/core.config.json",
+
+		"modules/support/support.config.json"
 	],
 	"debug": false
 }
