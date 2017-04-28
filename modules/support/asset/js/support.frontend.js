@@ -55,6 +55,25 @@ window.taskManagerWpshop.frontendSupport.setPointActive = function( event ) {
 	jQuery( this ).addClass( 'active' );
 };
 
+/**
+ * Avant de charger les commentaires, change la dashicons.
+ *
+ * @param  {HTMLSpanElement} triggeredElement L'élément HTML déclenchant l'action.
+ * @return void
+ *
+ * @since 1.3.6.0
+ * @version 1.3.6.0
+ */
+window.taskManagerWpshop.frontendSupport.beforeLoadComments = function( triggeredElement ) {
+	triggeredElement.toggleClass( 'dashicons-arrow-right-alt2 dashicons-arrow-down-alt2' );
+	triggeredElement.closest( 'li' ).find( '.comments' ).toggleClass( 'hidden' );
+	return true;
+};
+
 window.taskManagerWpshop.frontendSupport.loadedFrontComments = function( triggeredElement, response ) {
 	jQuery( triggeredElement ).closest( 'li' ).find( '.comments' ).html( response.data.view );
+};
+
+window.taskManagerWpshop.frontendSupport.addedCommentSuccess = function( triggeredElement, response ) {
+	jQuery( triggeredElement ).closest( '.comments .comment.edit' ).after( response.data.view );
 };
