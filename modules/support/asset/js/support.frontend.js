@@ -77,3 +77,11 @@ window.taskManagerWpshop.frontendSupport.loadedFrontComments = function( trigger
 window.taskManagerWpshop.frontendSupport.addedCommentSuccess = function( triggeredElement, response ) {
 	jQuery( triggeredElement ).closest( '.comments .comment.edit' ).after( response.data.view );
 };
+
+window.taskManagerWpshop.frontendSupport.askedTask = function( triggeredElement, response ) {
+	if ( response.data.edit ) {
+		jQuery( '.task[data-id="' + response.data.task_id + '"]' ).replaceWith( response.data.template );
+	} else {
+		jQuery( '.grid-item' ).prepend( response.data.template );
+	}
+};
