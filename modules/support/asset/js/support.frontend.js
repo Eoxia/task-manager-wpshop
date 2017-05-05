@@ -71,7 +71,7 @@ window.taskManagerWpshop.frontendSupport.beforeLoadComments = function( triggere
 };
 
 window.taskManagerWpshop.frontendSupport.loadedFrontComments = function( triggeredElement, response ) {
-	jQuery( triggeredElement ).closest( 'li' ).find( '.comments' ).html( response.data.view );
+	jQuery( triggeredElement ).closest( '.point' ).find( '.comments' ).html( response.data.view );
 };
 
 window.taskManagerWpshop.frontendSupport.addedCommentSuccess = function( triggeredElement, response ) {

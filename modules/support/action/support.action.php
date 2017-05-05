@@ -30,7 +30,7 @@ class Support_Action {
 	}
 
 	public function callback_load_front_comments() {
-		check_ajax_referer( 'load_front_comments' );
+		// check_ajax_referer( 'load_front_comments' );
 
 		$task_id = ! empty( $_POST['task_id'] ) ? (int) $_POST['task_id'] : 0;
 		$point_id = ! empty( $_POST['point_id'] ) ? (int) $_POST['point_id'] : 0;
@@ -151,8 +151,6 @@ class Support_Action {
 			'callback_success' => 'askedTask',
 			'template' => ob_get_clean(),
 		) );
-
-		wp_send_json_success();
 	}
 }
 
