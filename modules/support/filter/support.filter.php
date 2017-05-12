@@ -48,7 +48,6 @@ class Support_Filter {
 	 */
 	public function callback_my_account_content( $output, $dashboard_part ) {
 		if ( 'support' === $dashboard_part ) {
-
 			$id = get_posts( array(
 				'posts_per_page' => 1,
 				'author' => get_current_user_id(),
@@ -62,8 +61,9 @@ class Support_Filter {
 				'parent_id' => $id[0],
 			) );
 			$output = ob_get_clean();
-			return $output;
 		}
+
+		return $output;
 	}
 }
 
