@@ -57,6 +57,10 @@ class Task_Manager_Wpshop_Core extends Singleton_Util {
 
 		if ( ! empty( $tasks[ $post->post_parent ]['data'] ) ) {
 			foreach ( $tasks[ $post->post_parent ]['data'] as $task ) {
+				if ( empty( $tasks[ $post->post_parent ]['total_time_elapsed'] ) ) {
+					$tasks[ $post->post_parent ]['total_time_elapsed'] = 0;
+				}
+
 				$tasks[ $post->post_parent ]['total_time_elapsed'] += $task->time_info['elapsed'];
 				$total_time_elapsed += $task->time_info['elapsed'];
 			}
