@@ -86,6 +86,7 @@ window.taskManagerWpshop.frontendSupport.addedCommentSuccess = function( trigger
 	jQuery( triggeredElement ).closest( '.wpeo-comment-container' ).find( 'input[name="content"]' ).val( '' );
 	jQuery( triggeredElement ).closest( '.wpeo-comment-container' ).find( '.content' ).html( '' );
 	jQuery( triggeredElement ).closest( '.comments .comment.new' ).after( response.data.view );
+	jQuery( triggeredElement ).closest( '.comment' ).find( '.wpeo-point-new-placeholder' ).removeClass( 'hidden' );
 };
 
 window.taskManagerWpshop.frontendSupport.askedTask = function( triggeredElement, response ) {
