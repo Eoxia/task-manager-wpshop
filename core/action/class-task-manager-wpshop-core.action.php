@@ -104,8 +104,10 @@ class Task_Manager_Wpshop_Core_Action {
 	public function callback_wp_enqueue_scripts() {
 		$pagename = get_query_var( 'pagename' );
 		if ( in_array( $pagename, Config_Util::$init['task-manager-wpshop']->insert_scripts_pages_js, true ) ) {
-			wp_enqueue_script( 'task-manager-wpshop-frontend-script', PLUGIN_TASK_MANAGER_WPSHOP_URL . 'core/assets/js/frontend.min.js', array(), Config_Util::$init['task-manager-wpshop']->version, false );
 		}
+
+		wp_enqueue_script( 'task-manager-wpshop-frontend-script', PLUGIN_TASK_MANAGER_WPSHOP_URL . 'core/assets/js/frontend.min.js', array(), Config_Util::$init['task-manager-wpshop']->version, false );
+
 	}
 
 	/**
