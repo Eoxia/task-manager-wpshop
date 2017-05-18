@@ -69,21 +69,27 @@ class Task_Manager_Wpshop_Core extends Singleton_Util {
 		if ( ! empty( $posts ) ) {
 			foreach ( $posts as $post ) {
 				$meta = get_post_meta( $post->ID, '_order_postmeta', true );
+				if ( ! empty( $meta ) ) {
+					$tasks[ $post->ID ]['title'] = __( 'Task in order : ', 'task-manager-wpshop' );
+					$tasks[ $post->ID ]['title'] .= $meta['order_key'];
+					$tasks[ $post->ID ]['data'] = \task_manager\Task_Class::g()->get_tasks( array(
+						'post_parent' => $post->ID,
+					) );
 
-				$tasks[ $post->post_parent ]['title'] = __( 'Task in order : ', 'task-manager-wpshop' );
-				$tasks[ $post->post_parent ]['title'] .= $meta->order_key;
-				$tasks[ $post->post_parent ]['data'] = \task_manager\Task_Class::g()->get_tasks( array(
-					'post_parent' => $post->ID,
-				) );
+					if ( empty( $tasks[ $post->ID ]['data'] ) ) {
+						unset( $tasks[ $post->ID ] );
+					}
 
-				if ( ! empty( $tasks[ $post->post_parent ]['data'] ) ) {
-					foreach ( $tasks[ $post->post_parent ]['data'] as $task ) {
-						$tasks[ $post->post_parent ]['total_time_elapsed'] += $task->time_info['elapsed'];
-						$total_time_elapsed += $task->time_info['elapsed'];
+					if ( ! empty( $tasks[ $post->ID ]['data'] ) ) {
+						foreach ( $tasks[ $post->ID ]['data'] as $task ) {
+							$tasks[ $post->ID ]['total_time_elapsed'] += $task->time_info['elapsed'];
+							$total_time_elapsed += $task->time_info['elapsed'];
+						}
 					}
 				}
 			}
 		}
+
 
 		$format = '%hh %imin';
 

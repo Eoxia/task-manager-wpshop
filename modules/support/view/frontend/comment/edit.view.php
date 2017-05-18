@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 	<form action="<?php echo esc_attr( admin_url( 'admin-ajax.php' ) ); ?>" method="POST">
 		<ul class="wpeo-comment-container">
 
-			<input type="hidden" name="action" value="edit_comment" />
-			<?php wp_nonce_field( 'edit_comment' ); ?>
+			<input type="hidden" name="action" value="edit_comment_front" />
+			<?php wp_nonce_field( 'edit_comment_front' ); ?>
 			<input type="hidden" name="comment_id" value="<?php echo esc_attr( $comment->id ); ?>" />
 			<input type="hidden" name="post_id" value="<?php echo esc_attr( $task_id ); ?>" />
 			<input type="hidden" name="parent_id" value="<?php echo esc_attr( $point_id ); ?>" />
