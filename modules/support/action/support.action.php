@@ -73,7 +73,6 @@ class Support_Action {
 		$comment_id = ! empty( $_POST['comment_id'] ) ? (int) $_POST['comment_id'] : 0;
 		$post_id = ! empty( $_POST['post_id'] ) ? (int) $_POST['post_id'] : 0;
 		$parent_id = ! empty( $_POST['parent_id'] ) ? (int) $_POST['parent_id'] : 0;
-		$date = ! empty( $_POST['date'] ) ? sanitize_text_field( $_POST['date'] ) : '';
 		$content = ! empty( $_POST['content'] ) ? sanitize_text_field( $_POST['content'] ) : '';
 		$time = ! empty( $_POST['time'] ) ? (int) $_POST['time'] : 0;
 
@@ -81,7 +80,7 @@ class Support_Action {
 			'id' => $comment_id,
 			'post_id' => $post_id,
 			'parent_id' => $parent_id,
-			'date' => Date_Util::g()->formatte_date( $date ),
+			'date' => current_time( 'mysql' ),
 			'content' => $content,
 			'time_info' => array(
 				'elapsed' => $time,

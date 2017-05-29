@@ -13,7 +13,8 @@
 		"core/external/wpeo_model/wpeo_model.config.json",
 		"core/core.config.json",
 
-		"modules/support/support.config.json"
+		"modules/support/support.config.json",
+		"modules/admin-bar/admin-bar.config.json"
 	],
 	"debug": false
 }
