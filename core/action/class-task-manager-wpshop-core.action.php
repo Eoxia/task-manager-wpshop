@@ -42,7 +42,7 @@ class Task_Manager_Wpshop_Core_Action {
 		}
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'callback_wp_enqueue_scripts' ), 11 );
-
+		add_action( 'wp_enqueue_scripts', array( $this, 'callback_dequeue_bootstrap' ), 99 );
 
 		add_action( 'init', array( $this, 'callback_plugins_loaded' ) );
 		add_action( 'add_meta_boxes', array( $this, 'callback_add_meta_boxes' ), 10, 2 );
@@ -104,6 +104,12 @@ class Task_Manager_Wpshop_Core_Action {
 	public function callback_wp_enqueue_scripts() {
 		wp_enqueue_script( 'task-manager-wpshop-frontend-script', PLUGIN_TASK_MANAGER_WPSHOP_URL . 'core/assets/js/frontend.min.js', array(), Config_Util::$init['task-manager-wpshop']->version, false );
 
+	}
+
+	public function callback_dequeue_bootstrap() {
+		if ( $_GET['account_dashboard_part'] == 'support' ) {
+			wp_dequeue_style( 'bootstrap-min' );
+		}
 	}
 
 	/**
