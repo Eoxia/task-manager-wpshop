@@ -63,6 +63,7 @@ class Support_Action {
 		wp_send_json_success( array(
 			'task_id' => $task_id,
 			'edit' => $edit,
+			'namespace' => 'taskManagerWpshop',
 			'module' => 'frontendSupport',
 			'callback_success' => 'askedTask',
 			'template' => ob_get_clean(),
