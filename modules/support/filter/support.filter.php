@@ -32,7 +32,7 @@ class Support_Filter {
 	 * @version 1.0.0.0
 	 */
 	public function callback_my_account_menu() {
-		View_Util::exec( 'support', 'frontend/menu' );
+		\eoxia\View_Util::exec( 'support', 'frontend/menu' );
 	}
 
 	/**
@@ -60,7 +60,7 @@ class Support_Filter {
 			) );
 
 			ob_start();
-			View_Util::exec( 'support', 'frontend/main', array(
+			\eoxia\View_Util::exec( 'support', 'frontend/main', array(
 				'parent_id' => $id[0],
 			) );
 			$output = ob_get_clean();

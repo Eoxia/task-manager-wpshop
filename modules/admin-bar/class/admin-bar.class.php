@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {	exit; }
 /**
  * Classe de gestion des actions
  */
-class Admin_Bar_Class extends Singleton_Util {
+class Admin_Bar_Class extends \eoxia\Singleton_Util {
 
 	/**
 	 * Instanciation du module

@@ -30,12 +30,12 @@ class Task_Manager_Wpshop_Core_Action {
 		// Initialises ses actions que si nous sommes sur une des pages réglés dans le fichier digirisk.config.json dans la clé "insert_scripts_pages".
 		$page = ( ! empty( $_REQUEST['page'] ) ) ? sanitize_text_field( $_REQUEST['page'] ) : ''; // WPCS: CSRF ok.
 
-		if ( in_array( $page, Config_Util::$init['task-manager-wpshop']->insert_scripts_pages_css, true ) ) {
+		if ( in_array( $page, \eoxia\Config_Util::$init['task-manager-wpshop']->insert_scripts_pages_css, true ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'callback_before_admin_enqueue_scripts_css' ), 10 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'callback_admin_enqueue_scripts_css' ), 11 );
 		}
 
-		if ( in_array( $page, Config_Util::$init['task-manager-wpshop']->insert_scripts_pages_js, true ) ) {
+		if ( in_array( $page, \eoxia\Config_Util::$init['task-manager-wpshop']->insert_scripts_pages_js, true ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'callback_before_admin_enqueue_scripts_js' ), 10 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'callback_admin_enqueue_scripts_js' ), 11 );
 			add_action( 'admin_print_scripts', array( $this, 'callback_admin_print_scripts_js' ) );
@@ -102,7 +102,7 @@ class Task_Manager_Wpshop_Core_Action {
 	 * @version 1.0.0.0
 	 */
 	public function callback_wp_enqueue_scripts() {
-		wp_enqueue_script( 'task-manager-wpshop-frontend-script', PLUGIN_TASK_MANAGER_WPSHOP_URL . 'core/assets/js/frontend.min.js', array(), Config_Util::$init['task-manager-wpshop']->version, false );
+		wp_enqueue_script( 'task-manager-wpshop-frontend-script', PLUGIN_TASK_MANAGER_WPSHOP_URL . 'core/assets/js/frontend.min.js', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version, false );
 
 	}
 

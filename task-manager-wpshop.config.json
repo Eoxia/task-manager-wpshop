@@ -10,6 +10,7 @@
 	"insert_scripts_pages_css": [],
 	"modules": [
 		"core/external/wpeo_log/wpeo_log.config.json",
+		"core/external/wpeo_util/wpeo_util.config.json",
 		"core/external/wpeo_model/wpeo_model.config.json",
 		"core/core.config.json",
 

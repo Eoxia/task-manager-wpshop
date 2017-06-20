@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 /**
  * Appelle la vue permettant d'afficher la navigation
  */
-class Task_Manager_Wpshop_Core extends Singleton_Util {
+class Task_Manager_Wpshop_Core extends \eoxia\Singleton_Util {
 
 	/**
 	 * Le constructeur

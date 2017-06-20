@@ -5,7 +5,6 @@
 	"description": "",
 	"path": "core/",
 	"dependencies": {
-		"util": {},
 		"action": {},
 		"helper": {},
 		"class": {}
