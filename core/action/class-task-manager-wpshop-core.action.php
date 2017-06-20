@@ -107,7 +107,7 @@ class Task_Manager_Wpshop_Core_Action {
 	}
 
 	public function callback_dequeue_bootstrap() {
-		if ( $_GET['account_dashboard_part'] == 'support' ) {
+		if ( ! empty( $_GET['account_dashboard_part'] ) && $_GET['account_dashboard_part'] == 'support' ) {
 			wp_dequeue_style( 'bootstrap-min' );
 		}
 	}
