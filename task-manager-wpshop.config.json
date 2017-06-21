@@ -8,10 +8,11 @@
 		"mon-compte"
 	],
 	"insert_scripts_pages_css": [],
-	"modules": [
+	"externals": [
 		"core/external/wpeo_log/wpeo_log.config.json",
-		"core/external/wpeo_util/wpeo_util.config.json",
-		"core/external/wpeo_model/wpeo_model.config.json",
+		"core/external/wpeo_model/wpeo_model.config.json"
+	],
+	"modules": [
 		"core/core.config.json",
 
 		"modules/support/support.config.json",

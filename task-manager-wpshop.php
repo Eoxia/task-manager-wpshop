@@ -28,4 +28,3 @@ require_once 'core/external/wpeo_util/init.util.php';
 require_once 'core/external/wpeo_log/class/log.class.php';
 
 \eoxia\Init_Util::g()->exec( PLUGIN_TASK_MANAGER_WPSHOP_PATH, basename( __FILE__, '.php' ) );
-\eoxia\View_Util::g()->set_path( PLUGIN_TASK_MANAGER_WPSHOP_PATH . 'modules/' );

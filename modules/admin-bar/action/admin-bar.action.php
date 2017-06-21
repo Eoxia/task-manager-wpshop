@@ -19,7 +19,7 @@ class Admin_Bar_Action {
 	 * Instanciation du module
 	 */
 	public function __construct() {
-		add_action( 'admin_bar_menu', array( $this, 'callback_admin_bar_menu' ), 106 );
+		// add_action( 'admin_bar_menu', array( $this, 'callback_admin_bar_menu' ), 106 );
 
 		add_action( 'wp_ajax_open_popup_last_wpshop_customer_ask', array( $this, 'callback_open_popup_last_wpshop_customer_ask' ) );
 		add_action( 'wp_ajax_open_popup_last_wpshop_customer_comment', array( $this, 'callback_open_popup_last_wpshop_customer_comment' ) );

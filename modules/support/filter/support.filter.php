@@ -32,7 +32,7 @@ class Support_Filter {
 	 * @version 1.0.0.0
 	 */
 	public function callback_my_account_menu() {
-		\eoxia\View_Util::exec( 'support', 'frontend/menu' );
+		\eoxia\View_Util::exec( 'task-manager-wpshop', 'support', 'frontend/menu' );
 	}
 
 	/**
@@ -49,8 +49,6 @@ class Support_Filter {
 	public function callback_my_account_content( $output, $dashboard_part ) {
 		if ( 'support' === $dashboard_part ) {
 
-
-
 			$id = get_posts( array(
 				'posts_per_page' => 1,
 				'author' => get_current_user_id(),
@@ -60,7 +58,7 @@ class Support_Filter {
 			) );
 
 			ob_start();
-			\eoxia\View_Util::exec( 'support', 'frontend/main', array(
+			\eoxia\View_Util::exec( 'task-manager-wpshop', 'support', 'frontend/main', array(
 				'parent_id' => $id[0],
 			) );
 			$output = ob_get_clean();

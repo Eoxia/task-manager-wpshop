@@ -50,19 +50,21 @@ class Task_Manager_Wpshop_Core extends \eoxia\Singleton_Util {
 		$tasks = array();
 		$total_time_elapsed = 0;
 
-		$tasks[ $post->post_parent ]['title'] = __( 'Task in client', 'task-manager-wpshop' );
-		$tasks[ $post->post_parent ]['data'] = \task_manager\Task_Class::g()->get_tasks( array(
-			'post_parent' => $post->ID,
-		) );
+		if ( 'wpshop_customers' === $post->post_type ) {
+			$tasks[ $post->post_parent ]['title'] = __( 'Task in client', 'task-manager-wpshop' );
+			$tasks[ $post->post_parent ]['data'] = \task_manager\Task_Class::g()->get_tasks( array(
+				'post_parent' => $post->ID,
+			) );
 
-		if ( ! empty( $tasks[ $post->post_parent ]['data'] ) ) {
-			foreach ( $tasks[ $post->post_parent ]['data'] as $task ) {
-				if ( empty( $tasks[ $post->post_parent ]['total_time_elapsed'] ) ) {
-					$tasks[ $post->post_parent ]['total_time_elapsed'] = 0;
+			if ( ! empty( $tasks[ $post->post_parent ]['data'] ) ) {
+				foreach ( $tasks[ $post->post_parent ]['data'] as $task ) {
+					if ( empty( $tasks[ $post->post_parent ]['total_time_elapsed'] ) ) {
+						$tasks[ $post->post_parent ]['total_time_elapsed'] = 0;
+					}
+
+					$tasks[ $post->post_parent ]['total_time_elapsed'] += $task->time_info['elapsed'];
+					$total_time_elapsed += $task->time_info['elapsed'];
 				}
-
-				$tasks[ $post->post_parent ]['total_time_elapsed'] += $task->time_info['elapsed'];
-				$total_time_elapsed += $task->time_info['elapsed'];
 			}
 		}
 
@@ -82,6 +84,9 @@ class Task_Manager_Wpshop_Core extends \eoxia\Singleton_Util {
 
 					if ( ! empty( $tasks[ $post->ID ]['data'] ) ) {
 						foreach ( $tasks[ $post->ID ]['data'] as $task ) {
+							if ( empty( $tasks[ $post->ID ]['total_time_elapsed'] ) ) {
+								$tasks[ $post->ID ]['total_time_elapsed'] = 0;
+							}
 							$tasks[ $post->ID ]['total_time_elapsed'] += $task->time_info['elapsed'];
 							$total_time_elapsed += $task->time_info['elapsed'];
 						}
