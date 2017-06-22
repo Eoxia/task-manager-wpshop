@@ -40,7 +40,7 @@ class Task_Manager_Wpshop_Core extends \eoxia\Singleton_Util {
 
 		global $wpdb;
 
-		$posts_id = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_parent=" . $user_id );
+		$posts_id = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_parent=" . $post->post_parent );
 
 		$posts = get_posts( array(
 			'include' => $posts_id,
