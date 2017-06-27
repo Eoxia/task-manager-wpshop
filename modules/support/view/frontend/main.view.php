@@ -34,12 +34,10 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 <?php echo do_shortcode( '[task frontend="true" post_parent="' . $parent_id . '" posts_per_page="-1"]' ); ?>
 
 <?php
-$posts_id = $GLOBALS['wpdb']->get_col( "SELECT ID FROM {$GLOBALS['wpdb']->posts} WHERE post_parent=" . $parent_id );
 $posts = get_posts( array(
-	'include' => $posts_id,
+	'author' => get_current_user_id(),
 	'post_type' => 'wpshop_shop_order',
 ) );
-
 if ( ! empty( $posts ) ) :
 	foreach ( $posts as $post ) :
 		echo do_shortcode( '[task frontend="true" post_parent="' . $post->ID . '"]' );

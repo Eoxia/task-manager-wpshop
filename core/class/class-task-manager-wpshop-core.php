@@ -38,15 +38,6 @@ class Task_Manager_Wpshop_Core extends \eoxia\Singleton_Util {
 		$parent_id = $post->ID;
 		$user_id = $post->post_author;
 
-		global $wpdb;
-
-		$posts_id = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_parent=" . $post->post_parent );
-
-		$posts = get_posts( array(
-			'include' => $posts_id,
-			'post_type' => 'wpshop_shop_order',
-		) );
-
 		$tasks = array();
 		$total_time_elapsed = 0;
 
@@ -68,6 +59,11 @@ class Task_Manager_Wpshop_Core extends \eoxia\Singleton_Util {
 			}
 		}
 
+		$posts_args = array(
+			'author' => $user_id,
+			'post_type' => 'wpshop_shop_order',
+		);
+		$posts = get_posts( $posts_args );
 		if ( ! empty( $posts ) ) {
 			foreach ( $posts as $post ) {
 				$meta = get_post_meta( $post->ID, '_order_postmeta', true );
@@ -94,7 +90,6 @@ class Task_Manager_Wpshop_Core extends \eoxia\Singleton_Util {
 				}
 			}
 		}
-
 
 		$format = '%hh %imin';
 

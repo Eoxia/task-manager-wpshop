@@ -1,7 +1,7 @@
 {
 	"name": "Task Manager WPShop",
 	"slug": "task-manager-wpshop",
-	"version": "1.0.0.0",
+	"version": "1.0.0.1",
 	"description": "",
 	"insert_scripts_pages_js": [
 		"myaccount",
