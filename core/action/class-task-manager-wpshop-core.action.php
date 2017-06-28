@@ -106,8 +106,16 @@ class Task_Manager_Wpshop_Core_Action {
 
 	}
 
+	/**
+	 * Dequeue la librairie bootstrap dans la page de support du compte client
+	 *
+	 * @return void nothing
+	 *
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
+	 */
 	public function callback_dequeue_bootstrap() {
-		if ( ! empty( $_GET['account_dashboard_part'] ) && $_GET['account_dashboard_part'] == 'support' ) {
+		if ( ! empty( $_GET['account_dashboard_part'] ) && 'support' === $_GET['account_dashboard_part'] ) {
 			wp_dequeue_style( 'bootstrap-min' );
 		}
 	}
@@ -144,6 +152,7 @@ class Task_Manager_Wpshop_Core_Action {
 			add_meta_box( 'wpeo-task-metabox', __( 'Task', 'task-manager' ), array( Task_Manager_Wpshop_Core::g(), 'callback_render_metabox' ), $post_type, 'normal', 'default' );
 		}
 	}
+
 }
 
 new Task_Manager_Wpshop_Core_Action();

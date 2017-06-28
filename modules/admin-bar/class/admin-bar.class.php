@@ -1,4 +1,9 @@
 <?php
+/**
+ * Define functions for admin bar support extension for WPShop
+ *
+ * @package Task Manager WPShop
+ */
 
 namespace task_manager_wpshop;
 
@@ -12,9 +17,7 @@ class Admin_Bar_Class extends \eoxia\Singleton_Util {
 	/**
 	 * Instanciation du module
 	 */
-	protected function construct() {
-
-	}
+	protected function construct() { }
 
 	/**
 	 * Construction de la requête permettant de récupèrer la liste des
@@ -39,6 +42,7 @@ class Admin_Bar_Class extends \eoxia\Singleton_Util {
 			AND USERMETA.meta_value=0
 			AND TASKMETA.meta_key = 'wpeo_task'
 		ORDER BY POINT.comment_date DESC";
+
 		return $query;
 	}
 
@@ -65,6 +69,7 @@ class Admin_Bar_Class extends \eoxia\Singleton_Util {
 			AND USERMETA.meta_key='wp_user_level'
 			AND USERMETA.meta_value=0
 		ORDER BY TIME.comment_date DESC";
+
 		return $query;
 	}
 

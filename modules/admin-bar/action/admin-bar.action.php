@@ -19,7 +19,7 @@ class Admin_Bar_Action {
 	 * Instanciation du module
 	 */
 	public function __construct() {
-		// add_action( 'admin_bar_menu', array( $this, 'callback_admin_bar_menu' ), 106 );
+		add_action( 'admin_bar_menu', array( $this, 'callback_admin_bar_menu' ), 106 );
 
 		add_action( 'wp_ajax_open_popup_last_wpshop_customer_ask', array( $this, 'callback_open_popup_last_wpshop_customer_ask' ) );
 		add_action( 'wp_ajax_open_popup_last_wpshop_customer_comment', array( $this, 'callback_open_popup_last_wpshop_customer_comment' ) );
@@ -112,7 +112,7 @@ class Admin_Bar_Action {
 		global $wpdb;
 		$comments = $wpdb->get_results( Admin_Bar_Class::g()->get_new_ask_query( 'POINT.comment_ID, POINT.comment_content, TASK.post_parent, USER.user_email, POINT.comment_date, TASKMETA.meta_value' ) ); // WPCS: unprepared sql ok.
 		ob_start();
-		View_Util::exec( 'admin-bar', 'popup', array(
+		\eoxia\View_Util::exec( 'task-manager-wpshop', 'admin-bar', 'popup', array(
 			'comments' => $comments,
 		) );
 		wp_die( ob_get_clean() ); // WPCS: XSS is ok.
@@ -131,11 +131,12 @@ class Admin_Bar_Action {
 		global $wpdb;
 		$comments = $wpdb->get_results( Admin_Bar_Class::g()->get_new_response_query( 'TIME.comment_ID, POINT.comment_content AS point_content, TIME.comment_content, TASK.post_parent, USER.user_email, TIME.comment_date' ) ); // WPCS: unprepared sql ok.
 		ob_start();
-		View_Util::exec( 'admin-bar', 'popup-comment', array(
+		\eoxia\View_Util::exec( 'task-manager-wpshop', 'admin-bar', 'popup-comment', array(
 			'comments' => $comments,
 		) );
 		wp_die( ob_get_clean() ); // WPCS: XSS is ok.
 	}
+
 }
 
 new Admin_Bar_Action();
