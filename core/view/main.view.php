@@ -48,15 +48,15 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 		<p class="alignright">Temps total passé: <?php echo esc_html( $total_time_elapsed ); ?></p>
 	</div>
 
+	<div class="list-task">
 	<?php if ( ! empty( $tasks ) ) :
 		foreach ( $tasks as $key => $data ) :
 			?>
 				<h2><?php echo esc_html( $data['title'] ); ?></h2>
-				<div class="list-task">
-					<?php \task_manager\Task_Class::g()->display_tasks( $data['data'] ); ?>
-				</div>
+				<?php \task_manager\Task_Class::g()->display_tasks( $data['data'] ); ?>
 			<?php
 		endforeach;
 	endif;
 	?>
+	</div>
 </div>
