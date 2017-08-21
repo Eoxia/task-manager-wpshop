@@ -38,7 +38,7 @@ class Admin_Bar_Class extends \eoxia\Singleton_Util {
 			AND TASK.post_parent != 0
 			AND	POINTMETA.meta_key='wpeo_point'
 			AND POINTMETA.meta_value LIKE '%completed\":false%'
-			AND USERMETA.meta_key='wp_user_level'
+			AND USERMETA.meta_key='{$GLOBALS['wpdb']->prefix}user_level'
 			AND USERMETA.meta_value=0
 			AND TASKMETA.meta_key = 'wpeo_task'
 		ORDER BY POINT.comment_date DESC";

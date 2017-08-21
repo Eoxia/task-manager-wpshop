@@ -25,9 +25,9 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 		foreach ( $comments as $comment ) :
 			?>
 			<tr>
-				<td><?php echo esc_html( $comment->comment_ID ); ?></td>
-				<td><?php echo esc_html( $comment->comment_date ); ?></td>
-				<td>
+				<td style="vertical-align: top;"><?php echo esc_html( $comment->comment_ID ); ?></td>
+				<td style="vertical-align: top;"><?php echo esc_html( $comment->comment_date ); ?></td>
+				<td style="vertical-align: top;">
 					<a target="_blank" href="<?php echo esc_attr( admin_url( 'post.php?post=' . $comment->post_parent . '&action=edit' ) ); ?>">
 						<?php echo esc_html( $comment->user_email ); ?>
 					</a>

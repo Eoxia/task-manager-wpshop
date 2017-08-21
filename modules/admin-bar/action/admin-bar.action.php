@@ -44,6 +44,7 @@ class Admin_Bar_Action {
 				'height' => '900',
 			);
 			$comments = $wpdb->get_results( Admin_Bar_Class::g()->get_new_ask_query( 'POINT.comment_ID, POINT.comment_date, TASKMETA.meta_value' ) ); // WPCS : unprepared sql ok.
+
 			$current_date = current_time( 'timestamp' );
 			$new_comment = '';
 			$nb_comments = 0;
