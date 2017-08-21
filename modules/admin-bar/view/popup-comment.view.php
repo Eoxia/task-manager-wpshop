@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 		<th style="width: 10%">ID</th>
 		<th style="width: 20%">Date</th>
 		<th style="width: 20%">Email</th>
-		<th>Point contenu</th>
-		<th>Contenu</th>
+		<th>Contenu du point</th>
+		<th>Contenu de la réponse</th>
 	</tr>
 
 	<?php if ( ! empty( $comments ) ) :
