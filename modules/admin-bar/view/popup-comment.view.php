@@ -32,8 +32,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 						<?php echo esc_html( $comment->user_email ); ?>
 					</a>
 				</td>
-				<td><?php echo nl2br( esc_html( $comment->point_content ) ); ?></td>
-				<td><?php echo nl2br( esc_html( $comment->comment_content ) ); ?></td>
+				<td style="vertical-align: top;"><?php echo nl2br( esc_html( $comment->point_content ) ); ?></td>
+				<td style="vertical-align: top;"><?php echo nl2br( esc_html( $comment->comment_content ) ); ?></td>
 		<?php endforeach;
 	endif; ?>
 </ul>
