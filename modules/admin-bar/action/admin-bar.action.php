@@ -112,6 +112,13 @@ class Admin_Bar_Action {
 	public function callback_open_popup_last_wpshop_customer_ask() {
 		global $wpdb;
 		$comments = $wpdb->get_results( Admin_Bar_Class::g()->get_new_ask_query( 'POINT.comment_ID, POINT.comment_content, TASK.post_parent, USER.user_email, POINT.comment_date, TASKMETA.meta_value' ) ); // WPCS: unprepared sql ok.
+		$format = '\L\e d F Y à H\hi';
+
+		if ( ! empty( $comments ) ) {
+			foreach ( $comments as $comment ) {
+				$comment->comment_date = mysql2date( $format, $comment->comment_date );
+			}
+		}
 		ob_start();
 		\eoxia\View_Util::exec( 'task-manager-wpshop', 'admin-bar', 'popup', array(
 			'comments' => $comments,
@@ -131,6 +138,13 @@ class Admin_Bar_Action {
 	public function callback_open_popup_last_wpshop_customer_comment() {
 		global $wpdb;
 		$comments = $wpdb->get_results( Admin_Bar_Class::g()->get_new_response_query( 'TIME.comment_ID, POINT.comment_content AS point_content, TIME.comment_content, TASK.post_parent, USER.user_email, TIME.comment_date' ) ); // WPCS: unprepared sql ok.
+		$format = '\L\e d F Y à H\hi';
+
+		if ( ! empty( $comments ) ) {
+			foreach ( $comments as $comment ) {
+				$comment->comment_date = mysql2date( $format, $comment->comment_date );
+			}
+		}
 		ob_start();
 		\eoxia\View_Util::exec( 'task-manager-wpshop', 'admin-bar', 'popup-comment', array(
 			'comments' => $comments,
