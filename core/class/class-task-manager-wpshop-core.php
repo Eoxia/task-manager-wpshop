@@ -62,10 +62,12 @@ class Task_Manager_Wpshop_Core extends \eoxia\Singleton_Util {
 		$posts_args = array(
 			'author' => $user_id,
 			'post_type' => 'wpshop_shop_order',
+			'post_status' => 'any',
 		);
 		if ( 'wpshop_shop_order' === $post->post_type ) {
 			$posts_args['include'] = $parent_id;
 		}
+
 		$posts = get_posts( $posts_args );
 		if ( ! empty( $posts ) ) {
 			foreach ( $posts as $post ) {
