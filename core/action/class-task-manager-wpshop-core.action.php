@@ -1,16 +1,19 @@
 <?php
 /**
- * Initialise les actions princiaples de Digirisk EPI
+ * Classe gérant les actions principales de l'application.
  *
- * @package Eoxia\Plugin
- *
- * @since 1.0.0.0
- * @version 1.0.0.0
+ * @author Jimmy Latour <jimmy@evarisk.com>
+ * @since 6.0.0
+ * @version 6.3.0
+ * @copyright 2015-2017 Evarisk
+ * @package Task_Manager_WPShop
  */
 
 namespace task_manager_wpshop;
 
-if ( ! defined( 'ABSPATH' ) ) {	exit; }
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Initialise les actions princiaples de Digirisk EPI
@@ -133,10 +136,12 @@ class Task_Manager_Wpshop_Core_Action {
 	/**
 	 * Initialise le fichier MO du plugin
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 1.0.0
+	 * @version 1.0.1
 	 */
-	public function callback_plugins_loaded() {}
+	public function callback_plugins_loaded() {
+		$i18n_loaded = load_plugin_textdomain( 'task-manager-wpshop', false, PLUGIN_TASK_MANAGER_WPSHOP_DIR . '/core/assets/language/' );
+	}
 
 	/**
 	 * Fait le contenu de la metabox
