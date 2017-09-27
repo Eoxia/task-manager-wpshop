@@ -1,17 +1,26 @@
-window.taskManagerWpshop.render = {};
+if ( ! window.eoxiaJS.render ) {
+	window.eoxiaJS.render = {};
 
-window.taskManagerWpshop.render.init = function() {
-	window.taskManagerWpshop.render.event();
-};
+	window.eoxiaJS.render.init = function() {
+		window.eoxiaJS.render.event();
+	};
 
-window.taskManagerWpshop.render.event = function() {};
+	window.eoxiaJS.render.event = function() {};
 
-window.taskManagerWpshop.render.callRenderChanged = function() {
-	var key = undefined;
+	window.eoxiaJS.render.callRenderChanged = function() {
+		var key = undefined;
+		var slug = undefined;
 
-	for ( key in window.taskManagerWpshop ) {
-		if ( window.taskManagerWpshop[key].renderChanged ) {
-			window.taskManagerWpshop[key].renderChanged();
+		for ( key in window.eoxiaJS ) {
+			if ( window.eoxiaJS[key].renderChanged ) {
+				window.eoxiaJS[key].renderChanged();
+			}
+
+			for ( slug in window.eoxiaJS[key] ) {
+				if ( window.eoxiaJS[key][slug].renderChanged ) {
+					window.eoxiaJS[key][slug].renderChanged();
+				}
+			}
 		}
-	}
-};
+	};
+}
