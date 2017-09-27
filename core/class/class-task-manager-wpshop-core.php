@@ -2,15 +2,18 @@
 /**
  * La classe principale de l'application.
  *
- * @package Eoxia\Plugin
- *
- * @since 1.0.0.0
- * @version 1.0.0.0
+ * @author Jimmy Latour <jimmy.eoxia@gmail.com>
+ * @since 1.0.0
+ * @version 1.1.0
+ * @copyright 2015-2017 Eoxia
+ * @package Task_Manager_WPShop
  */
 
 namespace task_manager_wpshop;
 
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Appelle la vue permettant d'afficher la navigation
@@ -31,14 +34,15 @@ class Task_Manager_Wpshop_Core extends \eoxia\Singleton_Util {
 	 * @param  WP_Post $post les données du post.
 	 * @return void
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 1.0.0
+	 * @version 1.1.0
 	 */
 	public function callback_render_metabox( $post ) {
 		$parent_id = $post->ID;
 		$user_id = $post->post_author;
 
 		$tasks = array();
+		$tasks_id = array();
 		$total_time_elapsed = 0;
 
 		if ( 'wpshop_customers' === $post->post_type ) {
@@ -106,6 +110,29 @@ class Task_Manager_Wpshop_Core extends \eoxia\Singleton_Util {
 		}
 
 		$total_time_elapsed = $dtf->diff( $dtt )->format( $format );
+
+		$tmp_tasks_id = array_map( function( $task_data ) {
+			$tmp_tasks_id = array();
+			if ( ! empty( $task_data['data'] ) ) {
+				foreach ( $task_data['data'] as $element ) {
+					$tmp_tasks_id[] = $element->id;
+				}
+			}
+
+			return $tmp_tasks_id;
+		}, $tasks );
+
+		if ( ! empty( $tmp_tasks_id ) ) {
+			foreach ( $tmp_tasks_id as $element ) {
+				if ( ! empty( $element ) ) {
+					foreach ( $element as $id ) {
+						$tasks_id[] = $id;
+					}
+				}
+			}
+		}
+
+		$tasks_id = implode( ',', $tasks_id );
 
 		require( PLUGIN_TASK_MANAGER_WPSHOP_PATH . '/core/view/main.view.php' );
 	}
