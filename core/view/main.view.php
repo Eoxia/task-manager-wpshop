@@ -55,7 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					data-tasks-id="<?php echo esc_attr( $tasks_id ); ?>"
 					data-title="<?php echo esc_attr( 'Last activities', 'task-manager-wpshop' ); ?>"></span>
 
-		<div class="popup last-activity history">
+		<div class="popup last-activity activities">
 			<div class="container">
 				<div class="header">
 					<h2 class="title">Titre de la popup</h2>
