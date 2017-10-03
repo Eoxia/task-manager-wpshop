@@ -137,6 +137,23 @@ class Task_Manager_Wpshop_Core extends \eoxia\Singleton_Util {
 		require( PLUGIN_TASK_MANAGER_WPSHOP_PATH . '/core/view/main.view.php' );
 	}
 
+
+	/**
+	 * [get_customers_id description]
+	 * @return [type] [description]
+	 */
+	public function get_customers_id() {
+		$customers_post_id = get_posts( array(
+			'post_type' => 'wpshop_customers',
+			'post_status' => 'any',
+			'posts_per_page' => \eoxia\Config_util::$init['task-manager']->task->posts_per_page,
+			'fields' => 'ids',
+		) );
+
+		if ( ! empty( $customers_post_id ) ) {
+			$customers_post_id = implode( ',', $customers_post_id );
+		}
+ }
 }
 
 new Task_Manager_Wpshop_Core();
