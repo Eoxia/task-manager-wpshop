@@ -45,7 +45,7 @@ class Support_Action {
 			$task_id = $list_task[0]->ID;
 		}
 		$task = \task_manager\Task_Class::g()->get( array(
-			'include' => array( $task_id ),
+			'id' => $task_id,
 		), true );
 
 		$_POST['point']['author_id'] = get_current_user_id();

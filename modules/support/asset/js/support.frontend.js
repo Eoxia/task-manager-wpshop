@@ -1,27 +1,27 @@
-window.eoxiaJS.taskManagerWpshop.frontendSupport = {};
+window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport = {};
 
-window.eoxiaJS.taskManagerWpshop.frontendSupport.init = function() {
-	window.eoxiaJS.taskManagerWpshop.frontendSupport.event();
+window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.init = function() {
+	window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.event();
 };
 
-window.eoxiaJS.taskManagerWpshop.frontendSupport.event = function() {
-	jQuery( document ).on( 'click', '.wpeo-ask-task', window.eoxiaJS.taskManagerWpshop.frontendSupport.slideAskTask );
-	jQuery( document ).on( 'keyup', '.wps-section-content .task-search', window.eoxiaJS.taskManagerWpshop.frontendSupport.searchKey );
-	jQuery( document ).on( 'click', '.wps-section-content .search-button', window.eoxiaJS.taskManagerWpshop.frontendSupport.searchIn );
+window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.event = function() {
+	jQuery( document ).on( 'click', '.wpeo-ask-task', window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.slideAskTask );
+	jQuery( document ).on( 'keyup', '.wps-section-content .task-search', window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.searchKey );
+	jQuery( document ).on( 'click', '.wps-section-content .search-button', window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.searchIn );
 };
 
-window.eoxiaJS.taskManagerWpshop.frontendSupport.slideAskTask = function( event ) {
+window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.slideAskTask = function( event ) {
 	event.preventDefault();
 	jQuery( '#wpeo-window-ask-task' ).slideToggle();
 };
 
-window.eoxiaJS.taskManagerWpshop.frontendSupport.searchKey = function( event ) {
+window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.searchKey = function( event ) {
 	if ( 13 === event.keyCode ) {
 		jQuery( '.wps-section-content .search-button' ).click();
 	}
 };
 
-window.eoxiaJS.taskManagerWpshop.frontendSupport.searchIn = function( event ) {
+window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.searchIn = function( event ) {
 	var element = jQuery( this );
 	if ( 0 == jQuery( this ).closest( '.wps-section-content' ).find( '.task-search' ).val().length ) {
 		jQuery( '.list-task .wpeo-project-task' ).show();
@@ -41,7 +41,7 @@ window.eoxiaJS.taskManagerWpshop.frontendSupport.searchIn = function( event ) {
 	}
 };
 
-window.eoxiaJS.taskManagerWpshop.frontendSupport.askedTask = function( triggeredElement, response ) {
+window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.askedTask = function( triggeredElement, response ) {
 	if ( response.data.edit ) {
 		jQuery( '.wpeo-project-task[data-id="' + response.data.task_id + '"]' ).replaceWith( response.data.template );
 	} else {
