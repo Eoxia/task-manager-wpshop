@@ -3,8 +3,8 @@
  * Classe gérant les actions principales de l'application.
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 6.0.0
- * @version 6.3.0
+ * @since 0.1.0
+ * @version 1.1.0
  * @copyright 2015-2017 Evarisk
  * @package Task_Manager_WPShop
  */
@@ -26,8 +26,8 @@ class Task_Manager_Wpshop_Core_Action {
 	 * admin_print_scripts (Pour appeler les scripts JS en bas du footer)
 	 * plugins_loaded (Pour appeler le domaine de traduction)
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 0.1.0
+	 * @version 1.1.0
 	 */
 	public function __construct() {
 		// Initialises ses actions que si nous sommes sur une des pages réglés dans le fichier digirisk.config.json dans la clé "insert_scripts_pages".
@@ -49,6 +49,8 @@ class Task_Manager_Wpshop_Core_Action {
 
 		add_action( 'init', array( $this, 'callback_plugins_loaded' ) );
 		add_action( 'add_meta_boxes', array( $this, 'callback_add_meta_boxes' ), 10, 2 );
+
+		add_action( 'wp_ajax_load_wpshop_task', array( $this, 'callback_load_wpshop_task' ) );
 	}
 
 	/**
@@ -91,10 +93,12 @@ class Task_Manager_Wpshop_Core_Action {
 	 *
 	 * @return void nothing
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 0.1.0
+	 * @version 1.1.0
 	 */
-	public function callback_admin_enqueue_scripts_js() {}
+	public function callback_admin_enqueue_scripts_js() {
+		wp_enqueue_script( 'task-manager-wpshop-script', PLUGIN_TASK_MANAGER_WPSHOP_URL . 'core/assets/js/backend.min.js', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version );
+	}
 
 	/**
 	 * Initialise le fichier backend.min.js du plugin Digirisk-EPI.
@@ -156,6 +160,38 @@ class Task_Manager_Wpshop_Core_Action {
 		if ( 'wpshop_customers' === $post_type || 'wpshop_shop_order' === $post_type ) {
 			add_meta_box( 'wpeo-task-metabox', __( 'Task', 'task-manager' ), array( Task_Manager_Wpshop_Core::g(), 'callback_render_metabox' ), $post_type, 'normal', 'default' );
 		}
+	}
+
+	/**
+	 * Récupères les tâches des clients WPShop et renvoies la vue.
+	 *
+	 * @since 1.1.0
+	 * @version 1.1.0
+	 *
+	 * @return void
+	 */
+	public function callback_load_wpshop_task() {
+		check_ajax_referer( 'load_wpshop_task' );
+
+		$customers_post_id = get_posts( array(
+			'post_type' => 'wpshop_customers',
+			'post_status' => 'any',
+			'posts_per_page' => \eoxia\Config_util::$init['task-manager']->task->posts_per_page,
+			'fields' => 'ids',
+		) );
+
+		if ( ! empty( $customers_post_id ) ) {
+			$customers_post_id = implode( ',', $customers_post_id );
+		}
+
+		ob_start();
+		echo do_shortcode( '[task post_parent="' . $customers_post_id . '" with_wrapper="0"]' );
+		wp_send_json_success( array(
+			'view' => ob_get_clean(),
+			'namespace' => 'taskManagerWPShop',
+			'module' => 'core',
+			'callback_success' => 'loadedWPShopTask',
+		) );
 	}
 
 }

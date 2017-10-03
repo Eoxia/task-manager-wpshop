@@ -1,11 +1,12 @@
 {
 	"name": "Task Manager WPShop",
 	"slug": "task-manager-wpshop",
-	"version": "1.0.0.1",
+	"version": "1.1.0",
 	"description": "",
 	"insert_scripts_pages_js": [
 		"myaccount",
-		"mon-compte"
+		"mon-compte",
+		"wpeomtm-dashboard"
 	],
 	"insert_scripts_pages_css": [],
 	"externals": [

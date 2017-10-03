@@ -5,8 +5,8 @@ if ( ! window.eoxiaJS ) {
 	window.eoxiaJS.scriptsLoaded = false;
 }
 
-window.eoxiaJS.yourApp = {};
-window.eoxiaJS.yourFrontendApp = {};
+window.eoxiaJS.taskManagerWPShop = {};
+window.eoxiaJS.taskManagerFrontendWPShop = {};
 
 if ( ! window.eoxiaJS.scriptsLoaded ) {
 	window.eoxiaJS.init = function() {
