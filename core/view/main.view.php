@@ -69,6 +69,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<button class="load-more-history"><?php esc_html_e( 'Load more', 'task-manager-wpshop' ); ?></button> <!-- Ne pas supprimer 'load-more-history' -->
 			</div>
+		</div>
 	</div>
 
 	<div class="list-task">
