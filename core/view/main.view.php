@@ -16,37 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 
 <div class="wrap wpeo-project-wrap">
-
+	<?php require( PLUGIN_TASK_MANAGER_WPSHOP_PATH . '/core/view/create-buttons.view.php' ); ?>
 	<div class="wpeo-project-dashboard">
-		<h2>
-			<a 	href="#"
-					class="action-attribute add-new-h2"
-					data-action="create_task"
-					data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
-					data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'New task', 'task-manager-wpshop' ); ?></a>
-
-			<a 	href="#"
-					class="action-attribute add-new-h2"
-					data-action="create_task"
-					data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
-					data-tag="sav"
-					data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'Nouvelle tâche "SAV"', 'task-manager-wpshop' ); ?></a>
-
-			<a 	href="#"
-					class="action-attribute add-new-h2"
-					data-action="create_task"
-					data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
-					data-tag="ref"
-					data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'Nouvelle tâche "reférencement"', 'task-manager-wpshop' ); ?></a>
-
-			<a 	href="#"
-					class="action-attribute add-new-h2"
-					data-action="create_task"
-					data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
-					data-tag="com"
-					data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'Nouvelle tâche "commercial"', 'task-manager-wpshop' ); ?></a>
-		</h2>
-
 		<p class="alignright"><?php esc_html_e( 'Total time past', 'task-manager-wpshop' ); ?>: <?php echo esc_html( $total_time_elapsed ); ?></p>
 		<span class="open-popup-ajax dashicons dashicons-screenoptions"
 					data-parent="wpeo-project-wrap"
