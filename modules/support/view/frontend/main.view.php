@@ -32,7 +32,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 </div>
 
-<?php echo do_shortcode( '[task frontend="true" status="publish" post_parent="' . $parent_id . '" posts_per_page="-1"]' ); ?>
+<?php
+if ( 0 != $parent_id ) :
+	echo do_shortcode( '[task frontend="true" status="publish" post_parent="' . $parent_id . '" posts_per_page="-1"]' );
+endif;
+?>
 
 <?php
 $posts = get_posts( array(
