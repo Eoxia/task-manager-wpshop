@@ -1,0 +1,24 @@
+ul.tm-wps-customer-requests {
+	width: 95%;
+}
+ul.tm-wps-customer-requests a {
+	color: #000;
+	text-decoration: none;
+}
+
+ul.tm-wps-customer-requests li.tm-wps-customer-requests-customer {
+	width: 100%;
+	border-bottom: 1px solid #000;
+	padding: 5px;
+}
+
+ul.tm-wps-customer-requests li.tm-wps-customer-requests-customer ul {
+	margin: 0 0 0 50px;
+}
+
+li.tm-wps-customer-request-point-infos span {
+	width: 30%;
+}
+li.tm-wps-customer-request-point-content span {
+	width: 100%;
+}
