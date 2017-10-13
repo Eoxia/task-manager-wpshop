@@ -43,6 +43,29 @@ class Admin_Bar_Class extends \eoxia\Singleton_Util {
 			AND TASKMETA.meta_key = 'wpeo_task'
 		ORDER BY POINT.comment_date DESC";
 
+		$query = "SELECT {$where_clause}
+		FROM {$GLOBALS['wpdb']->posts} AS TASK
+			JOIN {$GLOBALS['wpdb']->comments} AS POINT ON POINT.comment_post_id = TASK.ID
+			JOIN {$GLOBALS['wpdb']->commentmeta} AS POINTMETA ON POINTMETA.comment_id = POINT.comment_ID
+			JOIN {$GLOBALS['wpdb']->posts} AS CUSTOMER ON CUSTOMER.ID = TASK.post_parent
+			JOIN {$GLOBALS['wpdb']->usermeta} AS USERMETA ON USERMETA.user_id = POINT.user_id
+			LEFT JOIN {$GLOBALS['wpdb']->postmeta} AS TASKMETA ON ( TASKMETA.post_id = TASK.ID AND TASKMETA.meta_key = '_wp_old_slug' )
+
+			LEFT JOIN {$GLOBALS['wpdb']->comments} AS COMMENT ON COMMENT.comment_parent = POINT.comment_ID
+				LEFT JOIN {$GLOBALS['wpdb']->usermeta} AS USERCOMMENTMETA ON USERCOMMENTMETA.user_id = COMMENT.user_id AND USERCOMMENTMETA.meta_key = '{$GLOBALS['wpdb']->prefix}user_level'
+		WHERE
+			(
+						TASK.post_name LIKE 'ask-task-%'
+				OR 	TASKMETA.meta_value LIKE 'ask-task-%'
+			)
+			AND TASK.post_status != 'trash'
+			AND POINT.comment_approved != 'trash'
+			AND POINT.comment_parent = 0
+			AND POINTMETA.meta_key = 'wpeo_point'
+			AND POINTMETA.meta_value LIKE '%\"completed\":false%'
+		GROUP BY point_id
+		ORDER BY POINT.comment_date DESC, TASK.ID ASC";
+
 		return $query;
 	}
 

@@ -48,18 +48,13 @@ class Support_Filter {
 	 */
 	public function callback_my_account_content( $output, $dashboard_part ) {
 		if ( 'support' === $dashboard_part ) {
-
-			$id = get_posts( array(
-				'posts_per_page' => 1,
-				'author' => get_current_user_id(),
-				'post_status' => 'any',
-				'post_type' => 'wpshop_customers',
-				'fields' => 'ids',
-			) );
+			$current_customer_account_to_show = $_COOKIE['wps_current_connected_customer'];
 
 			ob_start();
 			\eoxia\View_Util::exec( 'task-manager-wpshop', 'support', 'frontend/main', array(
-				'parent_id' => $id[0],
+				'parent_id'   => $current_customer_account_to_show,
+				'customer_id' => $current_customer_account_to_show,
+				'user_id'     => get_current_user_id(),
 			) );
 			$output = ob_get_clean();
 		}

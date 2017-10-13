@@ -10,7 +10,7 @@ namespace task_manager_wpshop;
  * Plugin Name: Task Manager WPShop
  * Plugin URI:
  * Description: Handle client support with Task Manager and WPShop.
- * Version:     1.1.0
+ * Version:     1.2.0
  * Author:      Eoxia
  * Author URI:  http://www.eoxia.com
  * License:     GPL2
@@ -19,12 +19,24 @@ namespace task_manager_wpshop;
  * Domain Path: /language
  */
 
-DEFINE( 'PLUGIN_TASK_MANAGER_WPSHOP_PATH', realpath( plugin_dir_path( __FILE__ ) ) . '/' );
-DEFINE( 'PLUGIN_TASK_MANAGER_WPSHOP_URL', plugins_url( basename( __DIR__ ) ) . '/' );
-DEFINE( 'PLUGIN_TASK_MANAGER_WPSHOP_DIR', basename( __DIR__ ) );
+DEFINE( 'TM_WPS_PATH', realpath( plugin_dir_path( __FILE__ ) ) . '/' );
+DEFINE( 'TM_WPS_URL', plugins_url( basename( __DIR__ ) ) . '/' );
+DEFINE( 'TM_WPS_DIR', basename( __DIR__ ) );
 
-require_once 'core/external/wpeo_util/singleton.util.php';
-require_once 'core/external/wpeo_util/init.util.php';
-require_once 'core/external/wpeo_log/class/log.class.php';
+// On plugin load change order in order to load WPShop before current plugin.
+add_action( 'plugins_loaded', function() {
+	$plugins = get_option( 'active_plugins' );
 
-\eoxia\Init_Util::g()->exec( PLUGIN_TASK_MANAGER_WPSHOP_PATH, basename( __FILE__, '.php' ) );
+	$wps_key = array_search( 'task-manager/task-manager.php', $plugins, true );
+	$wps_seller_key = array_search( 'task-manager-wpshop/task-manager-wpshop.php', $plugins, true );
+
+	if ( $wps_key > $wps_seller_key ) {
+		unset( $plugins[ $wps_seller_key ] );
+		$plugins[] = 'task-manager-wpshop/task-manager-wpshop.php';
+		update_option( 'active_plugins', $plugins );
+	}
+} );
+
+if ( class_exists( '\eoxia\Init_Util' ) ) {
+	\eoxia\Init_Util::g()->exec( TM_WPS_PATH, basename( __FILE__, '.php' ) );
+}

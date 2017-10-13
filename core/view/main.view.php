@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 
 <div class="wrap wpeo-project-wrap">
-	<?php require( PLUGIN_TASK_MANAGER_WPSHOP_PATH . '/core/view/create-buttons.view.php' ); ?>
+	<?php require( TM_WPS_PATH . '/core/view/create-buttons.view.php' ); ?>
 	<div class="wpeo-project-dashboard">
 		<p class="alignright"><?php esc_html_e( 'Total time past', 'task-manager-wpshop' ); ?>: <?php echo esc_html( $total_time_elapsed ); ?></p>
 		<span class="open-popup-ajax dashicons dashicons-screenoptions"

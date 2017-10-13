@@ -10,36 +10,37 @@
  * @subpackage view
  */
 
-namespace task_manager;
+namespace task_manager_wpshop;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
 <h2>
 	<a 	href="#"
-			class="action-attribute page-title-action"
-			data-action="create_task"
-			data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
-			data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'New task', 'task-manager-wpshop' ); ?></a>
+		class="action-attribute page-title-action"
+		data-action="create_task"
+		data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
+		data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'New task', 'task-manager-wpshop' ); ?></a>
 
 	<a 	href="#"
-			class="action-attribute page-title-action"
-			data-action="create_task"
-			data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
-			data-tag="sav"
-			data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'Nouvelle tâche "SAV"', 'task-manager-wpshop' ); ?></a>
+		class="action-attribute page-title-action"
+		data-action="create_task"
+		data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
+		data-tag="sav"
+		data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'Nouvelle tâche "SAV"', 'task-manager-wpshop' ); ?></a>
 
 	<a 	href="#"
-			class="action-attribute page-title-action"
-			data-action="create_task"
-			data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
-			data-tag="ref"
-			data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'Nouvelle tâche "reférencement"', 'task-manager-wpshop' ); ?></a>
+		class="action-attribute page-title-action"
+		data-action="create_task"
+		data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
+		data-tag="ref"
+		data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'Nouvelle tâche "reférencement"', 'task-manager-wpshop' ); ?></a>
 
 	<a 	href="#"
-			class="action-attribute page-title-action"
-			data-action="create_task"
-			data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
-			data-tag="com"
-			data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'Nouvelle tâche "commercial"', 'task-manager-wpshop' ); ?></a>
+		class="action-attribute page-title-action"
+		data-action="create_task"
+		data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
+		data-tag="com"
+		data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'Nouvelle tâche "commercial"', 'task-manager-wpshop' ); ?></a>
 </h2>

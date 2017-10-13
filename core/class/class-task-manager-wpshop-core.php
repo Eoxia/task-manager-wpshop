@@ -64,7 +64,8 @@ class Task_Manager_Wpshop_Core extends \eoxia\Singleton_Util {
 		}
 
 		$posts_args = array(
-			'author' => $user_id,
+			// 'author' => $user_id,
+			'post_parent' => $parent_id,
 			'post_type' => 'wpshop_shop_order',
 			'post_status' => 'any',
 		);

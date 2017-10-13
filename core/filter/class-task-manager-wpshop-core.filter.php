@@ -42,7 +42,7 @@ class Task_Manager_Wpshop_Core_Filter {
 	 */
 	public function callback_task_manager_navigation_after( $content ) {
 		ob_start();
-		require( PLUGIN_TASK_MANAGER_WPSHOP_PATH . '/core/view/tab.view.php' );
+		require( TM_WPS_PATH . '/core/view/tab.view.php' );
 		$content = ob_get_clean();
 		return $content;
 	}

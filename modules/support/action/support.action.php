@@ -23,6 +23,9 @@ class Support_Action {
 		add_action( 'wp_ajax_nopriv_ask_task', array( $this, 'callback_ask_task' ) );
 	}
 
+	/**
+	 * Fonction de callback pour les demandes de tâches depuis le frontend
+	 */
 	public function callback_ask_task() {
 		check_ajax_referer( 'ask_task' );
 		global $wpdb;
@@ -69,6 +72,7 @@ class Support_Action {
 			'template' => ob_get_clean(),
 		) );
 	}
+
 }
 
 new Support_Action();
