@@ -7,7 +7,6 @@
 	"dependencies": {
 		"action": {},
 		"helper": {},
-		"filter": {},
 		"class": {}
 	}
 }

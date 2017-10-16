@@ -16,8 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
-<h2>
-	<a 	href="#"
+	<a href="#"
 		class="action-attribute page-title-action"
 		data-action="create_task"
 		data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
@@ -43,4 +42,3 @@ if ( ! defined( 'ABSPATH' ) ) {
 		data-parent-id="<?php echo esc_attr( $parent_id ); ?>"
 		data-tag="com"
 		data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task' ) ); ?>"><?php esc_html_e( 'Nouvelle tâche "commercial"', 'task-manager-wpshop' ); ?></a>
-</h2>

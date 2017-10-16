@@ -16,10 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 
 <div class="wrap wpeo-project-wrap">
-	<?php require( TM_WPS_PATH . '/core/view/create-buttons.view.php' ); ?>
 	<div class="wpeo-project-dashboard">
 		<p class="alignright"><?php esc_html_e( 'Total time past', 'task-manager-wpshop' ); ?>: <?php echo esc_html( $total_time_elapsed ); ?></p>
-		<span class="open-popup-ajax dashicons dashicons-screenoptions"
+		<span class="open-popup-ajax dashicons dashicons-screenoptions alignright"
 					data-parent="wpeo-project-wrap"
 					data-target="last-activity"
 					data-action="load_last_activity"
@@ -43,16 +42,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 
-	<div class="list-task">
+
 	<?php
 	if ( ! empty( $tasks ) ) :
 		foreach ( $tasks as $key => $data ) :
 			?>
-				<h2><?php echo esc_html( $data['title'] ); ?></h2>
+			<?php if ( ! empty( $data['title'] ) ) : ?><h2><?php echo esc_html( $data['title'] ); ?></h2><?php endif; ?>
+			<div class="list-task">
 				<?php \task_manager\Task_Class::g()->display_tasks( $data['data'] ); ?>
+			</div>
 			<?php
 		endforeach;
 	endif;
 	?>
-	</div>
 </div>

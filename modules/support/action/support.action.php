@@ -30,16 +30,18 @@ class Support_Action {
 		check_ajax_referer( 'ask_task' );
 		global $wpdb;
 
+		$current_customer_account_to_show = $_COOKIE['wps_current_connected_customer'];
+
 		$edit = false;
-		$query = "SELECT ID FROM {$wpdb->posts} WHERE post_name=%s";
-		$list_task = $wpdb->get_results( $wpdb->prepare( $query, array( 'ask-task-' . get_current_user_id() ) ) );
+		$query = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_name LIKE %s AND post_parent = %d", array( 'ask-task-%', $current_customer_account_to_show ) );
+		$list_task = $wpdb->get_results( $query );
 		/** On crée la tâche */
 		if ( 0 === count( $list_task ) ) {
 			$task = \task_manager\Task_Class::g()->update(
 				array(
 					'title' => __( 'Ask', 'task-manager' ),
 					'slug' => 'ask-task-' . get_current_user_id(),
-					'parent_id' => \wps_customer_ctr::get_customer_id_by_author_id( get_current_user_id() ),
+					'parent_id' => $current_customer_account_to_show,
 				)
 			);
 			$task_id = $task->id;
@@ -66,7 +68,7 @@ class Support_Action {
 		wp_send_json_success( array(
 			'task_id' => $task_id,
 			'edit' => $edit,
-			'namespace' => 'taskManagerWpshop',
+			'namespace' => 'taskManagerFrontendWPShop',
 			'module' => 'frontendSupport',
 			'callback_success' => 'askedTask',
 			'template' => ob_get_clean(),

@@ -28,8 +28,12 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 				<td style="vertical-align: top;"><?php echo esc_html( $comment->comment_ID ); ?></td>
 				<td style="vertical-align: top;"><?php echo esc_html( $comment->comment_date ); ?></td>
 				<td style="vertical-align: top;">
+				<?php
+						$request_user_info = get_userdata( $comment->user_id );
+
+					?>
 					<a target="_blank" href="<?php echo esc_attr( admin_url( 'post.php?post=' . $comment->post_parent . '&action=edit' ) ); ?>">
-						<?php echo esc_html( $comment->user_email ); ?>
+						<?php echo esc_html( $request_user_info->user_email . ' - ' . $request_user_info->display_name ); ?>
 					</a>
 				</td>
 				<td style="vertical-align: top;"><?php echo nl2br( esc_html( $comment->point_content ) ); ?></td>

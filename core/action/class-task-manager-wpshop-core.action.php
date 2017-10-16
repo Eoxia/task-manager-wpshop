@@ -56,9 +56,8 @@ class Task_Manager_Wpshop_Core_Action {
 	 */
 	public function callback_admin_enqueue_assets() {
 		wp_enqueue_media();
-		wp_enqueue_script( 'task-manager-wpshop-script', TM_WPS_URL . 'core/assets/js/backend.min.js', array( 'jquery', 'jquery-form', 'jquery-ui-datepicker', 'wp-api' ), \eoxia\Config_Util::$init['task-manager-wpshop']->version );
-
 		wp_enqueue_style( 'task-manage-wpshop-styles', TM_WPS_URL . 'core/assets/css/backend.min.css', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version );
+		wp_enqueue_script( 'task-manager-wpshop-script', TM_WPS_URL . 'core/assets/js/backend.min.js', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version );
 	}
 
 	/**
@@ -71,7 +70,6 @@ class Task_Manager_Wpshop_Core_Action {
 	 */
 	public function callback_wp_enqueue_scripts() {
 		wp_enqueue_script( 'task-manager-wpshop-frontend-script', TM_WPS_URL . 'core/assets/js/frontend.min.js', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version, false );
-
 	}
 
 	/**
@@ -109,7 +107,11 @@ class Task_Manager_Wpshop_Core_Action {
 	 */
 	public function callback_add_meta_boxes( $post_type, $post ) {
 		if ( 'wpshop_customers' === $post_type || 'wpshop_shop_order' === $post_type ) {
-			add_meta_box( 'wpeo-task-metabox', __( 'Task', 'task-manager' ), array( Task_Manager_Wpshop_Core::g(), 'callback_render_metabox' ), $post_type, 'normal', 'default' );
+			$parent_id = $post->ID;
+			ob_start();
+			require( TM_WPS_PATH . '/core/view/create-buttons.view.php' );
+			$buttons = ob_get_clean();
+			add_meta_box( 'wpeo-task-metabox', __( 'Task', 'task-manager' ) . $buttons, array( Task_Manager_Wpshop_Core::g(), 'callback_render_metabox' ), $post_type, 'normal', 'default' );
 		}
 	}
 

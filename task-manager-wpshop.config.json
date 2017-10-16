@@ -3,19 +3,11 @@
 	"slug": "task-manager-wpshop",
 	"version": "1.2.0",
 	"description": "",
-	"insert_scripts_pages_js": [
-		"myaccount",
-		"mon-compte",
-		"wpeomtm-dashboard"
-	],
+	"insert_scripts_pages_js": [],
 	"insert_scripts_pages_css": [],
-	"externals": [
-		"core/external/wpeo_log/wpeo_log.config.json",
-		"core/external/wpeo_model/wpeo_model.config.json"
-	],
+	"externals": [],
 	"modules": [
 		"core/core.config.json",
-
 		"modules/support/support.config.json",
 		"modules/admin-bar/admin-bar.config.json"
 	],
