@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 
 					?>
 					<a target="_blank" href="<?php echo esc_attr( admin_url( 'post.php?post=' . $comment->post_parent . '&action=edit' ) ); ?>">
-						<?php echo esc_html( $request_user_info->user_email . ' - ' . $request_user_info->display_name ); ?>
+						<?php echo esc_html( $comment->CUI . '-' . $request_user_info->user_email . ' - ' . $request_user_info->display_name ); ?>
 					</a>
 				</td>
 				<td style="vertical-align: top;"><?php echo nl2br( esc_html( $comment->point_content ) ); ?></td>

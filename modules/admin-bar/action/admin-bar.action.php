@@ -40,8 +40,8 @@ class Admin_Bar_Action {
 			global $wpdb;
 			$query_args = array(
 				'action' => 'open_popup_last_wpshop_customer_ask',
-				'width' => '1000',
-				'height' => '900',
+				'width' => '1024',
+				'height' => '768',
 			);
 			$comments = $wpdb->get_results( Admin_Bar_Class::g()->get_new_ask_query( 'POINT.comment_ID as point_id, POINT.comment_date, USERCOMMENTMETA.meta_value as user_level' ) ); // WPCS : unprepared sql ok.
 
@@ -70,22 +70,22 @@ class Admin_Bar_Action {
 			);
 			$wp_admin_bar->add_node( $button_open_popup );
 
-			$comments = $wpdb->get_results( Admin_Bar_Class::g()->get_new_response_query( 'POINT.comment_ID as point_id' ) ); // WPCS: unprepared sql ok.
+			$comments = $wpdb->get_results( Admin_Bar_Class::g()->get_new_response_query( 'POINT.comment_ID as point_id, POINT.comment_date' ) ); // WPCS: unprepared sql ok.
 			$current_date = current_time( 'timestamp' );
 			$new_comment = '';
 			if ( ! empty( $comments ) ) {
 				foreach ( $comments as $comment ) {
-					// $timestamp_comment = mysql2date( 'U', $comment->comment_date );
-					// if ( ( $current_date - ( 3600 * 24 ) * 5 ) < $timestamp_comment ) {
-					// 	$new_comment = '🔴';
-					// 	break;
-					// }
+					$timestamp_comment = mysql2date( 'U', $comment->comment_date );
+					if ( ( $current_date - ( 3600 * 24 ) * 5 ) < $timestamp_comment ) {
+						$new_comment = '🔴';
+						break;
+					}
 				}
 			}
 			$query_args = array(
 				'action' => 'open_popup_last_wpshop_customer_comment',
-				'width' => '1000',
-				'height' => '900',
+				'width' => '1024',
+				'height' => '768',
 			);
 			$href = add_query_arg( $query_args, admin_url( 'admin-ajax.php' ) );
 			$button_open_popup = array(
@@ -133,7 +133,7 @@ class Admin_Bar_Action {
 	 */
 	public function callback_open_popup_last_wpshop_customer_comment() {
 		global $wpdb;
-		$comments = $wpdb->get_results( Admin_Bar_Class::g()->get_new_response_query( 'POINT.comment_content AS point_content, POINT.comment_ID AS point_id, TASK.post_parent, COMMENT.comment_ID, COMMENT.comment_content ,POINT.user_id, COMMENT.comment_date' ) ); // WPCS: unprepared sql ok.
+		$comments = $wpdb->get_results( Admin_Bar_Class::g()->get_new_response_query( 'USERCOMMENTMETA.user_id AS CUI, POINT.comment_content AS point_content, POINT.comment_ID AS point_id, TASK.post_parent, COMMENT.comment_ID, COMMENT.comment_content ,POINT.user_id, COMMENT.comment_date' ) ); // WPCS: unprepared sql ok.
 		$format = '\L\e d F Y à H\hi';
 
 		if ( ! empty( $comments ) ) {
