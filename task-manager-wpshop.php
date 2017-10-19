@@ -27,12 +27,12 @@ DEFINE( 'TM_WPS_DIR', basename( __DIR__ ) );
 add_action( 'plugins_loaded', function() {
 	$plugins = get_option( 'active_plugins' );
 
-	$wps_key = array_search( 'task-manager/task-manager.php', $plugins, true );
-	$wps_seller_key = array_search( 'task-manager-wpshop/task-manager-wpshop.php', $plugins, true );
+	$wps_key = array_search( 'task-manager-alpha/task-manager.php', $plugins, true );
+	$wps_seller_key = array_search( 'task-manager-wpshop-alpha/task-manager-wpshop.php', $plugins, true );
 
 	if ( $wps_key > $wps_seller_key ) {
 		unset( $plugins[ $wps_seller_key ] );
-		$plugins[] = 'task-manager-wpshop/task-manager-wpshop.php';
+		$plugins[] = 'task-manager-wpshop-alpha/task-manager-wpshop.php';
 		update_option( 'active_plugins', $plugins );
 	}
 } );

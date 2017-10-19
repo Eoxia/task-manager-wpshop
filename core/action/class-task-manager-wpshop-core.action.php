@@ -32,7 +32,6 @@ class Task_Manager_Wpshop_Core_Action {
 	public function __construct() {
 		// Initialises ses actions que si nous sommes sur une des pages réglés dans le fichier digirisk.config.json dans la clé "insert_scripts_pages".
 		$page = ( ! empty( $_REQUEST['page'] ) ) ? sanitize_text_field( $_REQUEST['page'] ) : ''; // WPCS: CSRF ok.
-
 		if ( in_array( $page, \eoxia\Config_Util::$init['task-manager-wpshop']->insert_scripts_pages_js, true ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'callback_admin_enqueue_assets' ), 11 );
 		}
