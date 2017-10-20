@@ -31,20 +31,23 @@ add_action( 'plugins_loaded', function() {
 		if ( strpos( $value, 'task-manager.php' ) ) {
 			$main_plugin_key = $key;
 		}
+		if ( strpos( $value, 'wpshop.php' ) ) {
+			$wps_plugin_key = $key;
+		}
 		if ( strpos( $value, basename( __FILE__ ) ) ) {
 			$sub_plugin_key = $key;
 			$sub_plugin_path = $value;
 		}
 	}
 
-	if ( $main_plugin_key > $sub_plugin_key ) {
+	if ( $main_plugin_key > $sub_plugin_key || $wps_plugin_key > $sub_plugin_key ) {
 		array_splice( $plugins, $sub_plugin_key, 1 );
 		$plugins[] = $sub_plugin_path;
 		update_option( 'active_plugins', $plugins );
 	}
 } );
 
-if ( class_exists( '\eoxia\Init_Util' ) ) {
+if ( class_exists( '\eoxia\Init_Util' ) && class_exists( 'wpshop_products' ) ) {
 	\eoxia\Init_Util::g()->exec( TM_WPS_PATH, basename( __FILE__, '.php' ) );
 
 	// Ajout des entrées spécifiques à WPShop pour la gestion des tâches.
