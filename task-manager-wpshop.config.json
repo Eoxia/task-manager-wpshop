@@ -3,11 +3,7 @@
 	"slug": "task-manager-wpshop",
 	"version": "1.2.0",
 	"description": "",
-	"insert_scripts_pages_js": [
-		"wpshop_customers",
-		"wpshop_shop_order",
-		""
-	],
+	"insert_scripts_pages_js": [],
 	"insert_scripts_pages_css": [],
 	"externals": [],
 	"modules": [
@@ -15,5 +11,11 @@
 		"modules/support/support.config.json",
 		"modules/admin-bar/admin-bar.config.json"
 	],
-	"debug": false
+	"debug": false,
+	"quick_task_tags": [
+		"",
+		"sav",
+		"com",
+		"ref"
+	]
 }

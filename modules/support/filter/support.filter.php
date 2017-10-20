@@ -49,7 +49,6 @@ class Support_Filter {
 	public function callback_my_account_content( $output, $dashboard_part ) {
 		if ( 'support' === $dashboard_part ) {
 			$current_customer_account_to_show = $_COOKIE['wps_current_connected_customer'];
-echo __LINE__ . " - " . $current_customer_account_to_show . "<hr/>";
 			ob_start();
 			\eoxia\View_Util::exec( 'task-manager-wpshop', 'support', 'frontend/main', array(
 				'parent_id'   => $current_customer_account_to_show,
