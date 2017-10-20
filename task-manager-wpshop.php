@@ -10,7 +10,7 @@ namespace task_manager_wpshop;
  * Plugin Name: Task Manager WPShop
  * Plugin URI:
  * Description: Handle client support with Task Manager and WPShop.
- * Version:     1.2.0
+ * Version:     1.2.0-alpha
  * Author:      Eoxia
  * Author URI:  http://www.eoxia.com
  * License:     GPL2
