@@ -4,7 +4,7 @@
  *
  * @author Jimmy Latour <jimmy.eoxia@gmail.com>
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.2.0
  * @copyright 2015-2017 Eoxia
  * @package Task_Manager_WPShop
  */
@@ -15,36 +15,40 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 <div class="wpeo-project-wrap">
-	<div class="wpeo-window-ask-task-container">
-		<a href="#" class="wpeo-ask-task"><?php esc_html_e( 'Ask a ticket', 'task-manager-wpshop' ); ?></a>
+	<h2><?php esc_html_e( 'A request ?', 'task-manager-wpshop' ); ?></h2>
 
-		<div id="wpeo-window-ask-task" >
-			<form class="form" action="<?php echo esc_attr( admin_url( 'admin-ajax.php' ) ); ?>" method="POST" >
-				<input type="hidden" name="action" value="ask_task">
-				<input type="text" name="point[content]" placeholder="<?php esc_html_e( 'Write your ticket', 'task-manager-wpshop' ); ?>">
-				<input type="button" data-loader="form" class="action-input" data-parent="form" data-nonce="<?php echo esc_attr( wp_create_nonce( 'ask_task' ) ); ?>" value="<?php esc_html_e( 'Confirm', 'task-manager-wpshop' ); ?>">
-			</form>
-		</div>
-	</div>
+	<p>
+		<?php esc_html_e( 'Ask your question. We will answer you on the opened ticket', 'task-manager-wpshop' ); ?>
+		<span class="button blue">
+			<i class="fa fa-ticket" aria-hidden="true"></i>
+			<span class="open-popup-ajax"
+						data-title="<?php echo esc_html_e( 'Ask your question', 'task-manager-wpshop' ); ?>"
+						data-parent="wpeo-project-wrap"
+						data-target="popup"
+						data-action="open_popup_create_ticket"
+						data-nonce="<?php echo esc_attr( wp_create_nonce( 'open_popup_create_ticket' ) ); ?>"><?php esc_html_e( 'Open a ticket', 'task-manager-wpshop' ); ?></span>
+		</span>
+	</p>
 
-	<div class="wpeo-project-search">
-		<input type="text" class="task-search" placeholder="<?php esc_attr_e( 'Search...', 'task-manager-wpshop' ); ?>">
-		<button class="search-button"><span class="dashicons dashicons-search"></span></button>
-	</div>
+	<h2><?php esc_html_e( 'Support', 'task-manager-wpshop' ); ?></h2>
+
+	<p>
+		<span><?php esc_html_e( 'Last activity on your support the: ', 'task-manager-wpshop' ); ?></span>
+		<span><?php echo esc_html( $last_modification_date ); ?></span>
+	</p>
+
+	<span class="open-popup-ajax"
+				data-parent="wpeo-project-wrap"
+				data-target="popup"
+				data-action="load_last_activity"
+				data-title="Last activities"
+				data-tasks-id="<?php echo esc_attr( $tasks_id ); ?>"
+				data-frontend="1">
+		<i class="fa fa-list" aria-hidden="true"></i>
+		<span><?php esc_html_e( 'See the latest activities performed', 'task-manager-wpshop' ); ?></span>
+	</span>
+
+	<?php \eoxia\View_Util::exec( 'task-manager-wpshop', 'support', 'frontend/popup' ); ?>
+
+	<?php \task_manager\Task_Class::g()->display_tasks( $tasks, true ); ?>
 </div>
-
-<?php echo do_shortcode( '[task frontend="true" status="publish" post_parent="' . $parent_id . '" posts_per_page="-1"]' ); ?>
-
-<?php
-$posts = get_posts( array(
-	'post_parent'  => $parent_id,
-	'post_type'    => 'wpshop_shop_order',
-	'post_status'  => 'any',
-) );
-if ( ! empty( $posts ) ) :
-	foreach ( $posts as $post ) :
-		echo do_shortcode( '[task frontend="true" status="publish" post_parent="' . $post->ID . '"]' );
-	endforeach;
-endif;
-
-?>
