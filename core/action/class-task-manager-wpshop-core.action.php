@@ -66,6 +66,7 @@ class Task_Manager_Wpshop_Core_Action {
 	 * @version 1.0.0.0
 	 */
 	public function callback_wp_enqueue_scripts() {
+		wp_enqueue_style( 'task-manage-wpshop-front-styles', TM_WPS_URL . 'core/assets/css/frontend.css', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version );
 		wp_enqueue_script( 'task-manager-wpshop-frontend-script', TM_WPS_URL . 'core/assets/js/frontend.min.js', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version, false );
 	}
 

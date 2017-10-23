@@ -15,38 +15,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 <div class="wpeo-project-wrap">
-	<h2><?php esc_html_e( 'A request ?', 'task-manager-wpshop' ); ?></h2>
 
-	<p>
-		<?php esc_html_e( 'Ask your question. We will answer you on the opened ticket', 'task-manager-wpshop' ); ?>
-		<span class="button blue">
-			<i class="fa fa-ticket" aria-hidden="true"></i>
-			<span class="open-popup-ajax"
-						data-title="<?php echo esc_html_e( 'Ask your question', 'task-manager-wpshop' ); ?>"
-						data-parent="wpeo-project-wrap"
-						data-target="popup"
-						data-action="open_popup_create_ticket"
-						data-nonce="<?php echo esc_attr( wp_create_nonce( 'open_popup_create_ticket' ) ); ?>"><?php esc_html_e( 'Open a ticket', 'task-manager-wpshop' ); ?></span>
-		</span>
-	</p>
+	<div class="open-ticket">
+		<i class="fa fa-question"></i>
+		<h2><?php esc_html_e( 'A request ?', 'task-manager-wpshop' ); ?></h2>
+		<p>
+			<?php esc_html_e( 'Ask your question. We will answer you on the opened ticket', 'task-manager-wpshop' ); ?>
+			<span class="button blue">
+				<i class="fa fa-ticket" aria-hidden="true"></i>
+				<span class="open-popup-ajax"
+							data-title="<?php echo esc_html_e( 'Ask your question', 'task-manager-wpshop' ); ?>"
+							data-parent="wpeo-project-wrap"
+							data-target="popup"
+							data-action="open_popup_create_ticket"
+							data-nonce="<?php echo esc_attr( wp_create_nonce( 'open_popup_create_ticket' ) ); ?>"><?php esc_html_e( 'Open a ticket', 'task-manager-wpshop' ); ?></span>
+			</span>
+		</p>
+	</div>
 
 	<h2><?php esc_html_e( 'Support', 'task-manager-wpshop' ); ?></h2>
 
-	<p>
-		<span><?php esc_html_e( 'Last activity on your support the: ', 'task-manager-wpshop' ); ?></span>
-		<span><?php echo esc_html( $last_modification_date ); ?></span>
-	</p>
-
-	<span class="open-popup-ajax"
-				data-parent="wpeo-project-wrap"
-				data-target="popup"
-				data-action="load_last_activity"
-				data-title="Last activities"
-				data-tasks-id="<?php echo esc_attr( $tasks_id ); ?>"
-				data-frontend="1">
-		<i class="fa fa-list" aria-hidden="true"></i>
-		<span><?php esc_html_e( 'See the latest activities performed', 'task-manager-wpshop' ); ?></span>
-	</span>
+	<div class="toolbox-activity">
+		<div class="update-activity">
+			<span><?php esc_html_e( 'Last activity the : ', 'task-manager-wpshop' ); ?></span>
+			<span><?php echo esc_html( $last_modification_date ); ?></span>
+		</div>
+		<div class="open-popup-ajax button"
+					data-parent="wpeo-project-wrap"
+					data-target="popup"
+					data-action="load_last_activity"
+					data-title="Last activities"
+					data-tasks-id="<?php echo esc_attr( $tasks_id ); ?>"
+					data-frontend="1">
+			<i class="fa fa-list" aria-hidden="true"></i>
+			<span><?php esc_html_e( 'Latest activities', 'task-manager-wpshop' ); ?></span>
+		</div>
+	</div>
 
 	<?php \eoxia\View_Util::exec( 'task-manager-wpshop', 'support', 'frontend/popup' ); ?>
 

@@ -1,0 +1,46 @@
+/* ------------------------------
+ # Affichage page Mon compte
+------------------------------- */
+.open-ticket {
+	background: #e7edf6;
+	padding: 2em;
+	position: relative;
+	overflow: hidden;
+}
+.open-ticket .button {
+	padding: 1em;
+	text-transform: uppercase;
+	font-weight: 900;
+	color: #fff;
+	background: #389af6;
+	border: 0;
+	display: inline-block;
+	margin: 0 0.6em;
+}
+.open-ticket .fa-question {
+	position: absolute;
+	font-size: 220px;
+	color: rgba(0, 0, 0, 0.04);
+	top: -40px;
+	right: 60px;
+	transform: rotate(-26deg);
+}
+.update-activity {
+	font-style: italic;
+	color: rgba(0,0,0,0.4);
+}
+.toolbox-activity {
+	display: flex;
+	display: -webkit-flex;
+}
+.toolbox-activity .open-popup-ajax {
+	margin-left: auto;
+	padding: 0.8em 1em;
+	text-transform: uppercase;
+	font-weight: 700;
+	color: #fff;
+	background: #389af6;
+	border: 0;
+	display: inline-block;
+	font-size: 12px;
+}
