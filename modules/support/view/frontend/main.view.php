@@ -44,11 +44,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 					data-parent="wpeo-project-wrap"
 					data-target="popup"
 					data-action="load_last_activity"
-					data-title="Last activities"
+					data-title="<?php echo esc_attr_e( 'Last activities', 'task-manager-wpshop' ); ?>"
 					data-tasks-id="<?php echo esc_attr( $tasks_id ); ?>"
 					data-frontend="1">
 			<i class="fa fa-list" aria-hidden="true"></i>
 			<span><?php esc_html_e( 'Latest activities', 'task-manager-wpshop' ); ?></span>
+		</div>
+		<div>
+			<span><?php esc_html_e( 'Total time past', 'task-manager-wpshop' ); ?> : <?php echo esc_html( $total_time_elapsed ); ?> / <?php echo esc_html( $total_time_estimated ); ?></span>
+
 		</div>
 	</div>
 
