@@ -21,6 +21,8 @@ class Support_Filter {
 	public function __construct() {
 		add_filter( 'wps_my_account_extra_part_menu', array( $this, 'callback_my_account_menu' ) );
 		add_filter( 'wps_my_account_extra_panel_content', array( $this, 'callback_my_account_content' ), 10, 2 );
+		add_filter( 'wp_redirect', array( $this, 'callback_wp_redirect' ), 10, 2 );
+
 	}
 
 	/**
@@ -52,6 +54,8 @@ class Support_Filter {
 
 			$tasks_id = array();
 
+			$total_time_elapsed = 0;
+			$total_time_estimated = 0;
 			$last_modification_date = '';
 			$last_modification_date_mysql = '';
 
@@ -79,6 +83,8 @@ class Support_Filter {
 			if ( ! empty( $tasks ) ) {
 				foreach ( $tasks as $task ) {
 					$tasks_id[] = $task->id;
+					$total_time_elapsed += $task->time_info['elapsed'];
+					$total_time_estimated += $task->last_history_time->estimated_time;
 
 					if ( empty( $last_modification_date ) || ( $last_modification_date_mysql < $task->date_modified['date_input']['date'] ) ) {
 						$last_modification_date_mysql = $task->date_modified['date_input']['date'];
@@ -86,6 +92,21 @@ class Support_Filter {
 					}
 				}
 			}
+
+			$total_time_minute = $total_time_elapsed;
+			$format = '%hh %imin';
+			$dtf = new \DateTime( '@0' );
+			$dtt = new \DateTime( '@' . ( $total_time_elapsed * 60 ) );
+			if ( 240 <= $total_time_elapsed ) {
+				$format = '%aj %hh %imin';
+			}
+			$total_time_elapsed = $dtf->diff( $dtt )->format( $format );
+
+			$dtt = new \DateTime( '@' . ( $total_time_estimated * 60 ) );
+			if ( 240 <= $total_time_estimated ) {
+				$format = '%aj %hh %imin';
+			}
+			$total_time_estimated = $dtf->diff( $dtt )->format( $format );
 
 			ob_start();
 			\eoxia\View_Util::exec( 'task-manager-wpshop', 'support', 'frontend/main', array(
@@ -95,11 +116,30 @@ class Support_Filter {
 				'parent_id' => $current_customer_account_to_show,
 				'customer_id' => $current_customer_account_to_show,
 				'user_id' => get_current_user_id(),
+				'total_time_elapsed' => $total_time_elapsed . '( ' . $total_time_minute . 'min)',
+				'total_time_estimated' => $total_time_estimated,
 			) );
 			$output = ob_get_clean();
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Gestion de la redirection après l'authentification par le lien 'token'.
+	 *
+	 * @since 1.2.0
+	 * @version 1.2.0
+	 *
+	 * @param  string  $location L'URL.
+	 * @param  integer $status  Le status de la requête
+	 * @return string
+	 */
+	public function callback_wp_redirect( $location, $status ) {
+		if ( 'wp-login.php?tokeninvalid=true' === $location ) {
+			$location = get_option( 'tl_login_redirect_url' );
+		}
+		return $location;
 	}
 }
 

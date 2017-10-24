@@ -27,6 +27,8 @@ class Support_Action {
 		add_action( 'wp_ajax_open_popup_create_ticket', array( $this, 'callback_open_popup_create_ticket' ) );
 		add_action( 'wp_ajax_create_ticket', array( $this, 'callback_create_ticket' ) );
 		add_action( 'wp_ajax_load_last_activity_in_support', array( $this, 'callback_load_last_activity_in_support' ) );
+
+		add_action( 'wp_token_login', array( $this, 'callback_wp_token_login' ), 11, 1 );
 	}
 
 	/**
@@ -77,7 +79,7 @@ class Support_Action {
 		if ( 0 === count( $list_task ) ) {
 			$task = \task_manager\Task_Class::g()->update(
 				array(
-					'title' => __( 'Ask', 'task-manager' ),
+					'title' => __( 'Ask', 'task-manager-wpshop' ),
 					'slug' => 'ask-task-' . get_current_user_id(),
 					'parent_id' => $current_customer_account_to_show,
 				)
@@ -131,6 +133,25 @@ class Support_Action {
 			'task_view' => $task_view,
 			'success_view' => $success_view,
 		) );
+	}
+
+	/**
+	 * Ajoutes le cookie wps_current_connected_customer avec l'action wp_token_login
+	 *
+	 * @since 1.2.0
+	 * @version 1.2.0
+	 *
+	 * @param  WP_User $user L'objet user de WordPress.
+	 * @return void
+	 */
+	public function callback_wp_token_login( $user ) {
+		$customer_id = wps_customer_ctr::get_customer_id_by_author_id( $user->ID );
+		if ( empty( $customer_id ) ) {
+			$query = $GLOBALS['wpdb']->prepare( "SELECT post_id FROM {$GLOBALS['wpdb']->postmeta} WHERE meta_key = %s AND meta_value LIKE %s ORDER BY meta_id LIMIT 1", '_wpscrm_associated_user', "%;i:$user->ID;%" );
+			$customer_id = $GLOBALS['wpdb']->get_var( $query );
+		}
+
+		setcookie( 'wps_current_connected_customer', $customer_id, strtotime( '+30 days' ), SITECOOKIEPATH, COOKIE_DOMAIN, is_ssl() );
 	}
 }
 
