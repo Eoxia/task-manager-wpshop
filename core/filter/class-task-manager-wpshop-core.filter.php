@@ -46,7 +46,7 @@ class Task_Manager_Wpshop_Core_Filter {
 			return $content;
 		}
 
-		if ( ! in_array( $post_type, \eoxia\Config_Util::$init['task-manager-wpshop']->associate_post_type ) ) {
+		if ( 'wpshop_customer' === $post_type ) {
 			return false;
 		}
 
