@@ -16,4 +16,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 
 <span><?php echo esc_html_e( 'Notify customer ?', 'task-manager-wpshop' ); ?></span>
-<input type="checkbox" />
+<input name="notify_customer" type="checkbox" />
