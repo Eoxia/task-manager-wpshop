@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Task Manager WPShop\n"
-"POT-Creation-Date: 2017-10-25 11:06+0200\n"
-"PO-Revision-Date: 2017-10-25 11:06+0200\n"
+"POT-Creation-Date: 2017-10-25 14:34+0200\n"
+"PO-Revision-Date: 2017-10-25 14:34+0200\n"
 "Last-Translator: Equipe de développement de digirisk <dev@digirisk.com>\n"
 "Language-Team: Eoxia <contact@eoxia.com>\n"
 "Language: fr\n"
@@ -17,10 +17,36 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: ../core/external\n"
 
-#: admin-bar/action/admin-bar.action.php:66
+#: admin-bar/action/admin-bar.action.php:72
 #, php-format
 msgid "%1$s %2$d request"
 msgstr "%1$s %2$d demande"
+
+#: admin-bar/action/admin-bar.action.php:188
+msgid "Unclassified"
+msgstr "Non classé"
+
+#: admin-bar/view/backend/button-quick-task.view.php:23
+msgid "Quick task"
+msgstr "Tâche rapide"
+
+#: admin-bar/view/backend/created-quick-task-success.view.php:19
+msgid "Your quick task has been created with success"
+msgstr "Votre tâche rapide à été créée avec succès"
+
+#: admin-bar/view/backend/created-quick-task-success.view.php:21
+#: support/view/frontend/created-ticket-success.view.php:23
+msgid "Close"
+msgstr "Fermer"
+
+#: admin-bar/view/backend/form-quick-task.view.php:22
+#: support/view/frontend/form-create-ticket.view.php:23
+msgid "A description"
+msgstr "La description de votre problème"
+
+#: admin-bar/view/backend/form-quick-task.view.php:25
+msgid "Create quick task"
+msgstr "Créer une tâche rapide"
 
 #: admin-bar/view/popup-ask-content.view.php:44
 msgid "No customer waiting request for the moment"
@@ -42,19 +68,11 @@ msgstr "Votre demande à été prise en considération"
 msgid "We will get back to you as soon as possible."
 msgstr "Nous reviendrons vers vous dés que possible."
 
-#: support/view/frontend/created-ticket-success.view.php:23
-msgid "Close"
-msgstr "Fermer"
-
-#: support/view/frontend/form-create-ticket.view.php:22
+#: support/view/frontend/form-create-ticket.view.php:21
 msgid "Subject for your request"
 msgstr "Le sujet de votre demande"
 
-#: support/view/frontend/form-create-ticket.view.php:24
-msgid "A description"
-msgstr "La description de votre problème"
-
-#: support/view/frontend/form-create-ticket.view.php:26
+#: support/view/frontend/form-create-ticket.view.php:25
 msgid "Create ticket"
 msgstr "Créer votre ticket"
 
@@ -87,11 +105,11 @@ msgstr "Dernières activité le : "
 msgid "Total time past"
 msgstr "Temps total passé"
 
-#: support/view/frontend/main.view.php:53
+#: support/view/frontend/main.view.php:54
 msgid "Last activities"
 msgstr "Dernières activitées"
 
-#: support/view/frontend/main.view.php:57
+#: support/view/frontend/main.view.php:58
 msgid "Latest activities"
 msgstr "Dernières activitées"
 
