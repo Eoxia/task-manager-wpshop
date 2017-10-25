@@ -10,7 +10,8 @@ var uglify = require( 'gulp-uglify' );
 var sass = require( 'gulp-sass' );
 
 var paths = {
-	frontend_js: ['core/assets/js/init.js', '**/*.frontend.js' ]
+	frontend_js: ['core/assets/js/init.js', '**/*.frontend.js' ],
+	backend_js: ['core/assets/js/init.js', '**/*.backend.js' ]
 };
 
 gulp.task( 'js_frontend', function() {
@@ -19,6 +20,13 @@ gulp.task( 'js_frontend', function() {
 		.pipe( gulp.dest( 'core/assets/js/' ) );
 } );
 
+gulp.task( 'js_backend', function() {
+	return gulp.src( paths.backend_js )
+		.pipe( concat( 'backend.min.js' ) )
+		.pipe( gulp.dest( 'core/assets/js/' ) );
+} );
+
 gulp.task( 'default', function() {
 	gulp.watch( paths.frontend_js, [ 'js_frontend' ] );
+	gulp.watch( paths.backend_js, [ 'js_backend' ] );
 });
