@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Task Manager WPShop\n"
-"POT-Creation-Date: 2017-10-24 11:09+0200\n"
-"PO-Revision-Date: 2017-10-24 11:10+0200\n"
+"POT-Creation-Date: 2017-10-25 11:06+0200\n"
+"PO-Revision-Date: 2017-10-25 11:06+0200\n"
 "Last-Translator: Equipe de développement de digirisk <dev@digirisk.com>\n"
 "Language-Team: Eoxia <contact@eoxia.com>\n"
 "Language: fr\n"
@@ -30,7 +30,7 @@ msgstr "Aucun client en attente de demande pour le moment"
 msgid "Load more"
 msgstr "Charger plus"
 
-#: support/action/support.action.php:80
+#: support/action/support.action.php:82
 msgid "Ask"
 msgstr "Demande"
 
@@ -47,14 +47,14 @@ msgid "Close"
 msgstr "Fermer"
 
 #: support/view/frontend/form-create-ticket.view.php:22
-msgid "Subject or your request"
+msgid "Subject for your request"
 msgstr "Le sujet de votre demande"
 
-#: support/view/frontend/form-create-ticket.view.php:23
-msgid "A description"
-msgstr "La description de votre problème..."
-
 #: support/view/frontend/form-create-ticket.view.php:24
+msgid "A description"
+msgstr "La description de votre problème"
+
+#: support/view/frontend/form-create-ticket.view.php:26
 msgid "Create ticket"
 msgstr "Créer votre ticket"
 
@@ -79,21 +79,21 @@ msgstr "Demander un ticket"
 msgid "Support"
 msgstr "Support"
 
-#: support/view/frontend/main.view.php:40
+#: support/view/frontend/main.view.php:39
 msgid "Last activity the : "
 msgstr "Dernières activité le : "
 
-#: support/view/frontend/main.view.php:47
+#: support/view/frontend/main.view.php:46
+msgid "Total time past"
+msgstr "Temps total passé"
+
+#: support/view/frontend/main.view.php:53
 msgid "Last activities"
 msgstr "Dernières activitées"
 
-#: support/view/frontend/main.view.php:51
+#: support/view/frontend/main.view.php:57
 msgid "Latest activities"
 msgstr "Dernières activitées"
-
-#: support/view/frontend/main.view.php:54
-msgid "Total time past"
-msgstr "Temps total passé"
 
 #~ msgid "Confirm"
 #~ msgstr "Confirmer"
