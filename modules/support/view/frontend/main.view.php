@@ -50,6 +50,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					data-parent="wpeo-project-wrap"
 					data-target="popup"
 					data-action="load_last_activity"
+					data-class="last-activity activities"
 					data-title="<?php echo esc_attr_e( 'Last activities', 'task-manager-wpshop' ); ?>"
 					data-tasks-id="<?php echo esc_attr( $tasks_id ); ?>"
 					data-frontend="1">
