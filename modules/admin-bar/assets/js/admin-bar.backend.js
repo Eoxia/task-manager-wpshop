@@ -1,6 +1,3 @@
-window.eoxiaJS.taskManagerFrontendWPShop = {};
-window.eoxiaJS.taskManagerBackendWPShop = {};
-
 window.eoxiaJS.taskManagerBackendWPShop.adminBar = {};
 
 window.eoxiaJS.taskManagerBackendWPShop.adminBar.init = function() {

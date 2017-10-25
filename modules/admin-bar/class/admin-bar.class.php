@@ -107,6 +107,17 @@ class Admin_Bar_Class extends \eoxia\Singleton_Util {
 		return $query;
 	}
 
+	public function init_quick_task( $wp_admin_bar ) {
+		ob_start();
+		\eoxia\View_Util::exec( 'task-manager-wpshop', 'admin-bar', 'backend/button-quick-task' );
+		$button_open_popup = array(
+			'id' => 'button-open-popup-quick-task',
+			'parent' => 'new-content',
+			'title' => ob_get_clean(),
+		);
+
+		$wp_admin_bar->add_node( $button_open_popup );
+	}
 }
 
 new Admin_Bar_Class();
