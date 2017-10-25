@@ -32,6 +32,8 @@ class Task_Manager_Wpshop_Core_Filter {
 	public function __construct() {
 		add_filter( 'task_manager_popup_notify_after', array( $this, 'callback_task_manager_popup_notify_after' ), 10, 2 );
 		add_filter( 'task_manager_notify_send_notification_recipients', array( $this, 'callback_task_manager_notify_send_notification_recipients' ), 10, 3 );
+		add_filter( 'task_manager_notify_send_notification_subject', array( $this, 'callback_task_manager_notify_send_notification_subject' ), 10, 3 );
+		add_filter( 'task_manager_notify_send_notification_body', array( $this, 'callback_task_manager_notify_send_notification_body' ), 10, 3 );
 	}
 
 
@@ -56,6 +58,17 @@ class Task_Manager_Wpshop_Core_Filter {
 		return $content;
 	}
 
+	/**
+	 * Ajoutes l'email du client WPShop lié à la tâche.
+	 *
+	 * @since 1.2.0
+	 * @version 1.2.0
+	 *
+	 * @param  array       $recipients Un tableau contenant l'email des utilisateurs liées à la tâche.
+	 * @param  Task_Object $task       La tâche en elle même.
+	 * @param  array       $form_data  Les données du formulaire.
+	 * @return array                   Le tableau contenant l'email des utilisateurs + celui du client.
+	 */
 	public function callback_task_manager_notify_send_notification_recipients( $recipients, $task, $form_data ) {
 		if ( empty( $form_data['notify_customer'] ) ) {
 			return $recipients;
@@ -71,6 +84,59 @@ class Task_Manager_Wpshop_Core_Filter {
 		$recipients[] = $user_info->user_email;
 
 		return $recipients;
+	}
+
+	/**
+	 * Modifie le sujet du mail envoyé au client.
+	 *
+	 * @since 1.2.0
+	 * @version 1.2.0
+	 *
+	 * @param  string      $subject    Le sujet du mail.
+	 * @param  Task_Object $task       La tâche en elle même.
+	 * @param  array       $form_data  Les données du formulaire.
+	 * @return string                  Le sujet du mail modifié par ce filtre.
+	 */
+	public function callback_task_manager_notify_send_notification_subject( $subject, $task, $form_data ) {
+		if ( empty( $form_data['notify_customer'] ) ) {
+			return $subject;
+		}
+
+		$post = get_post( \eoxia\Config_Util::$init['task-manager-wpshop']->id_mail_support );
+
+		if ( ! $post ) {
+			return $subject;
+		}
+
+		$subject = __( 'Eoxia: New message on your support', 'task-manager-wpshop' );
+		return $subject;
+	}
+
+	/**
+	 * Modifie le contenu du mail envoyé au client.
+	 *
+	 * @since 1.2.0
+	 * @version 1.2.0
+	 *
+	 * @param  string      $body    Le contenu du mail.
+	 * @param  Task_Object $task       La tâche en elle même.
+	 * @param  array       $form_data  Les données du formulaire.
+	 * @return string                  Le contenu du mail modifié par ce filtre.
+	 */
+	public function callback_task_manager_notify_send_notification_body( $body, $task, $form_data ) {
+		if ( empty( $form_data['notify_customer'] ) ) {
+			return $body;
+		}
+
+		$post = get_post( \eoxia\Config_Util::$init['task-manager-wpshop']->id_mail_support );
+
+		if ( ! $post ) {
+			return $body;
+		}
+
+		$body = $post->post_content;
+
+		return $body;
 	}
 }
 
