@@ -41,7 +41,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<div class="toolbox-activity">
-		<div class="total-time"><i class="fa fa-clock-o"></i> <?php esc_html_e( 'Total time past', 'task-manager-wpshop' ); ?> : <?php echo esc_html( $total_time_elapsed ); ?> / <?php echo esc_html( $total_time_estimated ); ?></div>
+		<div class="total-time">
+			<i class="fa fa-clock-o"></i>
+			<?php esc_html_e( 'Total time past', 'task-manager-wpshop' ); ?> :
+			<?php echo esc_html( \eoxia\Date_Util::g()->convert_to_custom_hours( $total_time_elapsed, false ) ); ?> / <?php echo esc_html( \eoxia\Date_Util::g()->convert_to_custom_hours( $total_time_estimated, false ) ); ?>
+		</div>
 		<div class="open-popup-ajax button"
 					data-parent="wpeo-project-wrap"
 					data-target="popup"

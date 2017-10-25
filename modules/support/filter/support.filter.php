@@ -93,21 +93,6 @@ class Support_Filter {
 				}
 			}
 
-			$total_time_minute = $total_time_elapsed;
-			$format = '%hh %imin';
-			$dtf = new \DateTime( '@0' );
-			$dtt = new \DateTime( '@' . ( $total_time_elapsed * 60 ) );
-			if ( 240 <= $total_time_elapsed ) {
-				$format = '%aj %hh %imin';
-			}
-			$total_time_elapsed = $dtf->diff( $dtt )->format( $format );
-
-			$dtt = new \DateTime( '@' . ( $total_time_estimated * 60 ) );
-			if ( 240 <= $total_time_estimated ) {
-				$format = '%aj %hh %imin';
-			}
-			$total_time_estimated = $dtf->diff( $dtt )->format( $format );
-
 			ob_start();
 			\eoxia\View_Util::exec( 'task-manager-wpshop', 'support', 'frontend/main', array(
 				'last_modification_date' => $last_modification_date,
@@ -116,7 +101,7 @@ class Support_Filter {
 				'parent_id' => $current_customer_account_to_show,
 				'customer_id' => $current_customer_account_to_show,
 				'user_id' => get_current_user_id(),
-				'total_time_elapsed' => $total_time_elapsed . '( ' . $total_time_minute . 'min)',
+				'total_time_elapsed' => $total_time_elapsed,
 				'total_time_estimated' => $total_time_estimated,
 			) );
 			$output = ob_get_clean();
@@ -132,7 +117,7 @@ class Support_Filter {
 	 * @version 1.2.0
 	 *
 	 * @param  string  $location L'URL.
-	 * @param  integer $status  Le status de la requête
+	 * @param  integer $status  Le status de la requête.
 	 * @return string
 	 */
 	public function callback_wp_redirect( $location, $status ) {
