@@ -9,7 +9,7 @@ window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.event = function() {
 	jQuery( document ).on( 'keyup', '.wps-section-content .task-search', window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.searchKey );
 	jQuery( document ).on( 'click', '.wps-section-content .search-button', window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.searchIn );
 	jQuery( document ).on( 'click', '.wps-section-content .button.blue', window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.closePopup );
-	jQuery( document ).on( 'keydown', '.wps-section-content .popup input, .wps-section-content .popup textarea', window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.preventDefaultForm );
+	jQuery( document ).on( 'keydown', '.wps-section-content .popup input', window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.preventDefaultForm );
 };
 
 window.eoxiaJS.taskManagerFrontendWPShop.frontendSupport.slideAskTask = function( event ) {
