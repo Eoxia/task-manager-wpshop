@@ -19,8 +19,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div id="wpeo-window-ask-task" >
 	<form class="form" action="<?php echo esc_attr( admin_url( 'admin-ajax.php' ) ); ?>" method="POST" >
 		<input type="hidden" name="action" value="create_ticket">
-		<input type="text" name="subject" maxlength="150" placeholder="<?php esc_html_e( 'Subject or your request', 'task-manager-wpshop' ); ?>">
-		<textarea name="description" placeholder="<?php esc_html_e( 'A description', 'task-manager-wpshop' ); ?>"></textarea>
+		<label for="subject"><?php esc_html_e( 'Subject for your request', 'task-manager-wpshop' ); ?></label>
+		<input id="subject" type="text" name="subject" maxlength="150">
+		<label for="description"><?php esc_html_e( 'A description', 'task-manager-wpshop' ); ?></label>
+		<textarea id="description" name="description" rows="6"></textarea>
 		<input type="button" data-loader="form" class="action-input" data-parent="form" data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_ticket' ) ); ?>" value="<?php esc_html_e( 'Create ticket', 'task-manager-wpshop' ); ?>">
 	</form>
 </div>

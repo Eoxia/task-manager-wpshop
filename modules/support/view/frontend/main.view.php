@@ -35,11 +35,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<h2><?php esc_html_e( 'Support', 'task-manager-wpshop' ); ?></h2>
 
+	<div class="update-activity">
+		<span><?php esc_html_e( 'Last activity the : ', 'task-manager-wpshop' ); ?></span>
+		<span><?php echo esc_html( $last_modification_date ); ?></span>
+	</div>
+
 	<div class="toolbox-activity">
-		<div class="update-activity">
-			<span><?php esc_html_e( 'Last activity the : ', 'task-manager-wpshop' ); ?></span>
-			<span><?php echo esc_html( $last_modification_date ); ?></span>
-		</div>
+		<div class="total-time"><i class="fa fa-clock-o"></i> <?php esc_html_e( 'Total time past', 'task-manager-wpshop' ); ?> : <?php echo esc_html( $total_time_elapsed ); ?> / <?php echo esc_html( $total_time_estimated ); ?></div>
 		<div class="open-popup-ajax button"
 					data-parent="wpeo-project-wrap"
 					data-target="popup"
@@ -49,10 +51,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 					data-frontend="1">
 			<i class="fa fa-list" aria-hidden="true"></i>
 			<span><?php esc_html_e( 'Latest activities', 'task-manager-wpshop' ); ?></span>
-		</div>
-		<div>
-			<span><?php esc_html_e( 'Total time past', 'task-manager-wpshop' ); ?> : <?php echo esc_html( $total_time_elapsed ); ?> / <?php echo esc_html( $total_time_estimated ); ?></span>
-
 		</div>
 	</div>
 
