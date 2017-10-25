@@ -145,7 +145,7 @@ class Support_Action {
 	 * @return void
 	 */
 	public function callback_wp_token_login( $user ) {
-		$customer_id = wps_customer_ctr::get_customer_id_by_author_id( $user->ID );
+		$customer_id = \wps_customer_ctr::get_customer_id_by_author_id( $user->ID );
 		if ( empty( $customer_id ) ) {
 			$query = $GLOBALS['wpdb']->prepare( "SELECT post_id FROM {$GLOBALS['wpdb']->postmeta} WHERE meta_key = %s AND meta_value LIKE %s ORDER BY meta_id LIMIT 1", '_wpscrm_associated_user', "%;i:$user->ID;%" );
 			$customer_id = $GLOBALS['wpdb']->get_var( $query );
