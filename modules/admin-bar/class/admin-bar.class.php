@@ -7,7 +7,9 @@
 
 namespace task_manager_wpshop;
 
-if ( ! defined( 'ABSPATH' ) ) {	exit; }
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Classe de gestion des actions
@@ -42,7 +44,7 @@ class Admin_Bar_Class extends \eoxia\Singleton_Util {
 						TASK.post_name LIKE 'ask-task-%'
 				OR 	TASKMETA.meta_value LIKE 'ask-task-%'
 			)
-			AND TASK.post_status != 'trash'
+			AND TASK.post_status NOT IN ('trash', 'archive')
 			AND POINT.comment_approved != 'trash'
 			AND POINT.comment_parent = 0
 			AND POINTMETA.meta_key = 'wpeo_point'
