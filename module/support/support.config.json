@@ -3,7 +3,7 @@
 	"slug": "support",
 	"version": "1.2.0",
 	"description": "Le module gérant le support de WPShop",
-	"path": "modules/support/",
+	"path": "module/support/",
 	"dependencies": {
 		"action": {},
 		"filter": {}

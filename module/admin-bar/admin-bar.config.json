@@ -3,7 +3,7 @@
 	"slug": "admin-bar",
 	"version": "1.0.0.0",
 	"description": "",
-	"path": "modules/admin-bar/",
+	"path": "module/admin-bar/",
 	"dependencies": {
 		"action": {},
 		"class": {}

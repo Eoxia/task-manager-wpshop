@@ -57,6 +57,8 @@ class Support_Action {
 	 *
 	 * @since 1.0.0
 	 * @version 1.2.0
+	 *
+	 * @todo: Log fonction vide ?
 	 */
 	public function callback_create_ticket() {
 		check_ajax_referer( 'create_ticket' );

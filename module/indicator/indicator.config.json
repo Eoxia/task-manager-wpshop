@@ -1,0 +1,11 @@
+{
+	"name": "Indicateur",
+	"slug": "indicator",
+	"version": "1.2.0",
+	"description": "Le module gérant les indicateurs",
+	"path": "module/indicator/",
+	"dependencies": {
+		"class": {},
+		"action": {}
+	}
+}
