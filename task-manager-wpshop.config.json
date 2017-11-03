@@ -8,8 +8,9 @@
 	"externals": [],
 	"modules": [
 		"core/core.config.json",
-		"modules/support/support.config.json",
-		"modules/admin-bar/admin-bar.config.json"
+		"module/support/support.config.json",
+		"module/indicator/indicator.config.json",
+		"module/admin-bar/admin-bar.config.json"
 	],
 	"debug": false,
 	"quick_task_tags": [
@@ -17,5 +18,6 @@
 		"ref"
 	],
 	"id_mail_support": 221,
-	"id_quick_task": 213
+	"id_quick_task": 213,
+	"key_customer_ask" : "_tm_wpshop_ask_ids"
 }
