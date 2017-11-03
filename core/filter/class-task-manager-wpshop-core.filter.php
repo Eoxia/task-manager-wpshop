@@ -31,9 +31,9 @@ class Task_Manager_Wpshop_Core_Filter {
 	 */
 	public function __construct() {
 		add_filter( 'task_manager_popup_notify_after', array( $this, 'callback_task_manager_popup_notify_after' ), 10, 2 );
-		// add_filter( 'task_manager_notify_send_notification_recipients', array( $this, 'callback_task_manager_notify_send_notification_recipients' ), 10, 3 );
-		// add_filter( 'task_manager_notify_send_notification_subject', array( $this, 'callback_task_manager_notify_send_notification_subject' ), 10, 3 );
-		// add_filter( 'task_manager_notify_send_notification_body', array( $this, 'callback_task_manager_notify_send_notification_body' ), 10, 3 );
+		add_filter( 'task_manager_notify_send_notification_recipients', array( $this, 'callback_task_manager_notify_send_notification_recipients' ), 10, 3 );
+		add_filter( 'task_manager_notify_send_notification_subject', array( $this, 'callback_task_manager_notify_send_notification_subject' ), 10, 3 );
+		add_filter( 'task_manager_notify_send_notification_body', array( $this, 'callback_task_manager_notify_send_notification_body' ), 10, 3 );
 	}
 
 
@@ -70,7 +70,7 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return array                   Le tableau contenant l'email des utilisateurs + celui du client.
 	 */
 	public function callback_task_manager_notify_send_notification_recipients( $recipients, $task, $form_data ) {
-		if ( empty( $form_data['notify_customer'] ) ) {
+		if ( $form_data['notify_customer'] == 'false' ) {
 			return $recipients;
 		}
 
@@ -98,7 +98,7 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return string                  Le sujet du mail modifié par ce filtre.
 	 */
 	public function callback_task_manager_notify_send_notification_subject( $subject, $task, $form_data ) {
-		if ( empty( $form_data['notify_customer'] ) ) {
+		if ( $form_data['notify_customer'] == 'false' ) {
 			return $subject;
 		}
 
@@ -108,7 +108,7 @@ class Task_Manager_Wpshop_Core_Filter {
 			return $subject;
 		}
 
-		$subject = __( 'Eoxia: New message on your support', 'task-manager-wpshop' );
+		$subject = $post->post_title;
 		return $subject;
 	}
 
@@ -124,7 +124,7 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return string                  Le contenu du mail modifié par ce filtre.
 	 */
 	public function callback_task_manager_notify_send_notification_body( $body, $task, $form_data ) {
-		if ( empty( $form_data['notify_customer'] ) ) {
+		if ( $form_data['notify_customer'] == 'false' ) {
 			return $body;
 		}
 
@@ -135,6 +135,17 @@ class Task_Manager_Wpshop_Core_Filter {
 		}
 
 		$body = $post->post_content;
+		$datas = \task_manager\Activity_Class::g()->get_activity( array( $task->id ), 0 );
+		$query = $GLOBALS['wpdb']->prepare( "SELECT ID FROM {$GLOBALS['wpdb']->posts} WHERE ID = %d", get_option( 'wpshop_myaccount_page_id' ) );
+		$page_id = $GLOBALS['wpdb']->get_var( $query );
+		$permalink = get_permalink( $page_id );
+		ob_start();
+		\eoxia\View_Util::exec( 'task-manager', 'activity', 'backend/mail/list', array(
+			'datas' => $datas,
+			'last_date' => $last_date,
+			'permalink' => $permalink,
+		) );
+		$body .= ob_get_clean();
 
 		return $body;
 	}
