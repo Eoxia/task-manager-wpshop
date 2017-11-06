@@ -45,10 +45,18 @@ class Indicator_Class extends \eoxia\Singleton_Util {
 		$comments = array();
 
 		if ( ! empty( $ids ) ) {
-			$comments = \task_manager\Task_Comment_Class::g()->get( array(
-				'comment__in' => $ids,
-				'status' => -34070,
-			) );
+			foreach ( $ids as $task_id => $points ) {
+				if ( ! empty( $points ) ) {
+					foreach ( $points as $point_id => $id ) {
+						if ( ! empty( $id ) ) {
+							$comments = array_merge( $comments, \task_manager\Task_Comment_Class::g()->get( array(
+								'comment__in' => $id,
+								'status' => -34070,
+							) ) );
+						}
+					}
+				}
+			}
 		}
 
 		if ( ! empty( $comments ) ) {
@@ -61,7 +69,11 @@ class Indicator_Class extends \eoxia\Singleton_Util {
 					'id' => $comment->post_id,
 				), true );
 
-				$comment->post_parent = get_post( $comment->task->parent_id );
+				$comment->post_parent = null;
+
+				if ( ! empty( $comment->task->parent_id ) ) {
+					$comment->post_parent = get_post( $comment->task->parent_id );
+				}
 			}
 		}
 
