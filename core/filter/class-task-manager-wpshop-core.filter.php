@@ -34,6 +34,7 @@ class Task_Manager_Wpshop_Core_Filter {
 		add_filter( 'task_manager_notify_send_notification_recipients', array( $this, 'callback_task_manager_notify_send_notification_recipients' ), 10, 3 );
 		add_filter( 'task_manager_notify_send_notification_subject', array( $this, 'callback_task_manager_notify_send_notification_subject' ), 10, 3 );
 		add_filter( 'task_manager_notify_send_notification_body', array( $this, 'callback_task_manager_notify_send_notification_body' ), 10, 3 );
+		add_filter( 'tm_comment_toggle_before', array( $this, 'callback_tm_comment_toggle_before' ), 10, 2 );
 	}
 
 
@@ -148,6 +149,40 @@ class Task_Manager_Wpshop_Core_Filter {
 		$body .= ob_get_clean();
 
 		return $body;
+	}
+
+	public function callback_tm_comment_toggle_before( $view, $comment ) {
+		if ( 0 === $comment->post_id || ! class_exists( 'TokenLogin' ) ) {
+			return $view;
+		}
+
+		$task = \task_manager\Task_Class::g()->get( array(
+			'id' => $comment->post_id,
+		), true );
+
+		if ( 0 === $task->parent_id ) {
+			return $view;
+		}
+
+		$post_type = get_post_type( $task->parent_id );
+
+		if ( ! $post_type ) {
+			return $view;
+		}
+
+		if ( 'wpshop_customer' === $post_type ) {
+			return $view;
+		}
+
+		$cpt_customer = get_post( $task->parent_id );
+
+		$login_token = \TokenLogin::getToken( $cpt_customer->post_author );
+		$token_url = \TokenLogin::getTokenUrl( $cpt_customer->post_author, $login_token );
+
+		ob_start();
+		require( TM_WPS_PATH . '/core/view/comment/before-toggle.view.php' );
+		$view .= ob_get_clean();
+		return $view;
 	}
 }
 
