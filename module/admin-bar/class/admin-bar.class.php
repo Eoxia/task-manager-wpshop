@@ -37,10 +37,20 @@ class Admin_Bar_Class extends \eoxia\Singleton_Util {
 		$ids = get_option( \eoxia\Config_Util::$init['task-manager-wpshop']->key_customer_ask, array() );
 		$have_new = false;
 
-		if ( ! empty( $ids ) ) {
-			$have_new = true;
+		$count = 0;
 
-			$count = count( $ids );
+		if ( ! empty( $ids ) ) {
+			foreach ( $ids as $task_id => $points ) {
+				if ( ! empty( $points ) ) {
+					foreach ( $points as $point_id => $id ) {
+						$count += count( $id );
+					}
+				}
+			}
+		}
+
+		if ( 0 < $count ) {
+			$have_new = true;
 		}
 
 		$link_to_page = array(

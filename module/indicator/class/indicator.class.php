@@ -69,6 +69,8 @@ class Indicator_Class extends \eoxia\Singleton_Util {
 			'comments' => $comments,
 		) );
 	}
+
+
 }
 
 new Indicator_Class();
