@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Task Manager WPShop\n"
-"POT-Creation-Date: 2017-10-31 17:52+0100\n"
-"PO-Revision-Date: 2017-10-31 17:52+0100\n"
+"POT-Creation-Date: 2017-11-06 15:40+0100\n"
+"PO-Revision-Date: 2017-11-06 15:40+0100\n"
 "Last-Translator: Equipe de développement de digirisk <dev@digirisk.com>\n"
 "Language-Team: Eoxia <contact@eoxia.com>\n"
 "Language: fr\n"
@@ -16,7 +16,8 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: module\n"
 "X-Poedit-SearchPath-1: core/filter\n"
-"X-Poedit-SearchPath-2: core/filter/class-task-manager-wpshop-core.filter.php\n"
+"X-Poedit-SearchPath-2: core/filter/class-task-manager-wpshop-core.filter."
+"php\n"
 "X-Poedit-SearchPathExcluded-0: core/external\n"
 
 #: module/admin-bar/action/admin-bar.action.php:96
@@ -52,25 +53,25 @@ msgstr "Charger plus"
 
 #: module/indicator/action/indicator.action.php:30
 msgid "Customer support"
-msgstr ""
+msgstr "Client support"
 
-#: module/indicator/view/backend/request.view.php:27
+#: module/indicator/view/backend/request.view.php:28
 msgid "On the customer"
-msgstr ""
+msgstr "Sur le client"
 
-#: module/indicator/view/backend/request.view.php:36
+#: module/indicator/view/backend/request.view.php:38
 msgid "On the task"
-msgstr ""
+msgstr "Sur la tâche"
 
-#: module/indicator/view/backend/request.view.php:45
+#: module/indicator/view/backend/request.view.php:47
 msgid "On the point"
-msgstr ""
+msgstr "Sur le point"
 
-#: module/indicator/view/backend/request.view.php:54
+#: module/indicator/view/backend/request.view.php:56
 msgid "With the comment:"
-msgstr ""
+msgstr "Avec le commentaire:"
 
-#: module/indicator/view/backend/request.view.php:66
+#: module/indicator/view/backend/request.view.php:68
 msgid "No customer waiting request for the moment"
 msgstr "Aucun client en attente de demande pour le moment"
 
