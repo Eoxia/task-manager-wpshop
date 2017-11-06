@@ -22,15 +22,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<span><?php echo esc_html( $comment->date['date_human_readable'] ); ?></span>
 			</li>
 
-			<li class="tmp-wps-customer-requests-customer">
-				<span>
-					<?php esc_html_e( 'On the customer', 'task-manager-wpshop' ); ?>
-					<a href="<?php echo esc_url( admin_url( 'post.php?post=' . $comment->post_parent->ID . '&action=edit' ) ); ?>">
-						#<?php echo esc_html( $comment->post_parent->ID ); ?>
-						 - <?php echo esc_html( $comment->post_parent->post_title ); ?>
-					</a>
-				</span>
-			</li>
+			<?php if ( null !== $comment->post_parent ) : ?>
+				<li class="tmp-wps-customer-requests-customer">
+					<span>
+						<?php esc_html_e( 'On the customer', 'task-manager-wpshop' ); ?>
+						<a href="<?php echo esc_url( admin_url( 'post.php?post=' . $comment->post_parent->ID . '&action=edit' ) ); ?>">
+							#<?php echo esc_html( $comment->post_parent->ID ); ?>
+							 - <?php echo esc_html( $comment->post_parent->post_title ); ?>
+						</a>
+					</span>
+				</li>
+			<?php endif; ?>
 			<li>
 				<span>
 					<?php esc_html_e( 'On the task', 'task-manager-wpshop' ); ?>
