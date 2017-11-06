@@ -71,7 +71,7 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return array                   Le tableau contenant l'email des utilisateurs + celui du client.
 	 */
 	public function callback_task_manager_notify_send_notification_recipients( $recipients, $task, $form_data ) {
-		if ( $form_data['notify_customer'] == 'false' ) {
+		if ( ! $form_data['notify_customer'] ) {
 			return $recipients;
 		}
 
@@ -99,7 +99,7 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return string                  Le sujet du mail modifié par ce filtre.
 	 */
 	public function callback_task_manager_notify_send_notification_subject( $subject, $task, $form_data ) {
-		if ( $form_data['notify_customer'] == 'false' ) {
+		if ( ! $form_data['notify_customer'] ) {
 			return $subject;
 		}
 
@@ -125,7 +125,7 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return string                  Le contenu du mail modifié par ce filtre.
 	 */
 	public function callback_task_manager_notify_send_notification_body( $body, $task, $form_data ) {
-		if ( $form_data['notify_customer'] == 'false' ) {
+		if ( ! $form_data['notify_customer'] ) {
 			return $body;
 		}
 
