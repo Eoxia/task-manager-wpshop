@@ -30,6 +30,7 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @version 1.2.0
 	 */
 	public function __construct() {
+		add_filter( 'tm_task_main_menu_title', array( $this, 'callback_tm_task_main_menu_title' ) );
 		add_filter( 'task_manager_popup_notify_after', array( $this, 'callback_task_manager_popup_notify_after' ), 10, 2 );
 		add_filter( 'task_manager_notify_send_notification_recipients', array( $this, 'callback_task_manager_notify_send_notification_recipients' ), 10, 3 );
 		add_filter( 'task_manager_notify_send_notification_subject', array( $this, 'callback_task_manager_notify_send_notification_subject' ), 10, 3 );
@@ -37,6 +38,23 @@ class Task_Manager_Wpshop_Core_Filter {
 		add_filter( 'tm_comment_toggle_before', array( $this, 'callback_tm_comment_toggle_before' ), 10, 2 );
 	}
 
+	/**
+	 * Renvoies le titre du menu "Task" modifié avec le nombre de demande des clients.
+	 *
+	 * @since 1.2.0
+	 * @version 1.2.0
+	 *
+	 * @param  string $title Le titre du menu.
+	 * @return string        Le titre du menu modifié.
+	 */
+	public function callback_tm_task_main_menu_title( $title ) {
+		$number_ask = Support_Class::g()->get_number_ask();
+
+		if ( $number_ask > 0 ) {
+			$title .= '<span class="wp-core-ui wp-ui-notification"><span>' . $number_ask . '</span></span>';
+		}
+		return $title;
+	}
 
 	public function callback_task_manager_popup_notify_after( $content, $task ) {
 		if ( 0 === $task->parent_id ) {
