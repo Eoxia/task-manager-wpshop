@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<li>
 				<span>
 					<?php esc_html_e( 'On the task', 'task-manager-wpshop' ); ?>
-					<a href="<?php echo esc_url( admin_url( 'post.php?post=' . $comment->task->id . '&action=edit' ) ); ?>">
+					<a href="<?php echo esc_url( admin_url( 'post.php?post=' . $comment->post_parent->ID . '&term=' . $comment->task->id . '&action=edit' ) ); ?>">
 						#<?php echo esc_html( $comment->task->id ); ?>
 						- <?php echo esc_html( $comment->task->title ); ?>
 					</a>
@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<li>
 					<span>
 						<?php esc_html_e( 'On the point', 'task-manager-wpshop' ); ?>
-						<a href="<?php echo esc_url( admin_url( 'post.php?post=' . $comment->task->id . '&action=edit&point_id=' . $comment->point->id ) ); ?>">
+						<a href="<?php echo esc_url( admin_url( 'post.php?post=' . $comment->post_parent->ID . '&term=' . $comment->task->id . '&action=edit&point_id=' . $comment->point->id ) ); ?>">
 							#<?php echo esc_html( $comment->point->id ); ?>
 							- <?php echo esc_html( $comment->point->content ); ?>
 						</a>
@@ -54,7 +54,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<li>
 					<span>
 						<?php echo esc_html_e( 'With the comment:', 'task-manager-wpshop' ); ?>
-						<a href="<?php echo esc_url( admin_url( 'post.php?post=' . $comment->task->id . '&action=edit&point_id=' . $comment->point->id . '&comment_id=' . $comment->id ) ); ?>">
+						<a href="<?php echo esc_url( admin_url( 'post.php?post=' . $comment->post_parent->ID . '&term=' . $comment->task->id . '&action=edit&point_id=' . $comment->point->id . '&comment_id=' . $comment->id ) ); ?>">
 							#<?php echo esc_html( $comment->id ); ?>
 							- <?php echo esc_html( $comment->content ); ?>
 						</a>
