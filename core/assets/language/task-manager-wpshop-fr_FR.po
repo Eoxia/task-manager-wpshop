@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Task Manager WPShop\n"
-"POT-Creation-Date: 2017-11-06 15:40+0100\n"
-"PO-Revision-Date: 2017-11-06 15:40+0100\n"
+"POT-Creation-Date: 2017-11-07 14:31+0100\n"
+"PO-Revision-Date: 2017-11-07 14:31+0100\n"
 "Last-Translator: Equipe de développement de digirisk <dev@digirisk.com>\n"
 "Language-Team: Eoxia <contact@eoxia.com>\n"
 "Language: fr\n"
@@ -20,40 +20,69 @@ msgstr ""
 "php\n"
 "X-Poedit-SearchPathExcluded-0: core/external\n"
 
-#: module/admin-bar/action/admin-bar.action.php:96
+#: module/admin-bar/action/admin-bar.action.php:95
+#, php-format
+msgid "The parent post %d doesn't exists."
+msgstr ""
+
+#: module/admin-bar/action/admin-bar.action.php:100
+#, php-format
+msgid "The parent post %d is not a wpshop_customers CPT."
+msgstr ""
+
+#: module/admin-bar/action/admin-bar.action.php:112
 msgid "Unclassified"
 msgstr "Non classé"
 
 #: module/admin-bar/view/backend/button-quick-task.view.php:23
 #: module/admin-bar/view/backend/button-quick-task.view.php:24
+#: module/admin-bar/view/backend/created-quick-task-error.view.php:38
+#: module/admin-bar/view/backend/created-quick-task-success.view.php:26
 msgid "Quick task"
 msgstr "Tâche rapide"
+
+#: module/admin-bar/view/backend/created-quick-task-error.view.php:19
+msgid "Error for created your quick task."
+msgstr "Erreur lors de la création de la tâche rapide."
+
+#: module/admin-bar/view/backend/created-quick-task-error.view.php:39
+msgid "Try again"
+msgstr "Réessayer"
+
+#: module/admin-bar/view/backend/created-quick-task-error.view.php:41
+#: module/admin-bar/view/backend/created-quick-task-success.view.php:28
+#: module/support/view/frontend/created-ticket-success.view.php:23
+msgid "Close"
+msgstr "Fermer"
 
 #: module/admin-bar/view/backend/created-quick-task-success.view.php:19
 msgid "Your quick task has been created with success"
 msgstr "Votre tâche rapide à été créée avec succès"
 
-#: module/admin-bar/view/backend/created-quick-task-success.view.php:21
-#: module/support/view/frontend/created-ticket-success.view.php:23
-msgid "Close"
-msgstr "Fermer"
+#: module/admin-bar/view/backend/created-quick-task-success.view.php:27
+msgid "Add another quick task"
+msgstr "Ajouter une autre tâche rapide"
 
-#: module/admin-bar/view/backend/form-quick-task.view.php:22
-#: module/support/view/frontend/form-create-ticket.view.php:23
-msgid "A description"
-msgstr "La description de votre problème"
+#: module/admin-bar/view/backend/form-quick-task.view.php:20
+msgid ""
+"Quick task save on the post setted in task-manager-wpshop.config.json. This "
+"form create a comment on the point named <displayedname>."
+msgstr ""
+"Les tâches rapides sont enregistré dans le post défini dans le fichier "
+"\"task-manager-wpshop.config.json\". Ce formulaire créer un commentaire dans "
+"le point nommé <displayname>."
 
-#: module/admin-bar/view/backend/form-quick-task.view.php:25
+#: module/admin-bar/view/backend/form-quick-task.view.php:28
+msgid "Min"
+msgstr "Min"
+
+#: module/admin-bar/view/backend/form-quick-task.view.php:32
 msgid "Create quick task"
 msgstr "Créer une tâche rapide"
 
-#: module/admin-bar/view/popup-container.view.php:30
-msgid "Load more"
-msgstr "Charger plus"
-
 #: module/indicator/action/indicator.action.php:30
 msgid "Customer support"
-msgstr "Client support"
+msgstr "Support client"
 
 #: module/indicator/view/backend/request.view.php:28
 msgid "On the customer"
@@ -90,6 +119,10 @@ msgstr "Nous reviendrons vers vous dés que possible."
 #: module/support/view/frontend/form-create-ticket.view.php:21
 msgid "Subject for your request"
 msgstr "Le sujet de votre demande"
+
+#: module/support/view/frontend/form-create-ticket.view.php:23
+msgid "A description"
+msgstr "La description de votre problème"
 
 #: module/support/view/frontend/form-create-ticket.view.php:25
 msgid "Create ticket"
@@ -131,6 +164,9 @@ msgstr "Dernières activitées"
 #: module/support/view/frontend/main.view.php:58
 msgid "Latest activities"
 msgstr "Dernières activitées"
+
+#~ msgid "Load more"
+#~ msgstr "Charger plus"
 
 #, fuzzy
 #~| msgid "Support"
