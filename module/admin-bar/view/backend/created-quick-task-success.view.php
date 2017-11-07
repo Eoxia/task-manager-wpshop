@@ -18,4 +18,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <h2><?php echo esc_html_e( 'Your quick task has been created with success', 'task-manager-wpshop' ); ?></h2>
 
+<span class="open-popup-ajax button"
+			data-parent="js"
+			data-target="popup"
+			data-action="load_popup_quick_task"
+			data-class="popup-quick-task"
+			data-title="<?php esc_html_e( 'Quick task', 'task-manager-wpshop' ); ?>"
+			data-nonce="<?php echo esc_attr( wp_create_nonce( 'load_popup_quick_task' ) ); ?>"><?php esc_html_e( 'Add another quick task', 'task-manager-wpshop' ); ?></span>
 <span class="button blue"><?php esc_html_e( 'Close', 'task-manager-wpshop' ); ?></span>

@@ -17,11 +17,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 <div>
+	<p><?php esc_html_e( 'Quick task save on the post setted in task-manager-wpshop.config.json. This form create a comment on the point named <displayedname>.', 'task-manager-wpshop' ); ?></p>
 	<form class="form" action="<?php echo esc_attr( admin_url( 'admin-ajax.php' ) ); ?>" method="POST" >
 		<input type="hidden" name="action" value="create_quick_task">
-		<label for="description"><?php esc_html_e( 'A description', 'task-manager-wpshop' ); ?></label>
-		<textarea id="description" name="content" rows="6"></textarea>
-		<input type="text" name="time" value="15" />
-		<input type="button" data-loader="form" class="action-input" data-parent="form" data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_quick_task' ) ); ?>" value="<?php esc_html_e( 'Create quick task', 'task-manager-wpshop' ); ?>">
+		<div style="width: 100%;">
+			<textarea id="description" style="width: 100%" name="content" rows="6"></textarea>
+		</div>
+
+		<div style="float: right;">
+			<input type="text" name="time" value="15" /> <?php esc_html_e( 'Min', 'task-manager-wpshop' ); ?><br />
+			<div 	data-loader="form"
+						class="action-input button blue"
+						data-parent="form"
+						data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_quick_task' ) ); ?>"><?php esc_html_e( 'Create quick task', 'task-manager-wpshop' ); ?></div>
+		</div>
+
 	</form>
 </div>
