@@ -161,7 +161,7 @@ class Task_Manager_Wpshop_Core_Filter {
 		ob_start();
 		\eoxia\View_Util::exec( 'task-manager', 'activity', 'backend/mail/list', array(
 			'datas' => $datas,
-			'last_date' => $last_date,
+			'last_date' => '',
 			'permalink' => $permalink,
 		) );
 		$body .= ob_get_clean();
