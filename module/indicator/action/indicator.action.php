@@ -39,6 +39,15 @@ class Indicator_Action {
 		add_action( 'tm_customer_remove_entry_customer_ask', array( $this, 'callback_tm_remove_entry_customer_ask' ) );
 	}
 
+	/**
+	 * Lors de la suppresion d'une tâche, enlève les ID des commentaires se trouvant dans le tableau "key_customer_ask" et dans cette tâche.
+	 *
+	 * @since 1.2.0
+	 * @version 1.2.0
+	 *
+	 * @param  Task_Model $task La tâche.
+	 * @return void
+	 */
 	public function callback_tm_delete_task( $task ) {
 		$ids = get_option( \eoxia\Config_Util::$init['task-manager-wpshop']->key_customer_ask, array() );
 
@@ -53,6 +62,15 @@ class Indicator_Action {
 		}
 	}
 
+	/**
+	 * Lorsqu'on archive une tâche, enlève les ID des commentaires se trouvant dans le tableau "key_customer_ask" et dans cette tâche.
+	 *
+	 * @since 1.2.0
+	 * @version 1.2.0
+	 *
+	 * @param  Task_Model $task La tâche.
+	 * @return void
+	 */
 	public function callback_tm_archive_task( $task ) {
 		$ids = get_option( \eoxia\Config_Util::$init['task-manager-wpshop']->key_customer_ask, array() );
 
@@ -67,6 +85,15 @@ class Indicator_Action {
 		}
 	}
 
+	/**
+	 * Lorsqu'on complète un point, enlève les ID des commentaires se trouvant dans le tableau "key_customer_ask" et correspondant à ce point.
+	 *
+	 * @since 1.2.0
+	 * @version 1.2.0
+	 *
+	 * @param  Point_Model $point Le point.
+	 * @return void
+	 */
 	public function callback_tm_complete_point( $point ) {
 		$ids = get_option( \eoxia\Config_Util::$init['task-manager-wpshop']->key_customer_ask, array() );
 
@@ -81,6 +108,15 @@ class Indicator_Action {
 		}
 	}
 
+	/**
+	 * Lorsqu'on supprime un point, enlève les ID des commentaires se trouvant dans le tableau "key_customer_ask" et correspondant à ce point.
+	 *
+	 * @since 1.2.0
+	 * @version 1.2.0
+	 *
+	 * @param  Point_Model $point Le point.
+	 * @return void
+	 */
 	public function callback_tm_delete_point( $point ) {
 		$ids = get_option( \eoxia\Config_Util::$init['task-manager-wpshop']->key_customer_ask, array() );
 
@@ -95,6 +131,18 @@ class Indicator_Action {
 		}
 	}
 
+	/**
+	 * Lorsqu'on écrit un commentaire, enlève les ID des commentaires se trouvant dans le tableau "key_customer_ask" et contenu dans le point de ce commentaire.
+	 *
+	 * @since 1.2.0
+	 * @version 1.2.0
+	 *
+	 * @param  Task_Model    $task La tâche.
+	 * @param  Point_Model   $point Le point.
+	 * @param  Comment_Model $comment Le commentaire.
+	 *
+	 * @return boolean
+	 */
 	public function callback_tm_edit_comment( $task, $point, $comment ) {
 		$user = get_userdata( $comment->author_id );
 
@@ -156,10 +204,8 @@ class Indicator_Action {
 		}
 
 		if ( empty( $ids[ $comment->post_id ][ $comment->parent_id ] ) ) {
-			$ids[ $comment->post_id ] = array(
-				$comment->parent_id => array(
-					$comment->id,
-				),
+			$ids[ $comment->post_id ][ $comment->parent_id ] = array(
+				$comment->id,
 			);
 		}
 
@@ -196,6 +242,14 @@ class Indicator_Action {
 			$key = array_search( $comment->id, $ids[ $comment->post_id ][ $comment->parent_id ], true );
 			if ( false !== $key ) {
 				array_splice( $ids[ $comment->post_id ][ $comment->parent_id ], $key, 1 );
+
+				if ( empty( $ids[ $comment->post_id ][ $comment->parent_id ] ) ) {
+					unset( $ids[ $comment->post_id ][ $comment->parent_id ] );
+				}
+
+				if ( empty( $ids[ $comment->post_id ] ) ) {
+					unset( $ids[ $comment->post_id ] );
+				}
 			}
 		}
 
