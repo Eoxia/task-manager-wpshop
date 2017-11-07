@@ -25,4 +25,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 			data-class="popup-quick-task"
 			data-title="<?php esc_html_e( 'Quick task', 'task-manager-wpshop' ); ?>"
 			data-nonce="<?php echo esc_attr( wp_create_nonce( 'load_popup_quick_task' ) ); ?>"><?php esc_html_e( 'Add another quick task', 'task-manager-wpshop' ); ?></span>
-<span class="button blue"><?php esc_html_e( 'Close', 'task-manager-wpshop' ); ?></span>
+<span class="button blue close"><?php esc_html_e( 'Close', 'task-manager-wpshop' ); ?></span>
