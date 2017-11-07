@@ -62,3 +62,7 @@
 	padding: 1em;
 	margin-bottom: 1em;
 }
+
+.wpeo-project-wrap .open-ticket .button.blue:hover, .wpeo-project-wrap .toolbox-activity .button:hover {
+	cursor: pointer;
+}
