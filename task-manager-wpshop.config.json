@@ -14,10 +14,9 @@
 	],
 	"debug": false,
 	"quick_task_tags": [
-		"",
-		"ref"
+		""
 	],
-	"id_mail_support": 221,
-	"id_quick_task": 213,
+	"id_mail_support": 0,
+	"id_quick_task": 0,
 	"key_customer_ask" : "_tm_wpshop_ask_ids"
 }
