@@ -1,12 +1,5 @@
 <?php
 /**
- * Fichier boot du plugin
- *
- * @package Eoxia\plugin
- */
-
-namespace task_manager_wpshop;
-/**
  * Plugin Name: Task Manager WPShop
  * Plugin URI:
  * Description: Handle client support with Task Manager and WPShop.
@@ -17,7 +10,11 @@ namespace task_manager_wpshop;
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: task-manager-wpshop
  * Domain Path: /language
+ *
+ * @package Eoxia\plugin
  */
+
+namespace task_manager_wpshop;
 
 DEFINE( 'TM_WPS_PATH', realpath( plugin_dir_path( __FILE__ ) ) . '/' );
 DEFINE( 'TM_WPS_URL', plugins_url( basename( __DIR__ ) ) . '/' );
