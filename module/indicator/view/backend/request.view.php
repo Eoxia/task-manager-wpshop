@@ -56,7 +56,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php echo esc_html_e( 'With the comment:', 'task-manager-wpshop' ); ?>
 						<a href="<?php echo esc_url( admin_url( 'post.php?post=' . $comment->post_parent->ID . '&term=' . $comment->task->id . '&action=edit&point_id=' . $comment->point->id . '&comment_id=' . $comment->id ) ); ?>">
 							#<?php echo esc_html( $comment->id ); ?>
-							- <?php echo esc_html( $comment->content ); ?>
+							- <?php
+							echo wp_kses( $comment->content, array(
+								'br',
+								'p',
+							) );
+							?>
 						</a>
 					</span>
 				</li>
