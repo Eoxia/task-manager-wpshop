@@ -71,6 +71,10 @@ class Task_Manager_Wpshop_Core_Filter {
 			return false;
 		}
 
+		$customer_post = get_post( $task->parent_id );
+		$user_info = get_userdata( $customer_post->post_author );
+		$post = get_post( \eoxia\Config_Util::$init['task-manager-wpshop']->id_mail_support );
+
 		ob_start();
 		require( TM_WPS_PATH . '/core/view/notify/main.view.php' );
 		$content .= ob_get_clean();
