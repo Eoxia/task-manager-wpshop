@@ -58,8 +58,14 @@ class Admin_Bar_Action {
 	public function callback_load_popup_quick_task() {
 		check_ajax_referer( 'load_popup_quick_task' );
 
+		$comment_schema = \task_manager\Task_Comment_Class::g()->get( array(
+			'schema' => true,
+		), true );
+
 		ob_start();
-		\eoxia\View_Util::exec( 'task-manager-wpshop', 'admin-bar', 'backend/form-quick-task' );
+		\eoxia\View_Util::exec( 'task-manager-wpshop', 'admin-bar', 'backend/form-quick-task', array(
+			'comment' => $comment_schema,
+		) );
 		wp_send_json_success( array(
 			'namespace' => 'taskManagerBackendWPShop',
 			'module' => 'adminBar',

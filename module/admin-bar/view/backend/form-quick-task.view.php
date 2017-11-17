@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 
 		<div style="float: right;">
-			<input type="text" name="time" value="15" /> <?php esc_html_e( 'Min', 'task-manager-wpshop' ); ?><br />
+			<input type="text" name="time" value="<?php echo esc_attr( empty( $comment->id ) && isset( $comment->time_info['calculed_elapsed'] ) ? $comment->time_info['calculed_elapsed'] : $comment->time_info['elapsed'] ); ?>" /> <?php esc_html_e( 'Min', 'task-manager-wpshop' ); ?><br />
 			<div 	data-loader="form"
 						class="action-input button blue"
 						data-parent="form"
