@@ -58,8 +58,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 							#<?php echo esc_html( $comment->id ); ?>
 							- <?php
 							echo wp_kses( $comment->content, array(
-								'br',
-								'p',
+								'br' => array(),
+								'p' => array(),
 							) );
 							?>
 						</a>
