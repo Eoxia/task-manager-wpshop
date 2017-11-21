@@ -15,9 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
-<span class="open-popup-ajax"
-			data-parent="js"
-			data-target="popup"
+<span class="wpeo-modal-event"
 			data-action="load_popup_quick_task"
 			data-class="popup-quick-task"
 			data-title="<?php esc_html_e( 'Quick task', 'task-manager-wpshop' ); ?>"
