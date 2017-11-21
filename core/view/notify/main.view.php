@@ -34,6 +34,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			echo sprintf( __( 'Mail subject: %s', 'task-manager-wpshop' ), $post->post_title );
 			?>
 		</p>
+
+		<div>
+			<?php echo $body; ?>
+		</div>
 	</div>
 
 
