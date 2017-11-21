@@ -4,7 +4,7 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
- * @version 1.1.0
+ * @version 1.2.0
  * @copyright 2015-2017 Evarisk
  * @package Task_Manager_WPShop
  */
@@ -47,13 +47,19 @@ class Task_Manager_Wpshop_Core_Action {
 	 * @return void nothing
 	 *
 	 * @since 0.1.0
-	 * @version 1.1.0
+	 * @version 1.2.0
 	 */
 	public function callback_admin_enqueue_assets() {
+		wp_enqueue_script( 'task-manager-global-wpshop-script', TM_WPS_URL . 'core/assets/js/global.min.js', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version );
+
 		$screen = get_current_screen();
-		if ( in_array( $screen->id, \eoxia\Config_Util::$init['task-manager']->insert_scripts_pages, true ) ) {
-			wp_enqueue_style( 'task-manage-wpshop-styles', TM_WPS_URL . 'core/assets/css/backend.min.css', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version );
-			wp_enqueue_script( 'task-manager-wpshop-script', TM_WPS_URL . 'core/assets/js/backend.min.js', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version );
+		if ( ! empty( \eoxia\Config_Util::$init['task-manager']->insert_scripts_pages ) ) {
+			foreach ( \eoxia\Config_Util::$init['task-manager']->insert_scripts_pages as $insert_script_page ) {
+				if ( false !== strpos( $screen->id, $insert_script_page ) ) {
+					wp_enqueue_style( 'task-manage-wpshop-styles', TM_WPS_URL . 'core/assets/css/backend.min.css', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version );
+					wp_enqueue_script( 'task-manager-wpshop-script', TM_WPS_URL . 'core/assets/js/backend.min.js', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version );
+				}
+			}
 		}
 	}
 
