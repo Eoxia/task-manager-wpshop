@@ -73,7 +73,7 @@ class Admin_Bar_Action {
 			'comment' => $comment_schema,
 		) );
 		wp_send_json_success( array(
-			'namespace' => 'taskManagerBackendWPShop',
+			'namespace' => 'taskManagerGlobalWPShop',
 			'module' => 'adminBar',
 			'callback_success' => 'loadedPopupQuickTask',
 			'buttons_view' => $buttons_view,
@@ -93,10 +93,10 @@ class Admin_Bar_Action {
 		check_ajax_referer( 'create_quick_task' );
 
 		$content = ! empty( $_POST['content'] ) ? sanitize_text_field( $_POST['content'] ) : '';
-		$time = ! empty( $_POST['time'] ) ? sanitize_text_field( $_POST['time'] ) : '';
+		$time = ! empty( $_POST['time'] ) ? (int) $_POST['time'] : 0;
 		$parent_id = \eoxia\Config_Util::$init['task-manager-wpshop']->id_quick_task;
 
-		if ( 0 === $parent_id || '' === $content || '' === $time ) {
+		if ( 0 === $parent_id || '' === $content ) {
 			wp_send_json_error();
 		}
 
@@ -160,7 +160,7 @@ class Admin_Bar_Action {
 				'errors_message' => $errors_message,
 			) );
 			wp_send_json_success( array(
-				'namespace' => 'taskManagerBackendWPShop',
+				'namespace' => 'taskManagerGlobalWPShop',
 				'module' => 'adminBar',
 				'callback_success' => 'createdQuickTask',
 				'view' => ob_get_clean(),
@@ -170,7 +170,7 @@ class Admin_Bar_Action {
 		ob_start();
 		\eoxia\View_Util::exec( 'task-manager-wpshop', 'admin-bar', 'backend/created-quick-task-success' );
 		wp_send_json_success( array(
-			'namespace' => 'taskManagerBackendWPShop',
+			'namespace' => 'taskManagerGlobalWPShop',
 			'module' => 'adminBar',
 			'callback_success' => 'createdQuickTask',
 			'view' => ob_get_clean(),
