@@ -75,6 +75,19 @@ class Task_Manager_Wpshop_Core_Filter {
 		$user_info = get_userdata( $customer_post->post_author );
 		$post = get_post( \eoxia\Config_Util::$init['task-manager-wpshop']->id_mail_support );
 
+		$body = $post->post_content;
+		$datas = \task_manager\Activity_Class::g()->get_activity( array( $task->id ), 0 );
+		$query = $GLOBALS['wpdb']->prepare( "SELECT ID FROM {$GLOBALS['wpdb']->posts} WHERE ID = %d", get_option( 'wpshop_myaccount_page_id' ) );
+		$page_id = $GLOBALS['wpdb']->get_var( $query );
+		$permalink = get_permalink( $page_id );
+		ob_start();
+		\eoxia\View_Util::exec( 'task-manager', 'activity', 'backend/mail/list', array(
+			'datas' => $datas,
+			'last_date' => '',
+			'permalink' => $permalink,
+		) );
+		$body .= ob_get_clean();
+
 		ob_start();
 		require( TM_WPS_PATH . '/core/view/notify/main.view.php' );
 		$content .= ob_get_clean();
