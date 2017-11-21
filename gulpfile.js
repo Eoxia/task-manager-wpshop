@@ -11,7 +11,8 @@ var sass = require( 'gulp-sass' );
 
 var paths = {
 	frontend_js: ['core/assets/js/init.js', '**/*.frontend.js' ],
-	backend_js: ['core/assets/js/init.js', '**/*.backend.js' ]
+	backend_js: ['core/assets/js/init.js', '**/*.backend.js' ],
+	global_js: ['core/assets/js/init.global.js', '**/*.global.js' ]
 };
 
 gulp.task( 'js_frontend', function() {
@@ -26,7 +27,14 @@ gulp.task( 'js_backend', function() {
 		.pipe( gulp.dest( 'core/assets/js/' ) );
 } );
 
+gulp.task( 'global_js', function() {
+	return gulp.src( paths.global_js )
+		.pipe( concat( 'global.min.js' ) )
+		.pipe( gulp.dest( 'core/assets/js/' ) );
+} );
+
 gulp.task( 'default', function() {
 	gulp.watch( paths.frontend_js, [ 'js_frontend' ] );
 	gulp.watch( paths.backend_js, [ 'js_backend' ] );
+	gulp.watch( paths.global_js, [ 'global_js' ] );
 });
