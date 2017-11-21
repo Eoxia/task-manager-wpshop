@@ -26,10 +26,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<div style="float: right;">
 			<input type="text" name="time" value="<?php echo esc_attr( empty( $comment->id ) && isset( $comment->time_info['calculed_elapsed'] ) ? $comment->time_info['calculed_elapsed'] : $comment->time_info['elapsed'] ); ?>" /> <?php esc_html_e( 'Min', 'task-manager-wpshop' ); ?><br />
-			<div 	data-loader="form"
-						class="action-input button blue"
-						data-parent="form"
-						data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_quick_task' ) ); ?>"><?php esc_html_e( 'Create quick task', 'task-manager-wpshop' ); ?></div>
 		</div>
 
 	</form>
