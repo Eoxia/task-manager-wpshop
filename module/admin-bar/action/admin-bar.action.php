@@ -63,6 +63,12 @@ class Admin_Bar_Action {
 		), true );
 
 		ob_start();
+		\eoxia\View_Util::exec( 'task-manager-wpshop', 'admin-bar', 'backend/form-quick-task-buttons', array(
+			'comment' => $comment_schema,
+		) );
+		$buttons_view = ob_get_clean();
+
+		ob_start();
 		\eoxia\View_Util::exec( 'task-manager-wpshop', 'admin-bar', 'backend/form-quick-task', array(
 			'comment' => $comment_schema,
 		) );
@@ -70,6 +76,7 @@ class Admin_Bar_Action {
 			'namespace' => 'taskManagerBackendWPShop',
 			'module' => 'adminBar',
 			'callback_success' => 'loadedPopupQuickTask',
+			'buttons_view' => $buttons_view,
 			'view' => ob_get_clean(),
 		) );
 	}
