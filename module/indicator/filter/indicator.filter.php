@@ -43,7 +43,7 @@ class Indicator_Filter {
 		$number_ask = Support_Class::g()->get_number_ask();
 
 		if ( $number_ask > 0 ) {
-			$title .= '<span class="wp-core-ui wp-ui-notification"><span>' . $number_ask . '</span></span>';
+			// $title .= '<span class="wp-core-ui wp-ui-notification"><span>' . $number_ask . '</span></span>';
 		}
 		return $title;
 	}
