@@ -27,7 +27,7 @@ class Indicator_Action {
 	 * @version 1.2.0
 	 */
 	public function __construct() {
-		add_meta_box( 'tm-indicator-support', __( 'Customer support', 'task-manager-wpshop' ), array( Indicator_Class::g(), 'callback_customer_support' ), 'task-manager-indicator-support', 'normal' );
+		add_meta_box( 'tm-indicator-support', __( 'Customer support', 'task-manager-wpshop' ), array( Indicator_Class::g(), 'callback_customer_support' ), 'task-manager-indicator', 'normal' );
 
 		add_action( 'tm_delete_task', array( $this, 'callback_tm_delete_task' ) );
 		add_action( 'tm_archive_task', array( $this, 'callback_tm_archive_task' ) );
