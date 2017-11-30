@@ -35,17 +35,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<h2><?php esc_html_e( 'Support', 'task-manager-wpshop' ); ?></h2>
 
-	<div class="update-activity">
-		<span><?php esc_html_e( 'Last activity the : ', 'task-manager-wpshop' ); ?></span>
-		<span><?php echo esc_html( $last_modification_date ); ?></span>
-	</div>
-
 	<div class="toolbox-activity">
+		<i class="fa fa-clock-o"></i>
 		<div class="total-time">
-			<i class="fa fa-clock-o"></i>
 			<?php esc_html_e( 'Total time past', 'task-manager-wpshop' ); ?> :
-			<?php echo esc_html( \eoxia\Date_Util::g()->convert_to_custom_hours( $total_time_elapsed, false ) ); ?> / <?php echo esc_html( \eoxia\Date_Util::g()->convert_to_custom_hours( $total_time_estimated, false ) ); ?>
+			<?php if ( $total_time_elapsed > $total_time_estimated ) :  ?><span class="time-exceeded" ><?php endif; ?>
+				<?php echo esc_html( \eoxia\Date_Util::g()->convert_to_custom_hours( $total_time_elapsed, false ) ); ?>
+			<?php if ( $total_time_elapsed > $total_time_estimated ) :  ?>
+				<span class="time-exceeded-explanation" ><?php echo wp_kses( sprintf( __( 'All your time has been spent. We spent %s longer than expected.', 'task-manager-wpshop' ), '<span style="color: #000;" >' . \eoxia\Date_Util::g()->convert_to_custom_hours( $total_time_elapsed - $total_time_estimated, false ) . '</span>' ), array(
+					'span' => array(
+						'style' => array(),
+					),
+				) ); ?></span>
+				</span>
+			<?php endif; ?>
+
+			<br/>
+			<?php esc_html_e( 'Total expected time', 'task-manager-wpshop' ); ?> :
+			<?php echo esc_html( \eoxia\Date_Util::g()->convert_to_custom_hours( $total_time_estimated, false ) ); ?>
 		</div>
+
 		<div class="open-popup-ajax button"
 					data-parent="wpeo-project-wrap"
 					data-target="popup"
@@ -57,6 +66,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<i class="fa fa-list" aria-hidden="true"></i>
 			<span><?php esc_html_e( 'Latest activities', 'task-manager-wpshop' ); ?></span>
 		</div>
+	</div>
+
+	<div class="update-activity">
+		<span><?php esc_html_e( 'Last activity the : ', 'task-manager-wpshop' ); ?></span>
+		<span><?php echo esc_html( $last_modification_date ); ?></span>
 	</div>
 
 	<?php \eoxia\View_Util::exec( 'task-manager-wpshop', 'support', 'frontend/popup' ); ?>

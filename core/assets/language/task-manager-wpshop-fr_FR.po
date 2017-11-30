@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Task Manager WPShop\n"
-"POT-Creation-Date: 2017-11-07 14:31+0100\n"
-"PO-Revision-Date: 2017-11-07 14:31+0100\n"
+"POT-Creation-Date: 2017-11-30 14:27+0100\n"
+"PO-Revision-Date: 2017-11-30 14:28+0100\n"
 "Last-Translator: Equipe de développement de digirisk <dev@digirisk.com>\n"
 "Language-Team: Eoxia <contact@eoxia.com>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Poedit-Basepath: ../../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e;esc_html_e;esc_attr_e\n"
@@ -20,24 +20,24 @@ msgstr ""
 "php\n"
 "X-Poedit-SearchPathExcluded-0: core/external\n"
 
-#: module/admin-bar/action/admin-bar.action.php:95
+#: module/admin-bar/action/admin-bar.action.php:108
 #, php-format
 msgid "The parent post %d doesn't exists."
-msgstr ""
+msgstr "Le post parent %d n'existe pas."
 
-#: module/admin-bar/action/admin-bar.action.php:100
+#: module/admin-bar/action/admin-bar.action.php:113
 #, php-format
 msgid "The parent post %d is not a wpshop_customers CPT."
-msgstr ""
+msgstr "Le parent %d n'est pas un client WPShop"
 
-#: module/admin-bar/action/admin-bar.action.php:112
+#: module/admin-bar/action/admin-bar.action.php:125
 msgid "Unclassified"
 msgstr "Non classé"
 
-#: module/admin-bar/view/backend/button-quick-task.view.php:23
-#: module/admin-bar/view/backend/button-quick-task.view.php:24
-#: module/admin-bar/view/backend/created-quick-task-error.view.php:38
-#: module/admin-bar/view/backend/created-quick-task-success.view.php:26
+#: module/admin-bar/view/backend/button-quick-task.view.php:21
+#: module/admin-bar/view/backend/button-quick-task.view.php:22
+#: module/admin-bar/view/backend/created-quick-task-error.view.php:36
+#: module/admin-bar/view/backend/created-quick-task-success.view.php:23
 msgid "Quick task"
 msgstr "Tâche rapide"
 
@@ -45,23 +45,27 @@ msgstr "Tâche rapide"
 msgid "Error for created your quick task."
 msgstr "Erreur lors de la création de la tâche rapide."
 
-#: module/admin-bar/view/backend/created-quick-task-error.view.php:39
+#: module/admin-bar/view/backend/created-quick-task-error.view.php:37
 msgid "Try again"
 msgstr "Réessayer"
 
-#: module/admin-bar/view/backend/created-quick-task-error.view.php:41
-#: module/admin-bar/view/backend/created-quick-task-success.view.php:28
+#: module/admin-bar/view/backend/created-quick-task-error.view.php:39
+#: module/admin-bar/view/backend/created-quick-task-success.view.php:26
 #: module/support/view/frontend/created-ticket-success.view.php:23
 msgid "Close"
 msgstr "Fermer"
 
-#: module/admin-bar/view/backend/created-quick-task-success.view.php:19
+#: module/admin-bar/view/backend/created-quick-task-success.view.php:18
 msgid "Your quick task has been created with success"
 msgstr "Votre tâche rapide à été créée avec succès"
 
-#: module/admin-bar/view/backend/created-quick-task-success.view.php:27
+#: module/admin-bar/view/backend/created-quick-task-success.view.php:24
 msgid "Add another quick task"
 msgstr "Ajouter une autre tâche rapide"
+
+#: module/admin-bar/view/backend/form-quick-task-buttons.view.php:21
+msgid "Create quick task"
+msgstr "Créer une tâche rapide"
 
 #: module/admin-bar/view/backend/form-quick-task.view.php:20
 msgid ""
@@ -75,10 +79,6 @@ msgstr ""
 #: module/admin-bar/view/backend/form-quick-task.view.php:28
 msgid "Min"
 msgstr "Min"
-
-#: module/admin-bar/view/backend/form-quick-task.view.php:32
-msgid "Create quick task"
-msgstr "Créer une tâche rapide"
 
 #: module/indicator/action/indicator.action.php:30
 msgid "Customer support"
@@ -100,11 +100,11 @@ msgstr "Sur le point"
 msgid "With the comment:"
 msgstr "Avec le commentaire:"
 
-#: module/indicator/view/backend/request.view.php:68
+#: module/indicator/view/backend/request.view.php:73
 msgid "No customer waiting request for the moment"
 msgstr "Aucun client en attente de demande pour le moment"
 
-#: module/support/action/support.action.php:84
+#: module/support/action/support.action.php:82
 msgid "Ask"
 msgstr "Demande"
 
@@ -149,21 +149,30 @@ msgstr "Demander un ticket"
 msgid "Support"
 msgstr "Support"
 
-#: module/support/view/frontend/main.view.php:39
-msgid "Last activity the : "
-msgstr "Dernières activité le : "
-
-#: module/support/view/frontend/main.view.php:46
+#: module/support/view/frontend/main.view.php:41
 msgid "Total time past"
 msgstr "Temps total passé"
 
+#: module/support/view/frontend/main.view.php:45
+#, php-format
+msgid "All your time has been spent. We spent %s longer than expected."
+msgstr "Le temps imparti a été utilisé. Nous avons passé %s de plus que prévu."
+
 #: module/support/view/frontend/main.view.php:54
+msgid "Total expected time"
+msgstr "Temps total prévu"
+
+#: module/support/view/frontend/main.view.php:63
 msgid "Last activities"
 msgstr "Dernières activitées"
 
-#: module/support/view/frontend/main.view.php:58
+#: module/support/view/frontend/main.view.php:67
 msgid "Latest activities"
 msgstr "Dernières activitées"
+
+#: module/support/view/frontend/main.view.php:72
+msgid "Last activity the : "
+msgstr "Dernières activité le : "
 
 #~ msgid "Load more"
 #~ msgstr "Charger plus"

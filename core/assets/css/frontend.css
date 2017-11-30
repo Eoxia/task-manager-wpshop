@@ -29,10 +29,15 @@
 .update-activity {
 	font-style: italic;
 	color: rgba(0,0,0,0.4);
+	display: block;
+	text-align: right;
 }
 .toolbox-activity {
 	display: flex;
 	display: -webkit-flex;
+}
+.toolbox-activity i.fa {
+	margin: 10px 5px 0 5px;
 }
 .toolbox-activity .open-popup-ajax {
 	margin-left: auto;
@@ -44,6 +49,14 @@
 	border: 0;
 	display: inline-block;
 	font-size: 12px;
+}
+.total-time .time-exceeded {
+	font-weight: bold;
+	color: red;
+}
+.total-time .time-exceeded .time-exceeded-explanation {
+	font-weight: initial;
+	color: silver;
 }
 
 /* popup demande de ticket */
