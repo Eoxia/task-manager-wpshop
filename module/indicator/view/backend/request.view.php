@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<span class="event-client">
 									<i class="fa fa-user"></i>
 									<?php if ( ! empty( $comment->post_parent->ID ) ) : ?>
-									<a href="<?php echo esc_url( get_permalink( $comment->post_parent->ID ) ); ?>" target="wptm_view_activity_element" >
+									<a href="<?php echo esc_url( admin_url( 'post.php?action=edit&post=' . $comment->post_parent->ID ) ); ?>" target="wptm_view_activity_element" >
 										<?php echo esc_html( '#' . $comment->post_parent->ID . ' ' . $comment->post_parent->post_title ); ?>
 									</a>
 								<?php else : ?>
