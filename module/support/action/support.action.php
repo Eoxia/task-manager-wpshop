@@ -115,10 +115,7 @@ class Support_Action {
 		$comment = \task_manager\Task_Comment_Class::g()->update( $comment_data );
 
 		// Ajoutes une demande dans la donnée compilé.
-		$customer_post = get_post( $current_customer_account_to_show );
-		if ( WPSHOP_NEWTYPE_IDENTIFIER_CUSTOMERS === $customer_post->post_type ) {
-			do_action( 'tm_customer_add_entry_customer_ask', $comment->id );
-		}
+		do_action( 'tm_action_after_comment_update', $comment->id );
 
 		ob_start();
 		require( PLUGIN_TASK_MANAGER_PATH . '/module/task/view/frontend/task.view.php' );
