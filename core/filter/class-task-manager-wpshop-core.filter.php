@@ -4,7 +4,7 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 1.2.0
- * @version 1.2.0
+ * @version 1.3.0
  * @copyright 2015-2017
  * @package Task_Manager_WPShop
  */
@@ -56,6 +56,17 @@ class Task_Manager_Wpshop_Core_Filter {
 		return $title;
 	}
 
+	/**
+	 * Ajoutes du contenu de la popup "notification".
+	 *
+	 * @since 1.2.0
+	 * @version 1.3.0
+	 *
+	 * @param  string     $content Le contenu de la popup.
+	 * @param  Task_Model $task    Les données de la tâche.
+	 *
+	 * @return string              Le contenu de la popup modifié.
+	 */
 	public function callback_task_manager_popup_notify_after( $content, $task ) {
 		if ( 0 === $task->parent_id ) {
 			return $content;
@@ -71,25 +82,37 @@ class Task_Manager_Wpshop_Core_Filter {
 			return false;
 		}
 
-		$customer_post = get_post( $task->parent_id );
-		$user_info = get_userdata( $customer_post->post_author );
 		$post = get_post( \eoxia\Config_Util::$init['task-manager-wpshop']->id_mail_support );
-
-		$body = $post->post_content;
-		$datas = \task_manager\Activity_Class::g()->get_activity( array( $task->id ), 0 );
-		$query = $GLOBALS['wpdb']->prepare( "SELECT ID FROM {$GLOBALS['wpdb']->posts} WHERE ID = %d", get_option( 'wpshop_myaccount_page_id' ) );
-		$page_id = $GLOBALS['wpdb']->get_var( $query );
+		$body = __( 'No support post found', 'task-manager-wpshop' );
+		if ( ! empty( $post->post_content ) ) {
+			$body = $post->post_content;
+		}
+		$datas     = \task_manager\Activity_Class::g()->get_activity( array( $task->id ), 0 );
+		$query     = $GLOBALS['wpdb']->prepare( "SELECT ID FROM {$GLOBALS['wpdb']->posts} WHERE ID = %d", get_option( 'wpshop_myaccount_page_id' ) );
+		$page_id   = $GLOBALS['wpdb']->get_var( $query );
 		$permalink = get_permalink( $page_id );
 		ob_start();
 		\eoxia\View_Util::exec( 'task-manager', 'activity', 'backend/mail/list', array(
-			'datas' => $datas,
+			'datas'     => $datas,
 			'last_date' => '',
 			'permalink' => $permalink,
 		) );
 		$body .= ob_get_clean();
 
+		$users_id = get_post_meta( $task->parent_id, '_wpscrm_associated_user', true );
+
+		if ( empty( $users_id ) ) {
+			$users_id = array();
+		}
+
+		$customer_post = get_post( $task->parent_id );
+
+		if ( ! empty( $customer_post ) && ! in_array( $customer_post->post_author, (array) $users_id ) ) {
+			$users_id[] = $customer_post->post_author;
+		}
+
 		ob_start();
-		require( TM_WPS_PATH . '/core/view/notify/main.view.php' );
+		require TM_WPS_PATH . '/core/view/notify/main.view.php';
 		$content .= ob_get_clean();
 		return $content;
 	}
@@ -98,7 +121,7 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * Ajoutes l'email du client WPShop lié à la tâche.
 	 *
 	 * @since 1.2.0
-	 * @version 1.2.0
+	 * @version 1.3.0
 	 *
 	 * @param  array       $recipients Un tableau contenant l'email des utilisateurs liées à la tâche.
 	 * @param  Task_Object $task       La tâche en elle même.
@@ -106,7 +129,7 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return array                   Le tableau contenant l'email des utilisateurs + celui du client.
 	 */
 	public function callback_task_manager_notify_send_notification_recipients( $recipients, $task, $form_data ) {
-		if ( $form_data['notify_customer'] == 'false' ) {
+		if ( empty( $form_data['customers_id'] ) ) {
 			return $recipients;
 		}
 
@@ -116,8 +139,12 @@ class Task_Manager_Wpshop_Core_Filter {
 			return $recipients;
 		}
 
-		$user_info = get_userdata( $post->post_author );
-		$recipients[] = $user_info->user_email;
+		$customers_id = explode( ',', $form_data['customers_id'] );
+
+		foreach ( $customers_id as $user_id ) {
+			$user_info    = get_userdata( $user_id );
+			$recipients[] = $user_info->user_email;
+		}
 
 		return $recipients;
 	}
@@ -126,7 +153,7 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * Modifie le sujet du mail envoyé au client.
 	 *
 	 * @since 1.2.0
-	 * @version 1.2.0
+	 * @version 1.3.0
 	 *
 	 * @param  string      $subject    Le sujet du mail.
 	 * @param  Task_Object $task       La tâche en elle même.
@@ -134,7 +161,7 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return string                  Le sujet du mail modifié par ce filtre.
 	 */
 	public function callback_task_manager_notify_send_notification_subject( $subject, $task, $form_data ) {
-		if ( $form_data['notify_customer'] == 'false' ) {
+		if ( empty( $form_data['customers_id'] ) ) {
 			return $subject;
 		}
 
@@ -152,7 +179,7 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * Modifie le contenu du mail envoyé au client.
 	 *
 	 * @since 1.2.0
-	 * @version 1.2.0
+	 * @version 1.3.0
 	 *
 	 * @param  string      $body    Le contenu du mail.
 	 * @param  Task_Object $task       La tâche en elle même.
@@ -160,7 +187,7 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return string                  Le contenu du mail modifié par ce filtre.
 	 */
 	public function callback_task_manager_notify_send_notification_body( $body, $task, $form_data ) {
-		if ( $form_data['notify_customer'] == 'false' ) {
+		if ( empty( $form_data['customers_id'] ) ) {
 			return $body;
 		}
 
@@ -170,14 +197,14 @@ class Task_Manager_Wpshop_Core_Filter {
 			return $body;
 		}
 
-		$body = $post->post_content;
-		$datas = \task_manager\Activity_Class::g()->get_activity( array( $task->id ), 0 );
-		$query = $GLOBALS['wpdb']->prepare( "SELECT ID FROM {$GLOBALS['wpdb']->posts} WHERE ID = %d", get_option( 'wpshop_myaccount_page_id' ) );
-		$page_id = $GLOBALS['wpdb']->get_var( $query );
+		$body      = $post->post_content;
+		$datas     = \task_manager\Activity_Class::g()->get_activity( array( $task->id ), 0 );
+		$query     = $GLOBALS['wpdb']->prepare( "SELECT ID FROM {$GLOBALS['wpdb']->posts} WHERE ID = %d", get_option( 'wpshop_myaccount_page_id' ) );
+		$page_id   = $GLOBALS['wpdb']->get_var( $query );
 		$permalink = get_permalink( $page_id );
 		ob_start();
 		\eoxia\View_Util::exec( 'task-manager', 'activity', 'backend/mail/list', array(
-			'datas' => $datas,
+			'datas'     => $datas,
 			'last_date' => '',
 			'permalink' => $permalink,
 		) );
