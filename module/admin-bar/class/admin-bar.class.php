@@ -31,28 +31,6 @@ class Admin_Bar_Class extends \eoxia\Singleton_Util {
 	protected function construct() { }
 
 	/**
-	 * Ajoutes le button "Quick Task" dans le sous menu "Create" de l'admin bar de WordPress.
-	 *
-	 * @since 1.0.0
-	 * @version 1.2.0
-	 *
-	 * @param mixed $wp_admin_bar L'objet de WordPress pour gérer les noeuds.
-	 *
-	 * @return void
-	 */
-	public function init_quick_task( $wp_admin_bar ) {
-		ob_start();
-		\eoxia\View_Util::exec( 'task-manager-wpshop', 'admin-bar', 'backend/button-quick-task' );
-		$button_open_popup = array(
-			'id' => 'button-open-popup-quick-task',
-			'parent' => 'new-content',
-			'title' => ob_get_clean(),
-		);
-
-		$wp_admin_bar->add_node( $button_open_popup );
-	}
-
-	/**
 	 * Ajoutes le logo de TaskManager et le nombre de demande faites par les clients.
 	 * En cliquant dessus, renvoies vers la page "task-manager-indicator".
 	 *
