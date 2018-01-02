@@ -185,27 +185,27 @@ class Indicator_Action {
 	 * @return bool
 	 */
 	public function callback_tm_add_entry_customer_ask( $id ) {
-		LOG_Util::log( '------------------------------------------------------------------------------------------------', 'task-manager-wpshop' );
+		\eoxia\LOG_Util::log( '------------------------------------------------------------------------------------------------', 'task-manager-wpshop' );
 		$comment = \task_manager\Task_Comment_Class::g()->get( array(
 			'id' => $id,
 		), true );
 
 		if ( 0 === $comment->id ) {
-			LOG_Util::log( sprintf( __( 'Given comment identifier does not correspond to a comment in task manager. Request id: %s', 'task-manager-wpshop' ), $id ), 'task-manager-wpshop' );
+			\eoxia\LOG_Util::log( sprintf( __( 'Given comment identifier does not correspond to a comment in task manager. Request id: %s', 'task-manager-wpshop' ), $id ), 'task-manager-wpshop' );
 			return false;
 		}
 
 		// Check if the comment must be added to current ticket .
 		$comment->author = get_userdata( $comment->author_id );
 		if ( in_array( 'administrator', $comment->author->roles, true ) ) {
-			LOG_Util::log( sprintf( __( 'The comment author role does not allowed support request. Request customer id: %d1$. Customer roles: %2$s', 'task-manager-wpshop' ), $comment->author_id, wp_json_encode( $comment->author->roles ) ), 'task-manager-wpshop' );
+			\eoxia\LOG_Util::log( sprintf( __( 'The comment author role does not allowed support request. Request customer id: %d1$. Customer roles: %2$s', 'task-manager-wpshop' ), $comment->author_id, wp_json_encode( $comment->author->roles ) ), 'task-manager-wpshop' );
 			return false;
 		}
 
 		// If the code continue from here it means that we have to set a new support request.
 		$ids = get_option( \eoxia\Config_Util::$init['task-manager-wpshop']->key_customer_ask, array() );
-		LOG_Util::log( sprintf( __( 'Current support request list: %s', 'task-manager-wpshop' ), wp_json_encode( $ids ) ), 'task-manager-wpshop' );
-		LOG_Util::log( sprintf( __( 'Comment for adding in request %s', 'task-manager-wpshop' ), wp_json_encode( $comment ) ), 'task-manager-wpshop' );
+		\eoxia\LOG_Util::log( sprintf( __( 'Current support request list: %s', 'task-manager-wpshop' ), wp_json_encode( $ids ) ), 'task-manager-wpshop' );
+		\eoxia\LOG_Util::log( sprintf( __( 'Comment for adding in request %s', 'task-manager-wpshop' ), wp_json_encode( $comment ) ), 'task-manager-wpshop' );
 
 		if ( empty( $ids[ $comment->post_id ] ) ) {
 			$ids[ $comment->post_id ] = array(
@@ -226,7 +226,7 @@ class Indicator_Action {
 		}
 
 		update_option( \eoxia\Config_Util::$init['task-manager-wpshop']->key_customer_ask, $ids );
-		LOG_Util::log( sprintf( __( 'New support ticket list: %s', 'task-manager-wpshop' ), wp_json_encode( $ids ) ), 'task-manager-wpshop' );
+		\eoxia\LOG_Util::log( sprintf( __( 'New support ticket list: %s', 'task-manager-wpshop' ), wp_json_encode( $ids ) ), 'task-manager-wpshop' );
 
 		return true;
 	}
@@ -242,7 +242,7 @@ class Indicator_Action {
 	 * @return bool
 	 */
 	public function callback_tm_remove_entry_customer_ask( $id ) {
-		LOG_Util::log( '------------------------------------------------------------------------------------------------', 'task-manager-wpshop' );
+		\eoxia\LOG_Util::log( '------------------------------------------------------------------------------------------------', 'task-manager-wpshop' );
 		$ids = get_option( \eoxia\Config_Util::$init['task-manager-wpshop']->key_customer_ask, array() );
 
 		$comment = \task_manager\Task_Comment_Class::g()->get( array(
@@ -253,8 +253,8 @@ class Indicator_Action {
 			return false;
 		}
 
-		LOG_Util::log( sprintf( __( 'Current support request list: %s', 'task-manager-wpshop' ), wp_json_encode( $ids ) ), 'task-manager-wpshop' );
-		LOG_Util::log( sprintf( __( 'Comment for removing in request %s', 'task-manager-wpshop' ), wp_json_encode( $comment ) ), 'task-manager-wpshop' );
+		\eoxia\LOG_Util::log( sprintf( __( 'Current support request list: %s', 'task-manager-wpshop' ), wp_json_encode( $ids ) ), 'task-manager-wpshop' );
+		\eoxia\LOG_Util::log( sprintf( __( 'Comment for removing in request %s', 'task-manager-wpshop' ), wp_json_encode( $comment ) ), 'task-manager-wpshop' );
 
 		if ( ! empty( $ids[ $comment->post_id ] ) && ! empty( $ids[ $comment->post_id ][ $comment->parent_id ] ) ) {
 			$key = array_search( $comment->id, $ids[ $comment->post_id ][ $comment->parent_id ], true );
