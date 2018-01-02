@@ -42,7 +42,6 @@ class Admin_Bar_Action {
 	 */
 	public function callback_admin_bar_menu( $wp_admin_bar ) {
 		if ( current_user_can( 'administrator' ) ) {
-			Admin_Bar_Class::g()->init_quick_task( $wp_admin_bar );
 			Admin_Bar_Class::g()->init_customer_link( $wp_admin_bar );
 		}
 	}
