@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div>
 	<h2>
-		<?php esc_html_e( 'Customers', 'task-manager-wpshop' ); ?>
+		<?php esc_html_e( 'Contacts', 'task-manager-wpshop' ); ?>
 		(<span class="selected-number">0</span>/<span class="total-number"><?php echo esc_html( count( $users_id ) ); ?></span>)
 	</h2>
 
