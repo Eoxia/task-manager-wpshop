@@ -5,7 +5,7 @@
  * @author Jimmy Latour <jimmy.eoxia@gmail.com>
  * @since 1.2.0
  * @version 1.3.0
- * @copyright 2015-2017 Eoxia
+ * @copyright 2015-2018 Eoxia
  * @package Task_Manager_WPShop
  */
 
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		(<span class="selected-number">0</span>/<span class="total-number"><?php echo esc_html( count( $users_id ) ); ?></span>)
 	</h2>
 
-	<ul class="list-customers">
+	<ul class="list-customers wpeo-ul-users">
 		<?php
 		if ( ! empty( $users_id ) ) :
 			foreach ( $users_id as $user_id ) :
@@ -40,6 +40,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div>
 	<h2><?php esc_html_e( 'Preview of notification', 'task-manager-wpshop' ); ?></h2>
 
-	<h3><?php echo esc_html( $post->post_title ); ?></h3>
-	<div><?php echo $body; ?></div>
+	<?php	if ( ! empty( $post ) ) : ?>
+		<h3><?php echo esc_html( $post->post_title ); ?></h3>
+		<div><?php echo $body; ?></div>
+	<?php else : ?>
+		<p><?php esc_html_e( 'No support post defined', 'task-manager-wpshop' ); ?>
+	<?php endif; ?>
+
 </div>
