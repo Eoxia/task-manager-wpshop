@@ -83,6 +83,8 @@ class Indicator_Class extends \eoxia\Singleton_Util {
 			}
 		}
 
+		krsort( $datas );
+
 		\eoxia\View_Util::exec( 'task-manager-wpshop', 'indicator', 'backend/request', array(
 			'datas' => $datas,
 		) );

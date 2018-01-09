@@ -5,7 +5,7 @@
  * @author Jimmy Latour <jimmy@eoxia.com>
  * @since 1.3.0
  * @version 1.3.0
- * @copyright 2017 Eoxia
+ * @copyright 2017-2018 Eoxia
  * @package Task_Manager_WPShop
  */
 
@@ -36,13 +36,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php endif; ?>
 				</span>
 			<!-- Tâche -->
-			<span class="event-task">
+			<a href="<?php echo esc_attr( 'admin.php?page=wpeomtm-dashboard&term=' . $comment->task->id ); ?>" class="event-task">
 				<i class="dashicons dashicons-layout"></i> <?php echo esc_html( '#' . $comment->task->id . ' ' . $comment->task->title ); ?>
-			</span>
+			</a>
 			<!-- Point -->
-			<span class="event-point">
+			<a  href="<?php echo esc_attr( 'admin.php?page=wpeomtm-dashboard&term=' . $comment->task->id . '&point_id=' . $comment->point->id ); ?>" class="event-point">
 				<i class="fa fa-list-ul"></i> <?php echo esc_html( '#' . $comment->point->id . ' ' . $comment->point->content ); ?>
-			</span>
+			</a>
 		</div>
 
 		<span class="event-content">
