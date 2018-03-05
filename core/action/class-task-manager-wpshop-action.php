@@ -2,10 +2,10 @@
 /**
  * Classe gérant les actions principales de l'application.
  *
- * @author Jimmy Latour <jimmy@evarisk.com>
+ * @author Eoxia <dev@eoxia.com>
  * @since 0.1.0
- * @version 1.2.0
- * @copyright 2015-2017 Evarisk
+ * @version 1.3.0
+ * @copyright 2015-2018 Eoxia
  * @package Task_Manager_WPShop
  */
 
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Initialise les actions princiaples de Digirisk EPI
  */
-class Task_Manager_Wpshop_Core_Action {
+class Task_Manager_WPShop_Action {
 
 	/**
 	 * Le constructeur ajoutes les actions WordPress suivantes:
@@ -68,8 +68,8 @@ class Task_Manager_Wpshop_Core_Action {
 	 *
 	 * @return void nothing
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 1.0.0
+	 * @version 1.0.0
 	 */
 	public function callback_wp_enqueue_scripts() {
 		wp_enqueue_style( 'task-manage-wpshop-front-styles', TM_WPS_URL . 'core/assets/css/frontend.css', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version );
@@ -81,8 +81,8 @@ class Task_Manager_Wpshop_Core_Action {
 	 *
 	 * @return void nothing
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 1.0.0
+	 * @version 1.0.0
 	 */
 	public function callback_dequeue_bootstrap() {
 		if ( ! empty( $_GET['account_dashboard_part'] ) && 'support' === $_GET['account_dashboard_part'] ) {
@@ -102,4 +102,4 @@ class Task_Manager_Wpshop_Core_Action {
 
 }
 
-new Task_Manager_Wpshop_Core_Action();
+new Task_Manager_WPShop_Action();

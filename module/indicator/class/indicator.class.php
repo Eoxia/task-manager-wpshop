@@ -52,7 +52,6 @@ class Indicator_Class extends \eoxia\Singleton_Util {
 						if ( ! empty( $id ) ) {
 							$comments = array_merge( $comments, \task_manager\Task_Comment_Class::g()->get( array(
 								'comment__in' => $id,
-								'status'      => -34070,
 							) ) );
 						}
 					}
@@ -62,23 +61,23 @@ class Indicator_Class extends \eoxia\Singleton_Util {
 
 		if ( ! empty( $comments ) ) {
 			foreach ( $comments as $comment ) {
-				$comment->point = \task_manager\Point_Class::g()->get( array(
-					'id' => $comment->parent_id,
+				$comment->data['point'] = \task_manager\Point_Class::g()->get( array(
+					'id' => $comment->data['parent_id'],
 				), true );
 
-				$comment->task = \task_manager\Task_Class::g()->get( array(
-					'id' => $comment->post_id,
+				$comment->data['task'] = \task_manager\Task_Class::g()->get( array(
+					'id' => $comment->data['post_id'],
 				), true );
 
-				$comment->post_parent = null;
+				$comment->data['post_parent'] = null;
 
-				if ( ! empty( $comment->task->parent_id ) ) {
-					$comment->post_parent = get_post( $comment->task->parent_id );
+				if ( ! empty( $comment->data['task']->data['parent_id'] ) ) {
+					$comment->data['post_parent'] = get_post( $comment->data['task']->data['parent_id'] );
 				}
 
 				// Organisé par date pour la lecture dans le template.
-				$sql_date                      = substr( $comment->date['date_input']['date'], 0, strlen( $comment->date['date_input']['date'] ) - 9 );
-				$time                          = substr( $comment->date['date_input']['date'], 11, strlen( $comment->date['date_input']['date'] ) );
+				$sql_date                      = substr( $comment->data['date']['raw'], 0, strlen( $comment->data['date']['raw'] ) - 9 );
+				$time                          = substr( $comment->data['date']['raw'], 11, strlen( $comment->data['date']['raw'] ) );
 				$datas[ $sql_date ][ $time ][] = $comment;
 			}
 		}

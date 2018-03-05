@@ -51,8 +51,8 @@ class Indicator_Action {
 	public function callback_tm_delete_task( $task ) {
 		$ids = get_option( \eoxia\Config_Util::$init['task-manager-wpshop']->key_customer_ask, array() );
 
-		if ( ! empty( $ids[ $task->id ] ) ) {
-			foreach ( $ids[ $task->id ] as $more_ids ) {
+		if ( ! empty( $ids[ $task->data['id'] ] ) ) {
+			foreach ( $ids[ $task->data['id'] ] as $more_ids ) {
 				if ( ! empty( $more_ids ) ) {
 					foreach ( $more_ids as $point_id => $id ) {
 						$this->callback_tm_remove_entry_customer_ask( $id );
@@ -74,8 +74,8 @@ class Indicator_Action {
 	public function callback_tm_archive_task( $task ) {
 		$ids = get_option( \eoxia\Config_Util::$init['task-manager-wpshop']->key_customer_ask, array() );
 
-		if ( ! empty( $ids[ $task->id ] ) ) {
-			foreach ( $ids[ $task->id ] as $more_ids ) {
+		if ( ! empty( $ids[ $task->data['id'] ] ) ) {
+			foreach ( $ids[ $task->data['id'] ] as $more_ids ) {
 				if ( ! empty( $more_ids ) ) {
 					foreach ( $more_ids as $point_id => $id ) {
 						$this->callback_tm_remove_entry_customer_ask( $id );
@@ -97,8 +97,8 @@ class Indicator_Action {
 	public function callback_tm_complete_point( $point ) {
 		$ids = get_option( \eoxia\Config_Util::$init['task-manager-wpshop']->key_customer_ask, array() );
 
-		if ( ! empty( $ids[ $point->post_id ] ) ) {
-			foreach ( $ids[ $point->post_id ] as $more_ids ) {
+		if ( ! empty( $ids[ $point->data['post_id'] ] ) ) {
+			foreach ( $ids[ $point->data['post_id'] ] as $more_ids ) {
 				if ( ! empty( $more_ids ) ) {
 					foreach ( $more_ids as $point_id => $id ) {
 						$this->callback_tm_remove_entry_customer_ask( $id );
@@ -120,8 +120,8 @@ class Indicator_Action {
 	public function callback_tm_delete_point( $point ) {
 		$ids = get_option( \eoxia\Config_Util::$init['task-manager-wpshop']->key_customer_ask, array() );
 
-		if ( ! empty( $ids[ $point->post_id ] ) ) {
-			foreach ( $ids[ $point->post_id ] as $more_ids ) {
+		if ( ! empty( $ids[ $point->data['post_id'] ] ) ) {
+			foreach ( $ids[ $point->data['post_id'] ] as $more_ids ) {
 				if ( ! empty( $more_ids ) ) {
 					foreach ( $more_ids as $point_id => $id ) {
 						$this->callback_tm_remove_entry_customer_ask( $id );
@@ -144,7 +144,7 @@ class Indicator_Action {
 	 * @return boolean
 	 */
 	public function callback_tm_edit_comment( $task, $point, $comment ) {
-		$user = get_userdata( $comment->author_id );
+		$user = get_userdata( $comment->data['author_id'] );
 
 		if ( ! in_array( 'administrator', $user->roles, true ) ) {
 			return false;
@@ -152,23 +152,22 @@ class Indicator_Action {
 
 		$ids = get_option( \eoxia\Config_Util::$init['task-manager-wpshop']->key_customer_ask, array() );
 
-		if ( empty( $ids[ $task->id ] ) ) {
+		if ( empty( $ids[ $task->data['id'] ] ) ) {
 			return false;
 		}
 
-		if ( empty( $ids[ $task->id ][ $point->id ] ) ) {
+		if ( empty( $ids[ $task->data['id'] ][ $point->data['id'] ] ) ) {
 			return false;
 		}
 
 		$comments_customer = \task_manager\Task_Comment_Class::g()->get( array(
-			'comment__in' => $ids[ $task->id ][ $point->id ],
-			'status' => '-34070',
+			'comment__in' => $ids[ $task->data['id'] ][ $point->data['id'] ],
 		) );
 
 		if ( ! empty( $comments_customer ) ) {
 			foreach ( $comments_customer as $comment_customer ) {
-				if ( strtotime( $comment_customer->date['date_input']['date'] ) < strtotime( $comment->date['date_input']['date'] ) ) {
-					$this->callback_tm_remove_entry_customer_ask( $comment_customer->id );
+				if ( strtotime( $comment_customer->data['date']['raw'] ) < strtotime( $comment->data['date']['raw'] ) ) {
+					$this->callback_tm_remove_entry_customer_ask( $comment_customer->data['id'] );
 				}
 			}
 		}
@@ -190,15 +189,15 @@ class Indicator_Action {
 			'id' => $id,
 		), true );
 
-		if ( 0 === $comment->id ) {
+		if ( 0 === $comment->data['id'] ) {
 			\eoxia\LOG_Util::log( sprintf( __( 'Given comment identifier does not correspond to a comment in task manager. Request id: %s', 'task-manager-wpshop' ), $id ), 'task-manager-wpshop' );
 			return false;
 		}
 
 		// Check if the comment must be added to current ticket .
-		$comment->author = get_userdata( $comment->author_id );
-		if ( in_array( 'administrator', $comment->author->roles, true ) ) {
-			\eoxia\LOG_Util::log( sprintf( __( 'The comment author role does not allowed support request. Request customer id: %d1$. Customer roles: %2$s', 'task-manager-wpshop' ), $comment->author_id, wp_json_encode( $comment->author->roles ) ), 'task-manager-wpshop' );
+		$comment->data['author'] = get_userdata( $comment->data['author_id'] );
+		if ( in_array( 'administrator', $comment->data['author']->roles, true ) ) {
+			\eoxia\LOG_Util::log( sprintf( __( 'The comment author role does not allowed support request. Request customer id: %d1$. Customer roles: %2$s', 'task-manager-wpshop' ), $comment->data['author_id'], wp_json_encode( $comment->data['author']->roles ) ), 'task-manager-wpshop' );
 			return false;
 		}
 
@@ -207,22 +206,22 @@ class Indicator_Action {
 		\eoxia\LOG_Util::log( sprintf( __( 'Current support request list: %s', 'task-manager-wpshop' ), wp_json_encode( $ids ) ), 'task-manager-wpshop' );
 		\eoxia\LOG_Util::log( sprintf( __( 'Comment for adding in request %s', 'task-manager-wpshop' ), wp_json_encode( $comment ) ), 'task-manager-wpshop' );
 
-		if ( empty( $ids[ $comment->post_id ] ) ) {
-			$ids[ $comment->post_id ] = array(
-				$comment->parent_id => array(
-					$comment->id,
+		if ( empty( $ids[ $comment->data['post_id'] ] ) ) {
+			$ids[ $comment->data['post_id'] ] = array(
+				$comment->data['parent_id'] => array(
+					$comment->data['id'],
 				),
 			);
 		}
 
-		if ( empty( $ids[ $comment->post_id ][ $comment->parent_id ] ) ) {
-			$ids[ $comment->post_id ][ $comment->parent_id ] = array(
-				$comment->id,
+		if ( empty( $ids[ $comment->data['post_id'] ][ $comment->data['parent_id'] ] ) ) {
+			$ids[ $comment->data['post_id'] ][ $comment->data['parent_id'] ] = array(
+				$comment->data['id'],
 			);
 		}
 
-		if ( ! empty( $ids[ $comment->post_id ][ $comment->parent_id ] ) && ! in_array( $comment->id, $ids[ $comment->post_id ][ $comment->parent_id ], true ) ) {
-			$ids[ $comment->post_id ][ $comment->parent_id ][] = (int) $comment->id;
+		if ( ! empty( $ids[ $comment->data['post_id'] ][ $comment->data['parent_id'] ] ) && ! in_array( $comment->data['id'], $ids[ $comment->data['post_id'] ][ $comment->data['parent_id'] ], true ) ) {
+			$ids[ $comment->data['post_id'] ][ $comment->data['parent_id'] ][] = (int) $comment->data['id'];
 		}
 
 		update_option( \eoxia\Config_Util::$init['task-manager-wpshop']->key_customer_ask, $ids );

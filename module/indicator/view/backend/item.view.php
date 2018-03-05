@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="activity">
 	<div class="information">
-		<?php echo do_shortcode( '[task_avatar ids="' . $comment->author_id . '" size="30"]' ); ?>
+		<?php echo do_shortcode( '[task_avatar ids="' . $comment->data['author_id'] . '" size="30"]' ); ?>
 		<span class="time-posted"><?php echo esc_html( $time ); ?></span>
 	</div>
 
@@ -27,21 +27,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<!-- Client -->
 				<span class="event-client">
 					<i class="fa fa-user"></i>
-					<?php if ( ! empty( $comment->post_parent->ID ) ) : ?>
-					<a href="<?php echo esc_url( admin_url( 'post.php?action=edit&post=' . $comment->post_parent->ID ) ); ?>" target="wptm_view_activity_element" >
-						<?php echo esc_html( '#' . $comment->post_parent->ID . ' ' . $comment->post_parent->post_title ); ?>
+					<?php if ( ! empty( $comment->data['post_parent']->ID ) ) : ?>
+					<a href="<?php echo esc_url( admin_url( 'post.php?action=edit&post=' . $comment->data['post_parent']->ID ) ); ?>" target="wptm_view_activity_element" >
+						<?php echo esc_html( '#' . $comment->data['post_parent']->ID . ' ' . $comment->data['post_parent']->post_title ); ?>
 					</a>
 				<?php else : ?>
 					<?php echo esc_html( '-' ); ?>
 				<?php endif; ?>
 				</span>
 			<!-- Tâche -->
-			<a href="<?php echo esc_attr( 'admin.php?page=wpeomtm-dashboard&term=' . $comment->task->id ); ?>" class="event-task">
-				<i class="dashicons dashicons-layout"></i> <?php echo esc_html( '#' . $comment->task->id . ' ' . $comment->task->title ); ?>
+			<a href="<?php echo esc_attr( 'admin.php?page=wpeomtm-dashboard&term=' . $comment->data['task']->data['id'] ); ?>" class="event-task">
+				<i class="dashicons dashicons-layout"></i> <?php echo esc_html( '#' . $comment->data['task']->data['id'] . ' ' . $comment->data['task']->data['title'] ); ?>
 			</a>
 			<!-- Point -->
-			<a  href="<?php echo esc_attr( 'admin.php?page=wpeomtm-dashboard&term=' . $comment->task->id . '&point_id=' . $comment->point->id ); ?>" class="event-point">
-				<i class="fa fa-list-ul"></i> <?php echo esc_html( '#' . $comment->point->id . ' ' . $comment->point->content ); ?>
+			<a  href="<?php echo esc_attr( 'admin.php?page=wpeomtm-dashboard&term=' . $comment->data['task']->data['id'] . '&point_id=' . $comment->data['point']->data['id'] ); ?>" class="event-point">
+				<i class="fa fa-list-ul"></i> <?php echo esc_html( '#' . $comment->data['point']->data['id'] . ' ' . $comment->data['point']->data['content'] ); ?>
 			</a>
 		</div>
 
@@ -49,14 +49,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 			<?php
-			$link = 'admin.php?page=wpeomtm-dashboard&term=' . $comment->task->id . '&point_id=' . $comment->point->id . '&comment_id=' . $comment->id;
-			if ( ! empty( $comment->post_parent->id ) ) :
-				$link = 'post.php?post=' . $comment->post_parent->id . '&term=' . $comment->task->id . '&action=edit&point_id=' . $comment->point->id . '&comment_id=' . $comment->id;
+			$link = 'admin.php?page=wpeomtm-dashboard&term=' . $comment->data['task']->data['id'] . '&point_id=' . $comment->data['point']->data['id'] . '&comment_id=' . $comment->data['id'];
+			if ( ! empty( $comment->data['post_parent']->id ) ) :
+				$link = 'post.php?post=' . $comment->data['post_parent']->id . '&term=' . $comment->data['task']->data['id'] . '&action=edit&point_id=' . $comment->data['point']->data['id'] . '&comment_id=' . $comment->data['id'];
 			endif;
 			?>
 			<a target="wptm_view_activity_element" href="<?php echo esc_url( admin_url( $link ) ); ?>" >
 				<?php
-				echo wp_kses( $comment->content, array(
+				echo wp_kses( $comment->data['content'], array(
 					'br' => array(),
 					'p'  => array(),
 				) );
