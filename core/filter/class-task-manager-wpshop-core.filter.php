@@ -68,11 +68,11 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return string              Le contenu de la popup modifié.
 	 */
 	public function callback_task_manager_popup_notify_after( $content, $task ) {
-		if ( 0 === $task->parent_id ) {
+		if ( 0 === $task->data['parent_id'] ) {
 			return $content;
 		}
 
-		$post_type = get_post_type( $task->parent_id );
+		$post_type = get_post_type( $task->data['parent_id'] );
 
 		if ( ! $post_type ) {
 			return $content;
@@ -87,7 +87,7 @@ class Task_Manager_Wpshop_Core_Filter {
 		if ( ! empty( $post->post_content ) ) {
 			$body = $post->post_content;
 		}
-		$datas     = \task_manager\Activity_Class::g()->get_activity( array( $task->id ), 0 );
+		$datas     = \task_manager\Activity_Class::g()->get_activity( array( $task->data['id'] ), 0 );
 		$query     = $GLOBALS['wpdb']->prepare( "SELECT ID FROM {$GLOBALS['wpdb']->posts} WHERE ID = %d", get_option( 'wpshop_myaccount_page_id' ) );
 		$page_id   = $GLOBALS['wpdb']->get_var( $query );
 		$permalink = get_permalink( $page_id );
@@ -99,13 +99,13 @@ class Task_Manager_Wpshop_Core_Filter {
 		) );
 		$body .= ob_get_clean();
 
-		$users_id = get_post_meta( $task->parent_id, '_wpscrm_associated_user', true );
+		$users_id = get_post_meta( $task->data['parent_id'], '_wpscrm_associated_user', true );
 
 		if ( empty( $users_id ) ) {
 			$users_id = array();
 		}
 
-		$customer_post = get_post( $task->parent_id );
+		$customer_post = get_post( $task->data['parent_id'] );
 
 		if ( ! empty( $customer_post ) && ! in_array( $customer_post->post_author, (array) $users_id ) ) {
 			$users_id[] = $customer_post->post_author;
@@ -133,7 +133,7 @@ class Task_Manager_Wpshop_Core_Filter {
 			return $recipients;
 		}
 
-		$post = get_post( $task->parent_id );
+		$post = get_post( $task->data['parent_id'] );
 
 		if ( ! $post ) {
 			return $recipients;
@@ -198,7 +198,7 @@ class Task_Manager_Wpshop_Core_Filter {
 		}
 
 		$body      = $post->post_content;
-		$datas     = \task_manager\Activity_Class::g()->get_activity( array( $task->id ), 0 );
+		$datas     = \task_manager\Activity_Class::g()->get_activity( array( $task->data['id'] ), 0 );
 		$query     = $GLOBALS['wpdb']->prepare( "SELECT ID FROM {$GLOBALS['wpdb']->posts} WHERE ID = %d", get_option( 'wpshop_myaccount_page_id' ) );
 		$page_id   = $GLOBALS['wpdb']->get_var( $query );
 		$permalink = get_permalink( $page_id );
@@ -214,19 +214,19 @@ class Task_Manager_Wpshop_Core_Filter {
 	}
 
 	public function callback_tm_comment_toggle_before( $view, $comment ) {
-		if ( 0 === $comment->post_id || ! class_exists( 'TokenLogin' ) ) {
+		if ( 0 === $comment->data['post_id'] || ! class_exists( 'TokenLogin' ) ) {
 			return $view;
 		}
 
 		$task = \task_manager\Task_Class::g()->get( array(
-			'id' => $comment->post_id,
+			'id' => $comment->data['post_id'],
 		), true );
 
-		if ( 0 === $task->parent_id ) {
+		if ( 0 === $task->data['parent_id'] ) {
 			return $view;
 		}
 
-		$post_type = get_post_type( $task->parent_id );
+		$post_type = get_post_type( $task->data['parent_id'] );
 
 		if ( ! $post_type ) {
 			return $view;
@@ -236,7 +236,7 @@ class Task_Manager_Wpshop_Core_Filter {
 			return $view;
 		}
 
-		$cpt_customer = get_post( $task->parent_id );
+		$cpt_customer = get_post( $task->data['parent_id'] );
 
 		$login_token = \TokenLogin::getToken( $cpt_customer->post_author );
 		$token_url = \TokenLogin::getTokenUrl( $cpt_customer->post_author, $login_token );
