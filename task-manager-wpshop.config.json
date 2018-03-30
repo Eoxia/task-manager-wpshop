@@ -1,22 +1,22 @@
 {
 	"name": "Task Manager WPShop",
 	"slug": "task-manager-wpshop",
-	"version": "1.0.0.1",
+	"version": "1.3.0",
 	"description": "",
-	"insert_scripts_pages_js": [
-		"myaccount",
-		"mon-compte"
-	],
+	"insert_scripts_pages_js": [],
 	"insert_scripts_pages_css": [],
-	"externals": [
-		"core/external/wpeo_log/wpeo_log.config.json",
-		"core/external/wpeo_model/wpeo_model.config.json"
-	],
+	"externals": [],
 	"modules": [
 		"core/core.config.json",
-
-		"modules/support/support.config.json",
-		"modules/admin-bar/admin-bar.config.json"
+		"module/support/support.config.json",
+		"module/indicator/indicator.config.json",
+		"module/admin-bar/admin-bar.config.json"
 	],
-	"debug": false
+	"debug": false,
+	"quick_task_tags": [
+		""
+	],
+	"id_mail_support": 0,
+	"id_quick_task": 0,
+	"key_customer_ask" : "_tm_wpshop_ask_ids"
 }

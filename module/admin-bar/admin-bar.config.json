@@ -1,0 +1,11 @@
+{
+	"name": "Admin bar Task Manager WPShop",
+	"slug": "admin-bar",
+	"version": "1.2.0",
+	"description": "",
+	"path": "module/admin-bar/",
+	"dependencies": {
+		"action": {},
+		"class": {}
+	}
+}

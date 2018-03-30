@@ -3,8 +3,8 @@
  * Classe gérant les actions principales de l'application.
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 6.0.0
- * @version 6.3.0
+ * @since 0.1.0
+ * @version 1.2.0
  * @copyright 2015-2017 Evarisk
  * @package Task_Manager_WPShop
  */
@@ -26,64 +26,19 @@ class Task_Manager_Wpshop_Core_Action {
 	 * admin_print_scripts (Pour appeler les scripts JS en bas du footer)
 	 * plugins_loaded (Pour appeler le domaine de traduction)
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 0.1.0
+	 * @version 1.1.0
 	 */
 	public function __construct() {
 		// Initialises ses actions que si nous sommes sur une des pages réglés dans le fichier digirisk.config.json dans la clé "insert_scripts_pages".
-		$page = ( ! empty( $_REQUEST['page'] ) ) ? sanitize_text_field( $_REQUEST['page'] ) : ''; // WPCS: CSRF ok.
-
-		if ( in_array( $page, \eoxia\Config_Util::$init['task-manager-wpshop']->insert_scripts_pages_css, true ) ) {
-			add_action( 'admin_enqueue_scripts', array( $this, 'callback_before_admin_enqueue_scripts_css' ), 10 );
-			add_action( 'admin_enqueue_scripts', array( $this, 'callback_admin_enqueue_scripts_css' ), 11 );
-		}
-
-		if ( in_array( $page, \eoxia\Config_Util::$init['task-manager-wpshop']->insert_scripts_pages_js, true ) ) {
-			add_action( 'admin_enqueue_scripts', array( $this, 'callback_before_admin_enqueue_scripts_js' ), 10 );
-			add_action( 'admin_enqueue_scripts', array( $this, 'callback_admin_enqueue_scripts_js' ), 11 );
-			add_action( 'admin_print_scripts', array( $this, 'callback_admin_print_scripts_js' ) );
-		}
+		add_action( 'admin_enqueue_scripts', array( $this, 'callback_admin_enqueue_assets' ), 11 );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'callback_wp_enqueue_scripts' ), 11 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'callback_dequeue_bootstrap' ), 99 );
 
 		add_action( 'init', array( $this, 'callback_plugins_loaded' ) );
-		add_action( 'add_meta_boxes', array( $this, 'callback_add_meta_boxes' ), 10, 2 );
-	}
 
-	/**
-	 * Initialise les fichiers CSS inclus dans WordPress (jQuery, wp.media et thickbox)
-	 *
-	 * @return void nothing
-	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
-	 */
-	public function callback_before_admin_enqueue_scripts_css() {}
-
-	/**
-	 * Initialise le fichier style.min.css du plugin Digirisk-EPI.
-	 *
-	 * @return void nothing
-	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
-	 */
-	public function callback_admin_enqueue_scripts_css() {}
-
-	/**
-	 * Initialise les fichiers JS inclus dans WordPress (jQuery, wp.media et thickbox)
-	 *
-	 * @return void nothing
-	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
-	 */
-	public function callback_before_admin_enqueue_scripts_js() {
-		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'jquery-form' );
-		wp_enqueue_script( 'jquery-ui-datepicker' );
-		wp_enqueue_media();
+		add_action( 'wp_ajax_load_wpshop_task', array( $this, 'callback_load_wpshop_task' ) );
 	}
 
 	/**
@@ -91,10 +46,22 @@ class Task_Manager_Wpshop_Core_Action {
 	 *
 	 * @return void nothing
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 0.1.0
+	 * @version 1.2.0
 	 */
-	public function callback_admin_enqueue_scripts_js() {}
+	public function callback_admin_enqueue_assets() {
+		wp_enqueue_script( 'task-manager-global-wpshop-script', TM_WPS_URL . 'core/assets/js/global.min.js', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version );
+
+		$screen = get_current_screen();
+		if ( ! empty( \eoxia\Config_Util::$init['task-manager']->insert_scripts_pages ) ) {
+			foreach ( \eoxia\Config_Util::$init['task-manager']->insert_scripts_pages as $insert_script_page ) {
+				if ( false !== strpos( $screen->id, $insert_script_page ) ) {
+					wp_enqueue_style( 'task-manage-wpshop-styles', TM_WPS_URL . 'core/assets/css/backend.min.css', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version );
+					wp_enqueue_script( 'task-manager-wpshop-script', TM_WPS_URL . 'core/assets/js/backend.min.js', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version );
+				}
+			}
+		}
+	}
 
 	/**
 	 * Initialise le fichier backend.min.js du plugin Digirisk-EPI.
@@ -105,8 +72,8 @@ class Task_Manager_Wpshop_Core_Action {
 	 * @version 1.0.0.0
 	 */
 	public function callback_wp_enqueue_scripts() {
-		wp_enqueue_script( 'task-manager-wpshop-frontend-script', PLUGIN_TASK_MANAGER_WPSHOP_URL . 'core/assets/js/frontend.min.js', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version, false );
-
+		wp_enqueue_style( 'task-manage-wpshop-front-styles', TM_WPS_URL . 'core/assets/css/frontend.css', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version );
+		wp_enqueue_script( 'task-manager-wpshop-frontend-script', TM_WPS_URL . 'core/assets/js/frontend.min.js', array(), \eoxia\Config_Util::$init['task-manager-wpshop']->version, false );
 	}
 
 	/**
@@ -124,38 +91,13 @@ class Task_Manager_Wpshop_Core_Action {
 	}
 
 	/**
-	 * Initialise en php le fichier permettant la traduction des variables string JavaScript.
-	 *
-	 * @return void nothing
-	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
-	 */
-	public function callback_admin_print_scripts_js() {}
-
-	/**
 	 * Initialise le fichier MO du plugin
 	 *
 	 * @since 1.0.0
 	 * @version 1.0.1
 	 */
 	public function callback_plugins_loaded() {
-		$i18n_loaded = load_plugin_textdomain( 'task-manager-wpshop', false, PLUGIN_TASK_MANAGER_WPSHOP_DIR . '/core/assets/language/' );
-	}
-
-	/**
-	 * Fait le contenu de la metabox
-	 *
-	 * @param string  $post_type Le type du post.
-	 * @param WP_Post $post      Les données du post.
-	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
-	 */
-	public function callback_add_meta_boxes( $post_type, $post ) {
-		if ( 'wpshop_customers' === $post_type || 'wpshop_shop_order' === $post_type ) {
-			add_meta_box( 'wpeo-task-metabox', __( 'Task', 'task-manager' ), array( Task_Manager_Wpshop_Core::g(), 'callback_render_metabox' ), $post_type, 'normal', 'default' );
-		}
+		$i18n_loaded = load_plugin_textdomain( 'task-manager-wpshop', false, TM_WPS_DIR . '/core/assets/language/' );
 	}
 
 }
