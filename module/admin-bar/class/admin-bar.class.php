@@ -2,7 +2,7 @@
 /**
  * Classe relatives à l'admin bar.
  *
- * @author Jimmy Latour <jimmy.eoxia@gmail.com>
+ * @author Eoxia <dev@eoxia.com>
  * @since 1.0.0
  * @version 1.2.0
  * @copyright 2015-2017 Eoxia
@@ -50,9 +50,9 @@ class Admin_Bar_Class extends \eoxia\Singleton_Util {
 		}
 
 		$link_to_page = array(
-			'id' => 'button-open-popup-last-ask-customer',
-			'href' => admin_url( 'admin.php?page=task-manager-indicator' ),
-			'title' => '<img src="' . PLUGIN_TASK_MANAGER_URL . 'core/asset/icon-16x16.png" alt="TM" />',
+			'id'    => 'button-open-popup-last-ask-customer',
+			'href'  => admin_url( 'admin.php?page=task-manager-indicator' ),
+			'title' => '<img src="' . PLUGIN_TASK_MANAGER_URL . 'core/assets/icon-16x16.png" alt="TM" />',
 		);
 
 		if ( $have_new ) {

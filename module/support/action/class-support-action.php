@@ -2,10 +2,10 @@
 /**
  * Gestion des actions cotées 'support'.
  *
- * @author Jimmy Latour <jimmy.eoxia@gmail.com>
+ * @author Eoxia <dev@eoxia.com>
  * @since 1.2.0
  * @version 1.2.0
- * @copyright 2015-2017 Eoxia
+ * @copyright 2015-2018 Eoxia
  * @package Task_Manager_WPShop
  */
 
@@ -45,10 +45,11 @@ class Support_Action {
 		ob_start();
 		\eoxia\View_Util::exec( 'task-manager-wpshop', 'support', 'frontend/form-create-ticket' );
 		wp_send_json_success( array(
-			'namespace' => 'taskManagerFrontendWPShop',
-			'module' => 'frontendSupport',
+			'namespace'        => 'taskManagerFrontendWPShop',
+			'module'           => 'frontendSupport',
 			'callback_success' => 'openedPopupCreateTicket',
-			'view' => ob_get_clean(),
+			'buttons_view'     => '', // LOL Jimmy
+			'view'             => ob_get_clean(),
 		) );
 	}
 
@@ -73,14 +74,13 @@ class Support_Action {
 		$current_customer_account_to_show = $_COOKIE['wps_current_connected_customer'];
 
 		$edit      = false;
-		$query     = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_name LIKE %s AND post_parent = %d", array( 'ask-task-%', $current_customer_account_to_show ) );
-		$list_task = $wpdb->get_results( $query );
+		$list_task = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_name LIKE %s AND post_parent = %d", array( 'ask-task-%', $current_customer_account_to_show ) ) );
 		/** On crée la tâche */
 		if ( 0 === count( $list_task ) ) {
-			$task = \task_manager\Task_Class::g()->update(
+			$task    = \task_manager\Task_Class::g()->update(
 				array(
-					'title' => __( 'Ask', 'task-manager-wpshop' ),
-					'slug' => 'ask-task-' . get_current_user_id(),
+					'title'     => __( 'Ask', 'task-manager-wpshop' ),
+					'slug'      => 'ask-task-' . get_current_user_id(),
 					'parent_id' => (int) $current_customer_account_to_show,
 				)
 			);
@@ -145,12 +145,13 @@ class Support_Action {
 	public function callback_wp_token_login( $user ) {
 		$customer_id = \wps_customer_ctr::get_customer_id_by_author_id( $user->ID );
 		if ( empty( $customer_id ) ) {
-			$query = $GLOBALS['wpdb']->prepare( "SELECT post_id FROM {$GLOBALS['wpdb']->postmeta} WHERE meta_key = %s AND meta_value LIKE %s ORDER BY meta_id LIMIT 1", '_wpscrm_associated_user', "%;i:$user->ID;%" );
+			$query       = $GLOBALS['wpdb']->prepare( "SELECT post_id FROM {$GLOBALS['wpdb']->postmeta} WHERE meta_key = %s AND meta_value LIKE %s ORDER BY meta_id LIMIT 1", '_wpscrm_associated_user', "%;i:$user->ID;%" );
 			$customer_id = $GLOBALS['wpdb']->get_var( $query );
 		}
 
 		setcookie( 'wps_current_connected_customer', $customer_id, strtotime( '+30 days' ), SITECOOKIEPATH, COOKIE_DOMAIN, is_ssl() );
 	}
+
 }
 
 new Support_Action();

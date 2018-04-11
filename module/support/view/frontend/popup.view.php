@@ -2,7 +2,7 @@
 /**
  * La popup pour gérer l'ouverture d'un ticket ou les dernières activitées effectuées.
  *
- * @author Jimmy Latour <jimmy.eoxia@gmail.com>
+ * @author Eoxia <dev@eoxia.com>
  * @since 1.2.0
  * @version 1.2.0
  * @copyright 2015-2017 Eoxia

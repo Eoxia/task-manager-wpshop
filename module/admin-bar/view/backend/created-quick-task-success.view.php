@@ -2,7 +2,7 @@
 /**
  * Lorsque la création d'une nouvelle tâche rapide à été prise en compte.
  *
- * @author Jimmy Latour <jimmy.eoxia@gmail.com>
+ * @author Eoxia <dev@eoxia.com>
  * @since 1.2.0
  * @version 1.2.0
  * @copyright 2015-2017 Eoxia
