@@ -9,8 +9,7 @@
 	"modules": [
 		"core/core.config.json",
 		"module/support/support.config.json",
-		"module/indicator/indicator.config.json",
-		"module/admin-bar/admin-bar.config.json"
+		"module/indicator/indicator.config.json"
 	],
 	"debug": false,
 	"quick_task_tags": [
