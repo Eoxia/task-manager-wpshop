@@ -77,7 +77,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<span><?php echo esc_html( $last_modification_date ); ?></span>
 	</div>
 
-	<?php \eoxia\View_Util::exec( 'task-manager-wpshop', 'support', 'frontend/popup' ); ?>
-
 	<?php \task_manager\Task_Class::g()->display_tasks( $tasks, true ); ?>
 </div>
