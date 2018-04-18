@@ -53,7 +53,7 @@ class Support_Filter {
 	 * @return string
 	 */
 	public function callback_my_account_content( $output, $dashboard_part ) {
-		if ( 'support' === $dashboard_part ) {
+		if ( 'support' === $dashboard_part && isset( $_COOKIE['wps_current_connected_customer'] ) ) {
 			$current_customer_account_to_show = $_COOKIE['wps_current_connected_customer'];
 
 			$tasks_id = array();
