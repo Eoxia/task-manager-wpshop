@@ -25,16 +25,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="content">
 		<div class="event-header">
 			<!-- Client -->
-				<span class="event-client">
-					<i class="fa fa-user"></i>
-					<?php if ( ! empty( $comment->data['post_parent']->ID ) ) : ?>
-					<a href="<?php echo esc_url( admin_url( 'post.php?action=edit&post=' . $comment->data['post_parent']->ID ) ); ?>" target="wptm_view_activity_element" >
-						<?php echo esc_html( '#' . $comment->data['post_parent']->ID . ' ' . $comment->data['post_parent']->post_title ); ?>
-					</a>
-				<?php else : ?>
-					<?php echo esc_html( '-' ); ?>
-				<?php endif; ?>
-				</span>
+			<span class="event-client">
+				<i class="fa fa-user"></i>
+				<?php if ( ! empty( $comment->data['post_parent']->ID ) ) : ?>
+				<a href="<?php echo esc_url( admin_url( 'post.php?action=edit&post=' . $comment->data['post_parent']->ID ) ); ?>" target="wptm_view_activity_element" >
+					<?php echo esc_html( '#' . $comment->data['post_parent']->ID . ' ' . $comment->data['post_parent']->post_title ); ?>
+				</a>
+			<?php else : ?>
+				<?php echo esc_html( '-' ); ?>
+			<?php endif; ?>
+			</span>
 			<!-- Tâche -->
 			<a href="<?php echo esc_attr( 'admin.php?page=wpeomtm-dashboard&term=' . $comment->data['task']->data['id'] ); ?>" class="event-task">
 				<i class="dashicons dashicons-layout"></i> <?php echo esc_html( '#' . $comment->data['task']->data['id'] . ' ' . $comment->data['task']->data['title'] ); ?>
@@ -43,11 +43,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<a  href="<?php echo esc_attr( 'admin.php?page=wpeomtm-dashboard&term=' . $comment->data['task']->data['id'] . '&point_id=' . $comment->data['point']->data['id'] ); ?>" class="event-point">
 				<i class="fa fa-list-ul"></i> <?php echo esc_html( '#' . $comment->data['point']->data['id'] . ' ' . $comment->data['point']->data['content'] ); ?>
 			</a>
+
+			<a class="wpeo-button button-secondary action-attribute"
+			data-action="mark_as_read"
+			data-id="<?php echo esc_attr( $comment->data['id'] ); ?>"
+			data-nonce="<?php echo esc_attr( wp_create_nonce( 'mark_as_read' ) ); ?>">Mark as READ</a>
 		</div>
 
 		<span class="event-content">
-
-
 			<?php
 			$link = 'admin.php?page=wpeomtm-dashboard&term=' . $comment->data['task']->data['id'] . '&point_id=' . $comment->data['point']->data['id'] . '&comment_id=' . $comment->data['id'];
 			if ( ! empty( $comment->data['post_parent']->id ) ) :
@@ -63,5 +66,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				?>
 			</a>
 		</span>
+
 	</div>
 </div>

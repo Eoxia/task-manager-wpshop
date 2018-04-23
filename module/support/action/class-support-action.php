@@ -48,7 +48,7 @@ class Support_Action {
 			'namespace'        => 'taskManagerFrontendWPShop',
 			'module'           => 'frontendSupport',
 			'callback_success' => 'openedPopupCreateTicket',
-			'buttons_view'     => '', // LOL Jimmy
+			'buttons_view'     => '',
 			'view'             => ob_get_clean(),
 		) );
 	}

@@ -78,8 +78,8 @@ class Task_Manager_Wpshop_Core_Filter {
 			return $content;
 		}
 
-		if ( 'wpshop_customer' === $post_type ) {
-			return false;
+		if ( 'wpshop_customers' !== $post_type && 'wpshop_shop_order' !== $post_type ) {
+			return $content;
 		}
 
 		$post = get_post( \eoxia\Config_Util::$init['task-manager-wpshop']->id_mail_support );
@@ -129,21 +129,27 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return array                   Le tableau contenant l'email des utilisateurs + celui du client.
 	 */
 	public function callback_task_manager_notify_send_notification_recipients( $recipients, $task, $form_data ) {
-		if ( empty( $form_data['customers_id'] ) ) {
+		if ( 0 === $task->data['parent_id'] ) {
 			return $recipients;
 		}
 
-		$post = get_post( $task->data['parent_id'] );
+		$post_type = get_post_type( $task->data['parent_id'] );
 
-		if ( ! $post ) {
+		if ( ! $post_type ) {
 			return $recipients;
 		}
 
-		$customers_id = explode( ',', $form_data['customers_id'] );
+		if ( 'wpshop_customers' !== $post_type && 'wpshop_shop_order' !== $post_type ) {
+			return $recipients;
+		}
 
-		foreach ( $customers_id as $user_id ) {
-			$user_info    = get_userdata( $user_id );
-			$recipients[] = $user_info->user_email;
+		if ( ! empty( $form_data['customers_id'] ) ) {
+			$customers_id = explode( ',', $form_data['customers_id'] );
+
+			foreach ( $customers_id as $user_id ) {
+				$user_info    = get_userdata( $user_id );
+				$recipients[] = $user_info->user_email;
+			}
 		}
 
 		return $recipients;
@@ -161,7 +167,17 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return string                  Le sujet du mail modifié par ce filtre.
 	 */
 	public function callback_task_manager_notify_send_notification_subject( $subject, $task, $form_data ) {
-		if ( empty( $form_data['customers_id'] ) ) {
+		if ( 0 === $task->data['parent_id'] ) {
+			return $subject;
+		}
+
+		$post_type = get_post_type( $task->data['parent_id'] );
+
+		if ( ! $post_type ) {
+			return $subject;
+		}
+
+		if ( 'wpshop_customers' !== $post_type && 'wpshop_shop_order' !== $post_type ) {
 			return $subject;
 		}
 
@@ -187,7 +203,17 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return string                  Le contenu du mail modifié par ce filtre.
 	 */
 	public function callback_task_manager_notify_send_notification_body( $body, $task, $form_data ) {
-		if ( empty( $form_data['customers_id'] ) ) {
+		if ( 0 === $task->data['parent_id'] ) {
+			return $body;
+		}
+
+		$post_type = get_post_type( $task->data['parent_id'] );
+
+		if ( ! $post_type ) {
+			return $body;
+		}
+
+		if ( 'wpshop_customers' !== $post_type && 'wpshop_shop_order' !== $post_type ) {
 			return $body;
 		}
 
