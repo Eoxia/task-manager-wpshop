@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<h2><?php esc_html_e( 'Support', 'task-manager-wpshop' ); ?></h2>
 
 	<div class="toolbox-activity">
-		<i class="fa fa-clock-o"></i>
+		<i class="far fa-clock"></i>
 		<div class="total-time">
 			<?php esc_html_e( 'Total time past', 'task-manager-wpshop' ); ?> :
 		<?php if ( $total_time_elapsed > $total_time_estimated ) : ?>
@@ -63,7 +63,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<div class="wpeo-button wpeo-modal-event button-blue"
 				data-action="load_last_activity"
-				data-class="last-activity activities"
+				data-class="wpeo-project-wrap last-activity activities"
 				data-title="<?php echo esc_attr_e( 'Last activities', 'task-manager-wpshop' ); ?>"
 				data-tasks-id="<?php echo esc_attr( $tasks_id ); ?>"
 				data-frontend="1">
