@@ -37,10 +37,12 @@ add_action( 'plugins_loaded', function() {
 		}
 	}
 
-	if ( $main_plugin_key > $sub_plugin_key || $wps_plugin_key > $sub_plugin_key ) {
-		array_splice( $plugins, $sub_plugin_key, 1 );
-		$plugins[] = $sub_plugin_path;
-		update_option( 'active_plugins', $plugins );
+	if ( isset( $main_plugin_key ) ) {
+		if ( $main_plugin_key > $sub_plugin_key || $wps_plugin_key > $sub_plugin_key ) {
+			array_splice( $plugins, $sub_plugin_key, 1 );
+			$plugins[] = $sub_plugin_path;
+			update_option( 'active_plugins', $plugins );
+		}
 	}
 } );
 
