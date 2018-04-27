@@ -149,7 +149,7 @@ class Task_Manager_Wpshop_Core_Filter {
 
 			foreach ( $customers_id as $user_id ) {
 				$user_info    = get_userdata( $user_id );
-				$recipients[] = $user_info->user_email;
+				$recipients[] = $user_info;
 			}
 		}
 
