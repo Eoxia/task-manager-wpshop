@@ -35,6 +35,7 @@ class Task_Manager_Wpshop_Core_Filter {
 		add_filter( 'task_manager_notify_send_notification_recipients', array( $this, 'callback_task_manager_notify_send_notification_recipients' ), 10, 3 );
 		add_filter( 'task_manager_notify_send_notification_subject', array( $this, 'callback_task_manager_notify_send_notification_subject' ), 10, 3 );
 		add_filter( 'task_manager_notify_send_notification_body', array( $this, 'callback_task_manager_notify_send_notification_body' ), 10, 3 );
+		add_filter( 'task_manager_notify_send_notification_body_administrator', array( $this, 'callback_task_manager_notify_send_notification_body_administrator' ), 10, 3 );
 		add_filter( 'tm_comment_toggle_before', array( $this, 'callback_tm_comment_toggle_before' ), 10, 2 );
 	}
 
@@ -271,6 +272,30 @@ class Task_Manager_Wpshop_Core_Filter {
 		require( TM_WPS_PATH . '/core/view/comment/before-toggle.view.php' );
 		$view .= ob_get_clean();
 		return $view;
+	}
+
+	public function callback_task_manager_notify_send_notification_body_administrator( $body, $task, $form_data ) {
+		if ( 0 === $task->data['parent_id'] ) {
+			return $body;
+		}
+
+		$post_type = get_post_type( $task->data['parent_id'] );
+
+		if ( ! $post_type ) {
+			return $body;
+		}
+
+		if ( 'wpshop_customers' !== $post_type && 'wpshop_shop_order' !== $post_type ) {
+			return $body;
+		}
+
+		$current_user = wp_get_current_user();
+
+		ob_start();
+		require( TM_WPS_PATH . '/core/view/notify/body-admin.view.php' );
+		$body = ob_get_clean() . $body;
+
+		return $body;
 	}
 }
 
