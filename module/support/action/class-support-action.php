@@ -96,6 +96,7 @@ class Support_Action {
 		$point_data = array(
 			'content' => $subject,
 			'post_id' => (int) $task_id,
+			'order'   => (int) ( $task->data['count_uncompleted_points'] - 1 ),
 		);
 
 		$point = \task_manager\Point_Class::g()->update( $point_data );
