@@ -35,6 +35,7 @@ class Task_Manager_Wpshop_Core_Filter {
 		add_filter( 'task_manager_notify_send_notification_recipients', array( $this, 'callback_task_manager_notify_send_notification_recipients' ), 10, 3 );
 		add_filter( 'task_manager_notify_send_notification_subject', array( $this, 'callback_task_manager_notify_send_notification_subject' ), 10, 3 );
 		add_filter( 'task_manager_notify_send_notification_body', array( $this, 'callback_task_manager_notify_send_notification_body' ), 10, 3 );
+		add_filter( 'task_manager_notify_send_notification_body_administrator', array( $this, 'callback_task_manager_notify_send_notification_body_administrator' ), 10, 3 );
 		add_filter( 'tm_comment_toggle_before', array( $this, 'callback_tm_comment_toggle_before' ), 10, 2 );
 	}
 
@@ -68,18 +69,18 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return string              Le contenu de la popup modifié.
 	 */
 	public function callback_task_manager_popup_notify_after( $content, $task ) {
-		if ( 0 === $task->parent_id ) {
+		if ( 0 === $task->data['parent_id'] ) {
 			return $content;
 		}
 
-		$post_type = get_post_type( $task->parent_id );
+		$post_type = get_post_type( $task->data['parent_id'] );
 
 		if ( ! $post_type ) {
 			return $content;
 		}
 
-		if ( 'wpshop_customer' === $post_type ) {
-			return false;
+		if ( 'wpshop_customers' !== $post_type && 'wpshop_shop_order' !== $post_type ) {
+			return $content;
 		}
 
 		$post = get_post( \eoxia\Config_Util::$init['task-manager-wpshop']->id_mail_support );
@@ -87,7 +88,7 @@ class Task_Manager_Wpshop_Core_Filter {
 		if ( ! empty( $post->post_content ) ) {
 			$body = $post->post_content;
 		}
-		$datas     = \task_manager\Activity_Class::g()->get_activity( array( $task->id ), 0 );
+		$datas     = \task_manager\Activity_Class::g()->get_activity( array( $task->data['id'] ), 0 );
 		$query     = $GLOBALS['wpdb']->prepare( "SELECT ID FROM {$GLOBALS['wpdb']->posts} WHERE ID = %d", get_option( 'wpshop_myaccount_page_id' ) );
 		$page_id   = $GLOBALS['wpdb']->get_var( $query );
 		$permalink = get_permalink( $page_id );
@@ -99,13 +100,13 @@ class Task_Manager_Wpshop_Core_Filter {
 		) );
 		$body .= ob_get_clean();
 
-		$users_id = get_post_meta( $task->parent_id, '_wpscrm_associated_user', true );
+		$users_id = get_post_meta( $task->data['parent_id'], '_wpscrm_associated_user', true );
 
 		if ( empty( $users_id ) ) {
 			$users_id = array();
 		}
 
-		$customer_post = get_post( $task->parent_id );
+		$customer_post = get_post( $task->data['parent_id'] );
 
 		if ( ! empty( $customer_post ) && ! in_array( $customer_post->post_author, (array) $users_id ) ) {
 			$users_id[] = $customer_post->post_author;
@@ -129,21 +130,27 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return array                   Le tableau contenant l'email des utilisateurs + celui du client.
 	 */
 	public function callback_task_manager_notify_send_notification_recipients( $recipients, $task, $form_data ) {
-		if ( empty( $form_data['customers_id'] ) ) {
+		if ( 0 === $task->data['parent_id'] ) {
 			return $recipients;
 		}
 
-		$post = get_post( $task->parent_id );
+		$post_type = get_post_type( $task->data['parent_id'] );
 
-		if ( ! $post ) {
+		if ( ! $post_type ) {
 			return $recipients;
 		}
 
-		$customers_id = explode( ',', $form_data['customers_id'] );
+		if ( 'wpshop_customers' !== $post_type && 'wpshop_shop_order' !== $post_type ) {
+			return $recipients;
+		}
 
-		foreach ( $customers_id as $user_id ) {
-			$user_info    = get_userdata( $user_id );
-			$recipients[] = $user_info->user_email;
+		if ( ! empty( $form_data['customers_id'] ) ) {
+			$customers_id = explode( ',', $form_data['customers_id'] );
+
+			foreach ( $customers_id as $user_id ) {
+				$user_info    = get_userdata( $user_id );
+				$recipients[] = $user_info;
+			}
 		}
 
 		return $recipients;
@@ -161,7 +168,17 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return string                  Le sujet du mail modifié par ce filtre.
 	 */
 	public function callback_task_manager_notify_send_notification_subject( $subject, $task, $form_data ) {
-		if ( empty( $form_data['customers_id'] ) ) {
+		if ( 0 === $task->data['parent_id'] ) {
+			return $subject;
+		}
+
+		$post_type = get_post_type( $task->data['parent_id'] );
+
+		if ( ! $post_type ) {
+			return $subject;
+		}
+
+		if ( 'wpshop_customers' !== $post_type && 'wpshop_shop_order' !== $post_type ) {
 			return $subject;
 		}
 
@@ -187,7 +204,17 @@ class Task_Manager_Wpshop_Core_Filter {
 	 * @return string                  Le contenu du mail modifié par ce filtre.
 	 */
 	public function callback_task_manager_notify_send_notification_body( $body, $task, $form_data ) {
-		if ( empty( $form_data['customers_id'] ) ) {
+		if ( 0 === $task->data['parent_id'] ) {
+			return $body;
+		}
+
+		$post_type = get_post_type( $task->data['parent_id'] );
+
+		if ( ! $post_type ) {
+			return $body;
+		}
+
+		if ( 'wpshop_customers' !== $post_type && 'wpshop_shop_order' !== $post_type ) {
 			return $body;
 		}
 
@@ -198,7 +225,7 @@ class Task_Manager_Wpshop_Core_Filter {
 		}
 
 		$body      = $post->post_content;
-		$datas     = \task_manager\Activity_Class::g()->get_activity( array( $task->id ), 0 );
+		$datas     = \task_manager\Activity_Class::g()->get_activity( array( $task->data['id'] ), 0 );
 		$query     = $GLOBALS['wpdb']->prepare( "SELECT ID FROM {$GLOBALS['wpdb']->posts} WHERE ID = %d", get_option( 'wpshop_myaccount_page_id' ) );
 		$page_id   = $GLOBALS['wpdb']->get_var( $query );
 		$permalink = get_permalink( $page_id );
@@ -214,19 +241,19 @@ class Task_Manager_Wpshop_Core_Filter {
 	}
 
 	public function callback_tm_comment_toggle_before( $view, $comment ) {
-		if ( 0 === $comment->post_id || ! class_exists( 'TokenLogin' ) ) {
+		if ( 0 === $comment->data['post_id'] || ! class_exists( 'TokenLogin' ) ) {
 			return $view;
 		}
 
 		$task = \task_manager\Task_Class::g()->get( array(
-			'id' => $comment->post_id,
+			'id' => $comment->data['post_id'],
 		), true );
 
-		if ( 0 === $task->parent_id ) {
+		if ( 0 === $task->data['parent_id'] ) {
 			return $view;
 		}
 
-		$post_type = get_post_type( $task->parent_id );
+		$post_type = get_post_type( $task->data['parent_id'] );
 
 		if ( ! $post_type ) {
 			return $view;
@@ -236,7 +263,7 @@ class Task_Manager_Wpshop_Core_Filter {
 			return $view;
 		}
 
-		$cpt_customer = get_post( $task->parent_id );
+		$cpt_customer = get_post( $task->data['parent_id'] );
 
 		$login_token = \TokenLogin::getToken( $cpt_customer->post_author );
 		$token_url = \TokenLogin::getTokenUrl( $cpt_customer->post_author, $login_token );
@@ -245,6 +272,30 @@ class Task_Manager_Wpshop_Core_Filter {
 		require( TM_WPS_PATH . '/core/view/comment/before-toggle.view.php' );
 		$view .= ob_get_clean();
 		return $view;
+	}
+
+	public function callback_task_manager_notify_send_notification_body_administrator( $body, $task, $form_data ) {
+		if ( 0 === $task->data['parent_id'] ) {
+			return $body;
+		}
+
+		$post_type = get_post_type( $task->data['parent_id'] );
+
+		if ( ! $post_type ) {
+			return $body;
+		}
+
+		if ( 'wpshop_customers' !== $post_type && 'wpshop_shop_order' !== $post_type ) {
+			return $body;
+		}
+
+		$current_user = wp_get_current_user();
+
+		ob_start();
+		require( TM_WPS_PATH . '/core/view/notify/body-admin.view.php' );
+		$body = ob_get_clean() . $body;
+
+		return $body;
 	}
 }
 

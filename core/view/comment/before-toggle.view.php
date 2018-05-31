@@ -2,7 +2,7 @@
 /**
  * Ajout du partage du lien pour les clients.
  *
- * @author Jimmy Latour <jimmy.eoxia@gmail.com>
+ * @author Eoxia <dev@eoxia.com>
  * @since 1.2.0
  * @version 1.2.0
  * @copyright 2015-2017 Eoxia

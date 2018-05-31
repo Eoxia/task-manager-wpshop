@@ -1,14 +1,18 @@
 <?php
 /**
- * Fichier de gestion des filtres
+ * Fichier de gestion des filtres du support
  *
- * @package Task Manager
- * @subpackage Module/Tag
+ * @since 1.0.0
+ * @version 1.3.0
+ *
+ * @package Task_Manager_WPShop
  */
 
 namespace task_manager_wpshop;
 
-if ( ! defined( 'ABSPATH' ) ) {	exit; }
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Classe de gestion des filtres
@@ -30,8 +34,8 @@ class Support_Filter {
 	 *
 	 * @return void
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 1.0.0
+	 * @version 1.0.0
 	 */
 	public function callback_my_account_menu() {
 		\eoxia\View_Util::exec( 'task-manager-wpshop', 'support', 'frontend/menu' );
@@ -40,23 +44,23 @@ class Support_Filter {
 	/**
 	 * [callback_my_account_content description]
 	 *
-	 * @param  [type] $output         [description]
-	 * @param  [type] $dashboard_part [description]
-	 *
-	 * @return string
-	 *
 	 * @since 1.0.0
 	 * @version 1.2.0
+	 *
+	 * @param string $output         Output content.
+	 * @param string $dashboard_part slug du menu.
+	 *
+	 * @return string
 	 */
 	public function callback_my_account_content( $output, $dashboard_part ) {
-		if ( 'support' === $dashboard_part ) {
+		if ( 'support' === $dashboard_part && isset( $_COOKIE['wps_current_connected_customer'] ) ) {
 			$current_customer_account_to_show = $_COOKIE['wps_current_connected_customer'];
 
 			$tasks_id = array();
 
-			$total_time_elapsed = 0;
-			$total_time_estimated = 0;
-			$last_modification_date = '';
+			$total_time_elapsed           = 0;
+			$total_time_estimated         = 0;
+			$last_modification_date       = '';
 			$last_modification_date_mysql = '';
 
 			$tasks = \task_manager\Task_Class::g()->get_tasks( array(
@@ -82,13 +86,13 @@ class Support_Filter {
 
 			if ( ! empty( $tasks ) ) {
 				foreach ( $tasks as $task ) {
-					$tasks_id[] = $task->id;
-					$total_time_elapsed += $task->time_info['elapsed'];
-					$total_time_estimated += $task->last_history_time->estimated_time;
+					$tasks_id[]            = $task->data['id'];
+					$total_time_elapsed   += $task->data['time_info']['elapsed'];
+					$total_time_estimated += $task->data['last_history_time']->data['estimated_time'];
 
-					if ( empty( $last_modification_date ) || ( $last_modification_date_mysql < $task->date_modified['date_input']['date'] ) ) {
-						$last_modification_date_mysql = $task->date_modified['date_input']['date'];
-						$last_modification_date = $task->date_modified['date_input']['fr_FR']['date_time'];
+					if ( empty( $last_modification_date ) || ( $last_modification_date_mysql < $task->data['date_modified']['raw'] ) ) {
+						$last_modification_date_mysql = $task->data['date_modified']['raw'];
+						$last_modification_date       = $task->data['date_modified']['rendered']['date_time'];
 					}
 				}
 			}
@@ -96,13 +100,13 @@ class Support_Filter {
 			ob_start();
 			\eoxia\View_Util::exec( 'task-manager-wpshop', 'support', 'frontend/main', array(
 				'last_modification_date' => $last_modification_date,
-				'tasks' => $tasks,
-				'tasks_id' => implode( ',', $tasks_id ),
-				'parent_id' => $current_customer_account_to_show,
-				'customer_id' => $current_customer_account_to_show,
-				'user_id' => get_current_user_id(),
-				'total_time_elapsed' => $total_time_elapsed,
-				'total_time_estimated' => $total_time_estimated,
+				'tasks'                  => $tasks,
+				'tasks_id'               => implode( ',', $tasks_id ),
+				'parent_id'              => $current_customer_account_to_show,
+				'customer_id'            => $current_customer_account_to_show,
+				'user_id'                => get_current_user_id(),
+				'total_time_elapsed'     => $total_time_elapsed,
+				'total_time_estimated'   => $total_time_estimated,
 			) );
 			$output = ob_get_clean();
 		}

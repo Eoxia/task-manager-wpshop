@@ -3,8 +3,8 @@ Contributors: Eoxia
 Tags:
 Donate link:
 Requires at least: 4.4
-Tested up to: 4.8.3
-Stable tag: 1.2.0
+Tested up to: 4.9.5
+Stable tag: 1.3.0
 
 Task Manager
 

@@ -2,7 +2,7 @@
 /**
  * Lorsque la création d'un nouveau ticket à été pris en compte.
  *
- * @author Jimmy Latour <jimmy.eoxia@gmail.com>
+ * @author Eoxia <dev@eoxia.com>
  * @since 1.2.0
  * @version 1.2.0
  * @copyright 2015-2017 Eoxia
@@ -19,5 +19,3 @@ if ( ! defined( 'ABSPATH' ) ) {
 <h2><?php echo esc_html_e( 'Your request has been takend into consideration', 'task-manager-wpshop' ); ?></h2>
 
 <p><?php echo esc_html_e( 'We will get back to you as soon as possible.', 'task-manager-wpshop' ); ?></p>
-
-<span class="button blue"><?php esc_html_e( 'Close', 'task-manager-wpshop' ); ?></span>

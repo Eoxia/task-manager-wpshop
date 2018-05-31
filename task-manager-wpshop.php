@@ -3,7 +3,7 @@
  * Plugin Name: Task Manager WPShop
  * Plugin URI:
  * Description: Handle client support with Task Manager and WPShop.
- * Version:     1.2.0-alpha
+ * Version:     1.3.0
  * Author:      Eoxia
  * Author URI:  http://www.eoxia.com
  * License:     GPL2
@@ -37,14 +37,16 @@ add_action( 'plugins_loaded', function() {
 		}
 	}
 
-	if ( $main_plugin_key > $sub_plugin_key || $wps_plugin_key > $sub_plugin_key ) {
-		array_splice( $plugins, $sub_plugin_key, 1 );
-		$plugins[] = $sub_plugin_path;
-		update_option( 'active_plugins', $plugins );
+	if ( isset( $main_plugin_key ) ) {
+		if ( $main_plugin_key > $sub_plugin_key || $wps_plugin_key > $sub_plugin_key ) {
+			array_splice( $plugins, $sub_plugin_key, 1 );
+			$plugins[] = $sub_plugin_path;
+			update_option( 'active_plugins', $plugins );
+		}
 	}
 } );
 
-if ( class_exists( '\eoxia\Init_Util' ) && class_exists( 'wpshop_products' ) ) {
+if ( class_exists( '\eoxia\Init_Util' ) && class_exists( 'wpshop_products' ) && isset( \eoxia\Config_Util::$init['task-manager'] ) ) {
 	\eoxia\Init_Util::g()->exec( TM_WPS_PATH, basename( __FILE__, '.php' ) );
 
 	// Ajout des entrées spécifiques à WPShop pour la gestion des tâches.
