@@ -49,15 +49,26 @@ add_action( 'plugins_loaded', function() {
 if ( class_exists( '\eoxia\Init_Util' ) && class_exists( 'wpshop_products' ) && isset( \eoxia\Config_Util::$init['task-manager'] ) ) {
 	\eoxia\Init_Util::g()->exec( TM_WPS_PATH, basename( __FILE__, '.php' ) );
 
-	// Ajout des entrées spécifiques à WPShop pour la gestion des tâches.
-	$include_page = array(
-		WPSHOP_NEWTYPE_IDENTIFIER_CUSTOMERS,
-		WPSHOP_NEWTYPE_IDENTIFIER_ORDER,
-	);
 	// Type d'éléments ou afficher les tâches.
-	\eoxia\Config_Util::$init['task-manager']->associate_post_type = array_merge( \eoxia\Config_Util::$init['task-manager']->associate_post_type, $include_page );
-	// Page ou intégrer les scripts et css.
-	$query = $GLOBALS['wpdb']->prepare( "SELECT post_name FROM {$GLOBALS['wpdb']->posts} WHERE ID = %d", get_option( 'wpshop_myaccount_page_id' ) );
-	$include_page[] = $GLOBALS['wpdb']->get_var( $query );
-	\eoxia\Config_Util::$init['task-manager']->insert_scripts_pages = array_merge( \eoxia\Config_Util::$init['task-manager']->insert_scripts_pages, $include_page );
+	add_filter( 'eo-framework-init-config-json', 'add_wpshop_cpt', 1);
+	function add_wpshop_cpt( $current_config ) {
+		if ( ! empty( $current_config ) && isset( $current_config['task-manager'] ) ) {
+			// Ajout des entrées spécifiques à WPShop pour la gestion des tâches.
+			$include_page = array(
+				WPSHOP_NEWTYPE_IDENTIFIER_CUSTOMERS,
+				WPSHOP_NEWTYPE_IDENTIFIER_ORDER,
+			);
+
+			$current_config['task-manager']->associate_post_type = array_merge( $current_config['task-manager']->associate_post_type, $include_page );
+
+			// Page ou intégrer les scripts et css.
+			$query = $GLOBALS['wpdb']->prepare( "SELECT post_name FROM {$GLOBALS['wpdb']->posts} WHERE ID = %d", get_option( 'wpshop_myaccount_page_id' ) );
+			$include_page[] = $GLOBALS['wpdb']->get_var( $query );
+			$current_config['task-manager']->insert_scripts_pages = array_merge( $current_config['task-manager']->insert_scripts_pages, $include_page );
+		}
+
+		return $current_config;
+	}
+
+	add_wpshop_cpt( \eoxia\Config_Util::$init );
 }

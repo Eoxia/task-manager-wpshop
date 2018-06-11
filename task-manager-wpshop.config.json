@@ -9,7 +9,9 @@
 	"modules": [
 		"core/core.config.json",
 		"module/support/support.config.json",
-		"module/indicator/indicator.config.json"
+		"module/indicator/indicator.config.json",
+		"module/dashboard/dashboard.config.json",
+		"module/task/task.config.json"
 	],
 	"debug": false,
 	"quick_task_tags": [

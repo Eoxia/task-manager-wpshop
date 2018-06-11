@@ -1,0 +1,11 @@
+{
+	"name": "Task for WPShop",
+	"slug": "task",
+	"sinsce": "1.8.0",
+	"version": "1.8.0",
+	"description": "Le module permettant d'étendre les tâches de task-manager avec WPShop",
+	"path": "module/task/",
+	"dependencies": {
+		"filter": {}
+	}
+}
