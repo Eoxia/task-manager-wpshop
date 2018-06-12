@@ -14,8 +14,8 @@ namespace task_manager_wpshop;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?><li>
-	<span class="wpeo-task-time-info wpeo-tooltip-event" aria-label="<?php echo esc_attr( $task_time_info_human_readable ); ?>">
-		<i class="dashicons dashicons-admin-users"></i>
+	<span <?php echo esc_attr( ! empty( $parent_title ) ? 'class="wpeo-tooltip-event" aria-label="' . $parent_title . '"' : '' ); ?>>
+		<i class="dashicons <?php echo esc_attr( $parent_icon ); ?>"></i>
 		<span><?php echo esc_html( $parent->post_title ); ?></span>
 	</span>
 </li>

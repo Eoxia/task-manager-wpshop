@@ -6,8 +6,6 @@
 	"description": "Le module permettant d'étendre le dashboard de task-manager avec WPShop",
 	"path": "module/dashboard/",
 	"dependencies": {
-		"class": {},
-		"action": {},
 		"filter": {}
 	},
 	"state": true
